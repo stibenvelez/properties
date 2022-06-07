@@ -1,0 +1,103 @@
+import BackgroundSection from "components/BackgroundSection/BackgroundSection";
+import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
+import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
+import SectionHeroArchivePage from "components/SectionHeroArchivePage/SectionHeroArchivePage";
+import SectionSliderNewCategories from "components/SectionSliderNewCategories/SectionSliderNewCategories";
+import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
+import React, { FC, useEffect, useMemo, useState } from "react";
+import SectionGridFilterCard from "./SectionGridFilterCard";
+import { Helmet } from "react-helmet";
+import clientAxios from "config/axios";
+import { useHistory, useLocation } from "react-router-dom";
+import { useSearchParams } from "hooks/useSearchParams";
+import {fetchAllProperties} from '../../store/slice/properties/propertiesActions'
+import { useDispatch, useSelector } from "react-redux";
+import useDebounce from "hooks/useDebounce";
+import { fetchAllCities } from "store/slice/cities/citiesActions";
+
+export interface ListingStayPageProps {
+    className?: string;
+}
+
+const SalesPropertiesPage: FC<ListingStayPageProps> = ({ className = "" }) => {
+    const location = useLocation();
+    const dispatch:any = useDispatch();
+    //const [properties, setProperties] = useState<any[]>([]);
+
+    const search:any = useSearchParams();
+    const properties:any = useSelector(({properties}:any)=>properties.properties);
+    const loading:any = useSelector(({ properties }: any) => properties.loading);
+    const filters: any = useSelector(({ properties }: any) => properties.filters);
+    const debouncedFilters = useDebounce<string>(filters, 500);
+
+
+    const CATEGORY:any = {
+        arriendo: "rent",
+        venta: "sell",
+    }
+    
+    let category = location.pathname.split("/")[1]
+    const categoryProperty: any = CATEGORY[category];
+    
+    useEffect(() => {
+        dispatch(fetchAllProperties(debouncedFilters, categoryProperty));
+    }, [debouncedFilters]);
+     
+    useEffect(() => {
+        (() => dispatch(fetchAllCities()))();
+     }, []);
+      
+   
+     
+    return (
+        <div
+            className={`nc-ListingStayPage relative overflow-hidden ${className}`}
+            data-nc-id="ListingStayPage"
+        >
+            <Helmet>
+                <title>Venta de apartamentos</title>
+            </Helmet>
+            <BgGlassmorphism />
+
+            <div className="container relative overflow-hidden">
+                {/* SECTION HERO */}
+                {/* <SectionHeroArchivePage
+          currentPage="Stays"
+          currentTab="Stays"
+          className="pt-10 pb-24 lg:pb-32 lg:pt-16 "
+        /> */}
+
+                {/* SECTION */}
+                <SectionGridFilterCard
+                    className="pb-24 lg:pb-32"
+                    properties={properties}
+                    loading={loading}
+                />
+
+                {/* SECTION 1 */}
+                {/* <div className="relative py-16">
+                  <BackgroundSection />
+                  <SectionSliderNewCategories
+                      heading="Explore by types of stays"
+                      subHeading="Explore houses based on 10 types of stays"
+                      categoryCardType="card5"
+                      itemPerRow={5}
+                      sliderStyle="style2"
+                      uniqueClassName="ListingStayMapPage"
+                  />
+              </div> */}
+
+                {/* SECTION */}
+                <SectionSubscribe2 className="py-24 lg:py-32" />
+
+                {/* SECTION */}
+                {/* <div className="relative py-16 mb-24 lg:mb-32">
+                  <BackgroundSection className="bg-orange-50 dark:bg-black dark:bg-opacity-20 " />
+                  <SectionGridAuthorBox />
+              </div> */}
+            </div>
+        </div>
+    );
+};
+
+export default SalesPropertiesPage;
