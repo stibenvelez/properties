@@ -1,19 +1,14 @@
-import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
-import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
-import SectionHeroArchivePage from "components/SectionHeroArchivePage/SectionHeroArchivePage";
-import SectionSliderNewCategories from "components/SectionSliderNewCategories/SectionSliderNewCategories";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
-import React, { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect } from "react";
 import SectionGridFilterCard from "./SectionGridFilterCard";
 import { Helmet } from "react-helmet";
-import clientAxios from "config/axios";
-import { useHistory, useLocation } from "react-router-dom";
 import { useSearchParams } from "hooks/useSearchParams";
 import {fetchAllProperties} from '../../store/slice/properties/propertiesActions'
 import { useDispatch, useSelector } from "react-redux";
 import useDebounce from "hooks/useDebounce";
 import { fetchAllCities } from "store/slice/cities/citiesActions";
+import { useLocation } from "react-router-dom";
 
 export interface ListingStayPageProps {
     className?: string;
@@ -22,9 +17,6 @@ export interface ListingStayPageProps {
 const SalesPropertiesPage: FC<ListingStayPageProps> = ({ className = "" }) => {
     const location = useLocation();
     const dispatch:any = useDispatch();
-    //const [properties, setProperties] = useState<any[]>([]);
-
-    const search:any = useSearchParams();
     const properties:any = useSelector(({properties}:any)=>properties.properties);
     const loading:any = useSelector(({ properties }: any) => properties.loading);
     const filters: any = useSelector(({ properties }: any) => properties.filters);

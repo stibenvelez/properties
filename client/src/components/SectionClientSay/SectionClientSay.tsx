@@ -19,27 +19,26 @@ export interface SectionClientSayProps {
 }
 
 const DEMO_DATA = [
-  {
-    id: 1,
-    clientName: "Sergio Muñoz",
-    clientAddress: "Medellin",
-    content:
-      "Todo el proceso fue realmente fácil y rápido, me senti bien atendido. Totalmente recomendado",
-  },
-  {
-    id: 2,
-    clientName: "Lennie Swiffan",
-    clientAddress: "Envigado",
-    content:
-      "This place is exactly like the picture posted on Chisfis. Great service, we had a great stay!",
-  },
-  {
-    id: 3,
-    clientName: "Berta Emili",
-    clientAddress: "Bello",
-    content:
-      "This place is exactly like the picture posted on Chisfis. Great service, we had a great stay!",
-  },
+    {
+        id: 1,
+        clientName: "Sergio Muñoz",
+        clientAddress: "Medellin",
+        content:
+            "Todo el proceso fue realmente fácil y rápido, me senti bien atendido. Totalmente recomendado",
+    },
+    {
+        id: 2,
+        clientName: "Milena Sanchez",
+        clientAddress: "Envigado",
+        content: "Me senti muy bien atendido por los asesores!",
+    },
+    {
+        id: 3,
+        clientName: "Carlos Vasquez",
+        clientAddress: "Bello",
+        content:
+            "Los recomiendo si quieren comprar inmuebles en el Bello, esta es la mejor opción",
+    },
 ];
 
 const SectionClientSay: FC<SectionClientSayProps> = ({

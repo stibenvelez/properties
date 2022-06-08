@@ -20,13 +20,13 @@ const PageAbout: FC<PageAboutProps> = ({ className = "" }) => {
       data-nc-id="PageAbout"
     >
       <Helmet>
-        <title>About || Booking React Template</title>
+        <title>About</title>
       </Helmet>
 
       {/* ======== BG GLASS ======== */}
       <BgGlassmorphism />
 
-      <div className="container py-16 lg:py-28 space-y-16 lg:space-y-28">
+      <div className="container py-16 space-y-16 lg:py-28 lg:space-y-28">
         <SectionHero
           rightImg={rightImg}
           heading="👋 About Us."

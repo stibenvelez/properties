@@ -7,17 +7,17 @@ const AdminPage = () => {
         <div className="">
             <Helmet>
                 <title>Admin</title>
-            </Helmet>   
+            </Helmet>
             <div className="container lg:p-4">
                 <div className="flex flex-col">
                     <div className="mb-4">
-                        <h2 className="mb-4 text-xl font-medium text-gray-800">
+                        <h2 className="mb-4 text-xl font-medium text-gray-800 dark:text-white">
                             Importar datos csv:
                         </h2>
                         <FormUploadCSV />
                     </div>
                     <div className="mb-4">
-                        <h2 className="mb-4 text-xl font-medium text-gray-800">
+                        <h2 className="mb-4 text-xl font-medium text-gray-800 dark:text-white">
                             Importar imagenes:
                         </h2>
                         <FormUploadImages />

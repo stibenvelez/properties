@@ -1,11 +1,7 @@
-import React, { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ArrowRightIcon } from "@heroicons/react/outline";
 import LocationMarker from "components/AnyReactComponent/LocationMarker";
 import CommentListing from "components/CommentListing/CommentListing";
-import FiveStartIconForRate from "components/FiveStartIconForRate/FiveStartIconForRate";
-import GuestsInput from "components/HeroSearchForm/GuestsInput";
-import StayDatesRangeInput from "components/HeroSearchForm/StayDatesRangeInput";
 import { DateRage } from "components/HeroSearchForm/StaySearchForm";
 import StartRating from "components/StartRating/StartRating";
 import GoogleMapReact from "google-map-react";
@@ -13,22 +9,15 @@ import useWindowSize from "hooks/useWindowResize";
 import moment from "moment";
 import { DayPickerRangeController, FocusedInputShape } from "react-dates";
 import Avatar from "shared/Avatar/Avatar";
-import Badge from "shared/Badge/Badge";
-import ButtonCircle from "shared/Button/ButtonCircle";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import ButtonClose from "shared/ButtonClose/ButtonClose";
-import Input from "shared/Input/Input";
 import NcImage from "shared/NcImage/NcImage";
-import LikeSaveBtns from "./LikeSaveBtns";
 import ModalPhotos from "./ModalPhotos";
-import BackgroundSection from "components/BackgroundSection/BackgroundSection";
-import SectionSliderNewCategories from "components/SectionSliderNewCategories/SectionSliderNewCategories";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import { useParams } from "react-router-dom";
 import clientAxios from "config/axios";
 import formatMoney from "utils/formatMoney";
-import { LOADIPHLPAPI } from "dns";
 
 export interface ListingStayDetailPageProps {
     className?: string;
@@ -55,17 +44,6 @@ const COMMENTS = [
     },
 ];
 
-const PHOTOS: string[] = [
-    "https://images.pexels.com/photos/6129967/pexels-photo-6129967.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
-    "https://images.pexels.com/photos/7163619/pexels-photo-7163619.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    "https://images.pexels.com/photos/6527036/pexels-photo-6527036.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    "https://images.pexels.com/photos/6969831/pexels-photo-6969831.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    "https://images.pexels.com/photos/6438752/pexels-photo-6438752.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    "https://images.pexels.com/photos/1320686/pexels-photo-1320686.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    "https://images.pexels.com/photos/261394/pexels-photo-261394.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    "https://images.pexels.com/photos/2861361/pexels-photo-2861361.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    "https://images.pexels.com/photos/2677398/pexels-photo-2677398.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-];
 
 const Amenities_demos = [
     { name: "la-key", icon: "la-key" },
@@ -95,16 +73,6 @@ const Amenities_demos = [
     { name: "la-dumbbell", icon: "la-dumbbell" },
     { name: "la-hot-tub", icon: "la-hot-tub" },
     { name: "la-infinity", icon: "la-infinity" },
-];
-
-const TEST_IMAGES = [
-    "image1",
-    "image2",
-    "image3",
-    "image4",
-    "image5",
-    "image6",
-    "image7",
 ];
 
 const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
@@ -481,11 +449,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                         <a className="block text-xl font-medium" href="##">
                             {property.contactName}
                         </a>
-                        {/* <div className="mt-1.5 flex items-center text-sm text-neutral-500 dark:text-neutral-400">
-                            <StartRating />
-                            <span className="mx-2">·</span>
-                            <span> 12 places</span>
-                        </div> */}
                     </div>
                 </div>
 
@@ -544,37 +507,11 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                 </h2>
                 <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
 
-                {/* Content */}
-                {/* <div className="space-y-5">
-                    <FiveStartIconForRate
-                        iconClass="w-6 h-6"
-                        className="space-x-0.5"
-                    />
-                    <div className="relative">
-                        <Input
-                            fontClass=""
-                            sizeClass="h-16 px-4 py-3"
-                            rounded="rounded-3xl"
-                            placeholder="Share your thoughts ..."
-                        />
-                        <ButtonCircle
-                            className="absolute transform -translate-y-1/2 right-2 top-1/2"
-                            size=" w-12 h-12 "
-                        >
-                            <ArrowRightIcon className="w-5 h-5" />
-                        </ButtonCircle>
-                    </div>
-                </div> */}
-
                 {/* comment */}
                 <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
                     {COMMENTS.map((data: any) => (
                         <CommentListing data={data} className="py-8" />
                     ))}
-
-                    {/* <div className="pt-8">
-                        <ButtonSecondary>View more 20 reviews</ButtonSecondary>
-                    </div> */}
                 </div>
             </div>
         );
@@ -842,19 +779,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
             {/* OTHER SECTION */}
             {!isPreviewMode && (
                 <div className="container py-24 lg:py-32">
-                    {/* SECTION 1 */}
-                    {/*  <div className="relative py-16">
-                        <BackgroundSection />
-                      <SectionSliderNewCategories
-                            heading="Explore by types of stays"
-                            subHeading="Explore houses based on 10 types of stays"
-                            categoryCardType="card5"
-                            itemPerRow={5}
-                            sliderStyle="style2"
-                            uniqueClassName={"ListingStayDetailPage1"}
-                        /> 
-                    </div>*/}
-
                     {/* SECTION */}
                     <SectionSubscribe2 className="pt-24 lg:pt-32" />
                 </div>

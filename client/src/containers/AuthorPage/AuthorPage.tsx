@@ -212,7 +212,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
   return (
     <div className={`nc-AuthorPage ${className}`} data-nc-id="AuthorPage">
       <Helmet>
-        <title>Login || Booking React Template</title>
+        <title>Login</title>
       </Helmet>
       <main className="container flex flex-col mt-12 mb-24 lg:mb-32 lg:flex-row">
         <div className="flex-grow block mb-24 lg:mb-0">

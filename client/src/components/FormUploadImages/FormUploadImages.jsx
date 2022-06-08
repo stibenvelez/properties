@@ -10,7 +10,7 @@ const FormUploadImages = () => {
     const dispatch = useDispatch();
     const [files, setFiles] = useState(null);
 
-    const { response, loadingUploadImages } = useSelector(
+    const { loadingUploadImages } = useSelector(
         ({ properties }) => properties
     );
 
@@ -62,40 +62,6 @@ const FormUploadImages = () => {
                                 : "Importar imagenes"}
                         </ButtonPrimary>
                     </div>
-
-                    {response && response.errors && (
-                        <div className="p-4 text-xs text-red-500 border rounded-md shadow-sm border-1 bg-gray-50">
-                            <h3 className="text-xl font-bold text-center text-gray-700">
-                                Lista de errores
-                            </h3>
-                            <p className="text-center text-gray-800">
-                                {response.msg}
-                            </p>
-                            {response.errors &&
-                                response.errors.map((error) => (
-                                    <div className="flex flex-col gap-2 p-2 ">
-                                        <div className="flex gap-2">
-                                            <label className="font-bold">
-                                                Referencia:
-                                            </label>
-                                            <p>{error?.reference}</p>
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <label className="font-bold">
-                                                Columna:
-                                            </label>
-                                            <p>{error?.column}</p>
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <label className="font-bold">
-                                                Error:
-                                            </label>
-                                            <p>{error?.error}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                        </div>
-                    )}
                 </div>
             </form>
         </div>

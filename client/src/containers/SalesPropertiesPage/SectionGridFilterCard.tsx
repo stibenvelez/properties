@@ -1,13 +1,7 @@
-import React, { FC } from "react";
-import { DEMO_STAY_LISTINGS } from "data/listings";
-import { PropertyDataType, StayDataType } from "data/types";
-import Pagination from "shared/Pagination/Pagination";
+import { FC } from "react";
 import TabFilters from "./TabFilters";
 import Heading2 from "components/Heading/Heading2";
-import StayCard from "components/StayCard/StayCard";
-import PropertyCard from "components/PropertyCard/PropertyCard";
 import PropertyList from "./PropertyList";
-import { useSelector } from "react-redux";
 
 export interface SectionGridFilterCardProps {
     className?: string;
@@ -17,24 +11,18 @@ export interface SectionGridFilterCardProps {
     loading?: boolean;
 }
 
-//const DEMO_DATA: StayDataType[] = DEMO_STAY_LISTINGS.filter((_, i) => i < 8);
-const DEMO_DATA: StayDataType[] = DEMO_STAY_LISTINGS.filter((_, i) => i < 8);
-
 const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
-    className = ""
+    className = "",
 }) => {
-
     return (
         <div
             className={`nc-SectionGridFilterCard ${className}`}
             data-nc-id="SectionGridFilterCard"
         >
-            <Heading2
-                heading={"Venta de apartamentos en Colombia"}
-            />
+            <Heading2 heading={"Venta de apartamentos en Colombia"} />
 
             <div className="mb-8 lg:mb-11">
-                <TabFilters/>
+                <TabFilters />
             </div>
             <PropertyList />
 

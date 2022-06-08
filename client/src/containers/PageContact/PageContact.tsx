@@ -35,18 +35,18 @@ const PageContact: FC<PageContactProps> = ({ className = "" }) => {
       data-nc-id="PageContact"
     >
       <Helmet>
-        <title>Contact || Booking React Template</title>
+        <title>Contact</title>
       </Helmet>
       <div className="mb-24 lg:mb-32">
         <h2 className="my-16 sm:my-20 flex items-center text-3xl leading-[115%] md:text-5xl md:leading-[115%] font-semibold text-neutral-900 dark:text-neutral-100 justify-center">
           Contact
         </h2>
-        <div className="container max-w-7xl mx-auto">
-          <div className="flex-shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-12 ">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid flex-shrink-0 grid-cols-1 gap-12 sm:grid-cols-2 ">
             <div className="max-w-sm space-y-8">
               {info.map((item, index) => (
                 <div key={index}>
-                  <h3 className="uppercase font-semibold text-sm dark:text-neutral-200 tracking-wider">
+                  <h3 className="text-sm font-semibold tracking-wider uppercase dark:text-neutral-200">
                     {item.title}
                   </h3>
                   <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
@@ -55,7 +55,7 @@ const PageContact: FC<PageContactProps> = ({ className = "" }) => {
                 </div>
               ))}
               <div>
-                <h3 className="uppercase font-semibold text-sm dark:text-neutral-200 tracking-wider">
+                <h3 className="text-sm font-semibold tracking-wider uppercase dark:text-neutral-200">
                   🌏 SOCIALS
                 </h3>
                 <SocialsList className="mt-2" />

@@ -111,7 +111,7 @@ function PageHome() {
             categoryCardType="card4"
             itemPerRow={4}
             heading="Suggestions for discovery"
-            subHeading="Popular places to stay that Chisfis recommends for you"
+            subHeading=""
             sliderStyle="style2"
             uniqueClassName="PageHome_s2"
           />

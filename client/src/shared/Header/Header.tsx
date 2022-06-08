@@ -29,17 +29,17 @@ const Header: FC<HeaderProps> = () => {
   }
 
   return (
-    <div
-      id="nc-chifis-header"
-      className="nc-Header lg:sticky lg:top-0 w-full lg:left-0 lg:right-0 z-40"
-    >
-      <Helmet>
-        <title>Chisfis || Booking React Template</title>
-      </Helmet>
+      <div
+          id="nc-chifis-header"
+          className="z-40 w-full nc-Header lg:sticky lg:top-0 lg:left-0 lg:right-0"
+      >
+          <Helmet>
+              <title>Properties</title>
+          </Helmet>
 
-      {/* NAV */}
-      <MainNav1 isTop={isTop} />
-    </div>
+          {/* NAV */}
+          <MainNav1 isTop={isTop} />
+      </div>
   );
 };
 

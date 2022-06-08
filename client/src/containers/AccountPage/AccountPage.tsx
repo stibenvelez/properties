@@ -16,18 +16,18 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   return (
     <div className={`nc-AccountPage ${className}`} data-nc-id="AccountPage">
       <Helmet>
-        <title>Account || Booking React Template</title>
+        <title>Account</title>
       </Helmet>
       <CommonLayout>
         <div className="space-y-6 sm:space-y-8">
           {/* HEADING */}
           <h2 className="text-3xl font-semibold">Account infomation</h2>
-          <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+          <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
           <div className="flex flex-col md:flex-row">
-            <div className="flex-shrink-0 flex items-start">
-              <div className="relative rounded-full overflow-hidden flex">
+            <div className="flex items-start flex-shrink-0">
+              <div className="relative flex overflow-hidden rounded-full">
                 <Avatar sizeClass="w-32 h-32" />
-                <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-neutral-50 cursor-pointer">
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black cursor-pointer bg-opacity-60 text-neutral-50">
                   <svg
                     width="30"
                     height="30"
@@ -52,7 +52,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                 />
               </div>
             </div>
-            <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-6">
+            <div className="flex-grow max-w-3xl mt-10 space-y-6 md:mt-0 md:pl-16">
               <div>
                 <Label>Name</Label>
                 <Input className="mt-1.5" defaultValue="Eden Tuan" />

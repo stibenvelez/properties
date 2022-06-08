@@ -1,15 +1,15 @@
 import PropertyCard from "components/PropertyCard/PropertyCard";
 import PropertyCardSkeleton from "components/PropertyCard/PropertyCardSkeleton";
-import { log } from "console";
-import React from "react";
 import { useSelector } from "react-redux";
 
 const PropertyList = () => {
     const properties = useSelector(
         ({ properties }: any) => properties.properties
     );
-    const loading:any = useSelector(({ properties }: any) => properties.loading);
-    
+    const loading: any = useSelector(
+        ({ properties }: any) => properties.loading
+    );
+
     if (loading) {
         return (
             <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -20,7 +20,7 @@ const PropertyList = () => {
             </div>
         );
     }
-    
+
     if (properties && !properties.count) {
         return (
             <div className="p-3 text-sm text-yellow-900 bg-yellow-100 rounded-md shadow-sm">

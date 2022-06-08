@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useRef } from "react";
+import { FC, useEffect, useMemo, useRef } from "react";
 import { Dialog } from "@headlessui/react";
 import NextPrev from "shared/NextPrev/NextPrev";
 import ButtonClose from "shared/ButtonClose/ButtonClose";

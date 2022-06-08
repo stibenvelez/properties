@@ -12,8 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFilters } from "store/slice/properties";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { clearFilter } from "store/slice/properties/propertiesActions"
-import { useLocation } from "react-router-dom";
-
 
 // DEMO DATA
 const typeOfProperties = [
@@ -28,28 +26,12 @@ const typeOfProperties = [
     },
 ];
 
-const moreFilter1 = [
-    { name: "Kitchen", defaultChecked: true },
-    { name: "Air conditioning", defaultChecked: true },
-    { name: "Heating" },
-    { name: "Dryer" },
-    { name: "Washer" },
-    { name: "Wifi" },
-    { name: "Indoor fireplace" },
-    { name: "Breakfast" },
-    { name: "Hair dryer" },
-    { name: " Dedicated workspace" },
-];
-
 
 const TabFilters = () => {
     const dispatch: any = useDispatch();
-    const [isOpenMoreFilter, setisOpenMoreFilter] = useState(false);
     const [isOpenMoreFilterMobile, setisOpenMoreFilterMobile] = useState(false);
     const [query, setQuery] = useState("");
-    //
-    const closeModalMoreFilter = () => setisOpenMoreFilter(false);
-    const openModalMoreFilter = () => setisOpenMoreFilter(true);
+
     //
     const closeModalMoreFilterMobile = () => setisOpenMoreFilterMobile(false);
     const openModalMoreFilterMobile = () => setisOpenMoreFilterMobile(true);

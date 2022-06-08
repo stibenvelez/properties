@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import AnyReactComponent from "components/AnyReactComponent/AnyReactComponent";
 import StayCardH from "components/StayCardH/StayCardH";
 import GoogleMapReact from "google-map-react";
@@ -37,14 +37,14 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
               </div>
             ))}
           </div>
-          <div className="flex mt-16 justify-center items-center">
+          <div className="flex items-center justify-center mt-16">
             <Pagination />
           </div>
         </div>
 
         {!showFullMapFixed && (
           <div
-            className="flex xl:hidden items-center justify-center fixed bottom-8 left-1/2 transform -translate-x-1/2 px-6 py-2 bg-neutral-900 text-white shadow-2xl rounded-full z-30  space-x-3 text-sm cursor-pointer"
+            className="fixed z-30 flex items-center justify-center px-6 py-2 space-x-3 text-sm text-white transform -translate-x-1/2 rounded-full shadow-2xl cursor-pointer xl:hidden bottom-8 left-1/2 bg-neutral-900"
             onClick={() => setShowFullMapFixed(true)}
           >
             <i className="text-lg las la-map"></i>
@@ -61,7 +61,7 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
           {showFullMapFixed && (
             <ButtonClose
               onClick={() => setShowFullMapFixed(false)}
-              className="bg-white absolute z-50 left-3 top-3 shadow-lg rounded-xl w-10 h-10"
+              className="absolute z-50 w-10 h-10 bg-white shadow-lg left-3 top-3 rounded-xl"
             />
           )}
 

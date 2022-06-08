@@ -21,7 +21,7 @@ const SectionGridFeatureProperty: FC<SectionGridFeaturePropertyProps> = ({
   stayListings = DEMO_DATA,
   gridClass = "",
   heading = "Featured places to stay",
-  subHeading = "Popular places to stay that Chisfis recommends for you",
+  subHeading = "Propiedades para ti",
   headingIsCenter,
   tabs = ["New York", "Tokyo", "Paris", "London"],
 }) => {
@@ -30,7 +30,7 @@ const SectionGridFeatureProperty: FC<SectionGridFeaturePropertyProps> = ({
   };
 
   return (
-    <div className="nc-SectionGridFeatureProperty relative">
+    <div className="relative nc-SectionGridFeatureProperty">
       <HeaderFilter
         tabActive={"New York"}
         subHeading={subHeading}
@@ -43,7 +43,7 @@ const SectionGridFeatureProperty: FC<SectionGridFeaturePropertyProps> = ({
       >
         {DEMO_DATA.map(renderCard)}
       </div>
-      <div className="flex mt-16 justify-center items-center">
+      <div className="flex items-center justify-center mt-16">
         <ButtonPrimary loading>Show me more</ButtonPrimary>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
@@ -21,16 +21,13 @@ const ListingStayMapPage: FC<ListingStayMapPageProps> = ({
           data-nc-id="ListingStayMapPage"
       >
           <Helmet>
-              <title>Chisfis || Booking React Template</title>
+              <title>Properties</title>
           </Helmet>
           <BgGlassmorphism />
 
           {/* SECTION HERO */}
           <div className="container pt-10 pb-24 lg:pt-16 lg:pb-32">
-              <SectionHeroArchivePage
-                  currentPage="Venta"
-                  currentTab="Venta"
-              />
+              <SectionHeroArchivePage currentPage="Venta" currentTab="Venta" />
           </div>
 
           {/* SECTION */}
