@@ -5,7 +5,6 @@ const config = {
     storage: multer.diskStorage({
         filename: (req, file, cb) => {
             //const ext = file.originalname.split(".").pop();
-           console.log("------>", file);
             const filename = file.originalname; //Date.now();
             cb(null, `${filename}`);
         },

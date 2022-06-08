@@ -33,7 +33,6 @@ export const fetchAllProperties = (filters, categoryProperty) => async (dispatch
     };
 
 export const readFilters = (filters) => async (dispatch) => {
-    console.log('filters', filters);
     try {
         dispatch(setFilters(filters));
     } catch (error) {

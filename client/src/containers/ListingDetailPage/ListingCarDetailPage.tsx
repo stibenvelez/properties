@@ -117,13 +117,13 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
     return (
       <div className="listingSection__wrap !space-y-6">
         {/* 1 */}
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <Badge color="pink" name="BMW car" />
           <LikeSaveBtns />
         </div>
 
         {/* 2 */}
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
+        <h2 className="text-2xl font-semibold sm:text-3xl lg:text-4xl">
           BMW 3 Series Sedan
         </h2>
 
@@ -142,7 +142,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
           <Avatar hasChecked sizeClass="h-10 w-10" radius="rounded-full" />
           <span className="ml-2.5 text-neutral-500 dark:text-neutral-400">
             Car owner{" "}
-            <span className="text-neutral-900 dark:text-neutral-200 font-medium">
+            <span className="font-medium text-neutral-900 dark:text-neutral-200">
               Kevin Francis
             </span>
           </span>
@@ -152,17 +152,17 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
         <div className="w-full border-b border-neutral-100 dark:border-neutral-700" />
 
         {/* 6 */}
-        <div className="flex items-center justify-between xl:justify-start space-x-8 xl:space-x-12 text-sm text-neutral-700 dark:text-neutral-300">
-          <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 text-center sm:text-left sm:space-x-3 ">
-            <i className="las la-user-friends text-2xl"></i>
+        <div className="flex items-center justify-between space-x-8 text-sm xl:justify-start xl:space-x-12 text-neutral-700 dark:text-neutral-300">
+          <div className="flex flex-col items-center space-y-3 text-center sm:flex-row sm:space-y-0 sm:text-left sm:space-x-3 ">
+            <i className="text-2xl las la-user-friends"></i>
             <span className="">4 seats</span>
           </div>
-          <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 text-center sm:text-left sm:space-x-3 ">
-            <i className="las la-dharmachakra text-2xl"></i>
+          <div className="flex flex-col items-center space-y-3 text-center sm:flex-row sm:space-y-0 sm:text-left sm:space-x-3 ">
+            <i className="text-2xl las la-dharmachakra"></i>
             <span className=""> Auto gearbox</span>
           </div>
-          <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 text-center sm:text-left sm:space-x-3 ">
-            <i className="las la-suitcase text-2xl"></i>
+          <div className="flex flex-col items-center space-y-3 text-center sm:flex-row sm:space-y-0 sm:text-left sm:space-x-3 ">
+            <i className="text-2xl las la-suitcase"></i>
             <span className=""> 2 bags</span>
           </div>
         </div>
@@ -182,13 +182,13 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
             Questions are at the heart of making things great.
           </span>
         </div>
-        <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+        <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
         {/* 6 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-6 gap-x-10 text-sm text-neutral-700 dark:text-neutral-300 ">
+        <div className="grid grid-cols-1 text-sm lg:grid-cols-2 gap-y-6 gap-x-10 text-neutral-700 dark:text-neutral-300 ">
           {/* TIEN ICH 1 */}
           {Amenities_demos.map((item, index) => (
             <div key={index} className="flex items-center space-x-4 ">
-              <div className="w-10 flex-shrink-0">
+              <div className="flex-shrink-0 w-10">
                 <img src={item.icon} alt="" />
               </div>
               <span>{item.name}</span>
@@ -203,7 +203,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
     return (
       <div className="listingSection__wrap">
         <h2 className="text-2xl font-semibold">Car descriptions</h2>
-        <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+        <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
         <div className="text-neutral-6000 dark:text-neutral-300">
           <p>
             Until the all-new TUCSON hits the dealer showrooms you can check it
@@ -230,14 +230,14 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
             Included in the price
           </span>
         </div>
-        <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+        <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
         {/* 6 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm text-neutral-700 dark:text-neutral-300 ">
+        <div className="grid grid-cols-1 gap-6 text-sm lg:grid-cols-2 text-neutral-700 dark:text-neutral-300 ">
           {includes_demo
             .filter((_, i) => i < 12)
             .map((item) => (
               <div key={item.name} className="flex items-center space-x-3">
-                <i className="las la-check-circle text-2xl"></i>
+                <i className="text-2xl las la-check-circle"></i>
                 <span>{item.name}</span>
               </div>
             ))}
@@ -248,7 +248,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
 
   const renderSectionCheckIndate = () => {
     return (
-      <div className="listingSection__wrap overflow-hidden">
+      <div className="overflow-hidden listingSection__wrap">
         {/* HEADING */}
         <div>
           <h2 className="text-2xl font-semibold">Availability</h2>
@@ -256,9 +256,9 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
             Prices may increase on weekends or holidays
           </span>
         </div>
-        <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+        <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
         {/* CONTENT */}
-        <div className="listingSection__wrap__DayPickerRangeController flow-root">
+        <div className="flow-root listingSection__wrap__DayPickerRangeController">
           <div className="-mx-4 sm:mx-auto xl:mx-[-22px]">
             <DayPickerRangeController
               startDate={dateRangeValue.startDate}
@@ -298,7 +298,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
               rounded="rounded-xl"
               id="endTime"
               type="time"
-              onChange={(e) => console.log(e)}
+              onChange={() => {}}
             />
           </div>
         </div>
@@ -311,7 +311,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
       <div className="listingSection__wrap">
         {/* HEADING */}
         <h2 className="text-2xl font-semibold">Car Owner</h2>
-        <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+        <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
 
         {/* host */}
         <div className="flex items-center space-x-4">
@@ -345,7 +345,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
           <div className="flex items-center space-x-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -362,7 +362,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
           <div className="flex items-center space-x-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -379,7 +379,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
           <div className="flex items-center space-x-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -397,7 +397,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
         </div>
 
         {/* == */}
-        <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+        <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
         <div>
           <ButtonSecondary href="##">See host profile</ButtonSecondary>
         </div>
@@ -410,7 +410,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
       <div className="listingSection__wrap">
         {/* HEADING */}
         <h2 className="text-2xl font-semibold">Reviews (23 reviews)</h2>
-        <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
+        <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
 
         {/* Content */}
         <div className="space-y-5">
@@ -423,7 +423,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
               placeholder="Share your thoughts ..."
             />
             <ButtonCircle
-              className="absolute right-2 top-1/2 transform -translate-y-1/2"
+              className="absolute transform -translate-y-1/2 right-2 top-1/2"
               size=" w-12 h-12 "
             >
               <ArrowRightIcon className="w-5 h-5" />
@@ -455,11 +455,11 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
             San Diego, CA, United States of America (SAN-San Diego Intl.)
           </span>
         </div>
-        <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+        <div className="border-b w-14 border-neutral-200 dark:border-neutral-700" />
 
         {/* MAP */}
         <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3">
-          <div className="rounded-xl overflow-hidden">
+          <div className="overflow-hidden rounded-xl">
             <GoogleMapReact
               bootstrapURLKeys={{
                 key: "AIzaSyAGVJfZMAKYfZ71nzL_v5i3LjTTWnCYwTY",
@@ -484,7 +484,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
       <div className="listingSection__wrap">
         {/* HEADING */}
         <h2 className="text-2xl font-semibold">Things to know</h2>
-        <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+        <div className="border-b w-14 border-neutral-200 dark:border-neutral-700" />
 
         {/* CONTENT */}
         <div>
@@ -494,7 +494,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
             Reserve now and pay at pick-up.
           </span>
         </div>
-        <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+        <div className="border-b w-14 border-neutral-200 dark:border-neutral-700" />
 
         {/* CONTENT */}
         <div>
@@ -512,7 +512,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
 
   const renderSidebarPrice = () => {
     return (
-      <div className="listingSectionSidebar__wrap shadow-xl">
+      <div className="shadow-xl listingSectionSidebar__wrap">
         {/* PRICE */}
         <div className="flex justify-between">
           <span className="text-3xl font-semibold">
@@ -525,7 +525,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
         </div>
 
         {/* FORM */}
-        <form className="flex border  border-neutral-200 dark:border-neutral-700 rounded-3xl ">
+        <form className="flex border border-neutral-200 dark:border-neutral-700 rounded-3xl ">
           <RentalCarDatesRangeInput
             defaultDateValue={dateRangeValue}
             defaultTimeValue={timeRangeValue}
@@ -564,21 +564,21 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
   const renderSidebarDetail = () => {
     return (
       <div className="listingSection__wrap lg:shadow-xl">
-        <span className="text-2xl font-semibold block">
+        <span className="block text-2xl font-semibold">
           Pick up and drop off
         </span>
-        <div className="mt-8 flex">
-          <div className="flex-shrink-0 flex flex-col items-center py-2">
-            <span className="block w-6 h-6 rounded-full border border-neutral-400"></span>
-            <span className="block flex-grow border-l border-neutral-400 border-dashed my-1"></span>
-            <span className="block w-6 h-6 rounded-full border border-neutral-400"></span>
+        <div className="flex mt-8">
+          <div className="flex flex-col items-center flex-shrink-0 py-2">
+            <span className="block w-6 h-6 border rounded-full border-neutral-400"></span>
+            <span className="flex-grow block my-1 border-l border-dashed border-neutral-400"></span>
+            <span className="block w-6 h-6 border rounded-full border-neutral-400"></span>
           </div>
-          <div className="ml-4 space-y-14 text-sm">
+          <div className="ml-4 text-sm space-y-14">
             <div className="flex flex-col space-y-2">
               <span className=" text-neutral-500 dark:text-neutral-400">
                 Monday, August 12 · 10:00
               </span>
-              <span className=" font-semibold">
+              <span className="font-semibold ">
                 Saint Petersburg City Center
               </span>
             </div>
@@ -586,7 +586,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
               <span className=" text-neutral-500 dark:text-neutral-400">
                 Monday, August 16 · 10:00
               </span>
-              <span className=" font-semibold">
+              <span className="font-semibold ">
                 Saint Petersburg City Center
               </span>
             </div>
@@ -603,10 +603,10 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
     >
       {/* SINGLE HEADER */}
       <>
-        <header className="container 2xl:px-14 rounded-md sm:rounded-xl">
+        <header className="container rounded-md 2xl:px-14 sm:rounded-xl">
           <div className="relative grid grid-cols-4 gap-1 sm:gap-2">
             <div
-              className="col-span-2 row-span-2 relative rounded-md sm:rounded-xl overflow-hidden cursor-pointer"
+              className="relative col-span-2 row-span-2 overflow-hidden rounded-md cursor-pointer sm:rounded-xl"
               onClick={() => handleOpenModal(0)}
             >
               <NcImage
@@ -614,12 +614,12 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
                 className="object-cover w-full h-full rounded-md sm:rounded-xl"
                 src={PHOTOS[0]}
               />
-              <div className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity"></div>
+              <div className="absolute inset-0 transition-opacity opacity-0 bg-neutral-900 bg-opacity-20 hover:opacity-100"></div>
             </div>
 
             {/*  */}
             <div
-              className="col-span-1 row-span-2 relative rounded-md sm:rounded-xl overflow-hidden cursor-pointer"
+              className="relative col-span-1 row-span-2 overflow-hidden rounded-md cursor-pointer sm:rounded-xl"
               onClick={() => handleOpenModal(1)}
             >
               <NcImage
@@ -627,7 +627,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
                 className="object-cover w-full h-full rounded-md sm:rounded-xl"
                 src={PHOTOS[1]}
               />
-              <div className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity"></div>
+              <div className="absolute inset-0 transition-opacity opacity-0 bg-neutral-900 bg-opacity-20 hover:opacity-100"></div>
             </div>
 
             {/*  */}
@@ -646,19 +646,19 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
 
                 {/* OVERLAY */}
                 <div
-                  className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity cursor-pointer"
+                  className="absolute inset-0 transition-opacity opacity-0 cursor-pointer bg-neutral-900 bg-opacity-20 hover:opacity-100"
                   onClick={() => handleOpenModal(index + 2)}
                 />
               </div>
             ))}
 
             <div
-              className="absolute hidden md:flex md:items-center md:justify-center left-3 bottom-3 px-4 py-2 rounded-xl bg-neutral-100 text-neutral-500 cursor-pointer hover:bg-neutral-200 z-10"
+              className="absolute z-10 hidden px-4 py-2 cursor-pointer md:flex md:items-center md:justify-center left-3 bottom-3 rounded-xl bg-neutral-100 text-neutral-500 hover:bg-neutral-200"
               onClick={() => handleOpenModal(0)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="w-5 h-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -670,7 +670,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
                   d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
                 />
               </svg>
-              <span className="ml-2 text-neutral-800 text-sm font-medium">
+              <span className="ml-2 text-sm font-medium text-neutral-800">
                 Show all photos
               </span>
             </div>
@@ -687,9 +687,9 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
       </>
 
       {/* MAIn */}
-      <main className="container relative z-10 mt-11 flex flex-col lg:flex-row ">
+      <main className="container relative z-10 flex flex-col mt-11 lg:flex-row ">
         {/* CONTENT */}
-        <div className="w-full lg:w-3/5 xl:w-2/3 space-y-8 lg:pr-10 lg:space-y-10">
+        <div className="w-full space-y-8 lg:w-3/5 xl:w-2/3 lg:pr-10 lg:space-y-10">
           {renderSection1()}
           <div className="block lg:hidden">{renderSidebarDetail()}</div>
           {renderSectionTienIch()}
@@ -703,14 +703,14 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
         </div>
 
         {/* SIDEBAR */}
-        <div className="block flex-grow mt-14 lg:mt-0">
+        <div className="flex-grow block mt-14 lg:mt-0">
           {renderSidebarDetail()}
-          <div className="mt-10 sticky top-24">{renderSidebarPrice()}</div>
+          <div className="sticky mt-10 top-24">{renderSidebarPrice()}</div>
         </div>
       </main>
 
       {/* STICKY FOOTER MOBILE */}
-      <div className="block lg:hidden fixed bottom-0 inset-x-0 py-4 bg-white text-neutral-900 border-t border-neutral-200 z-20">
+      <div className="fixed inset-x-0 bottom-0 z-20 block py-4 bg-white border-t lg:hidden text-neutral-900 border-neutral-200">
         <div className="container flex items-center justify-between">
           <span className="text-2xl font-semibold">
             $311

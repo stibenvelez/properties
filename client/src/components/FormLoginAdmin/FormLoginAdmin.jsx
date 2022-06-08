@@ -28,7 +28,6 @@ const FormLoginAdmin = () => {
     };
     useEffect(() => {
         if (auth) {
-            console.log("auth");
             <Redirect
                 to="/admin"
             />;
@@ -36,14 +35,14 @@ const FormLoginAdmin = () => {
     }, []);
     
     return (
-        <div className="bg-white max-w-2xl mx-auto p-8 rounded-lg shadow ">
+        <div className="max-w-2xl p-8 mx-auto bg-white rounded-lg shadow ">
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-4">
                     <div>
                         <label>usuario</label>
                         <input
                             type="text"
-                            className="border border-gray-200 p-2 rounded-lg w-full"
+                            className="w-full p-2 border border-gray-200 rounded-lg"
                             name="user"
                             value={user.user}
                             onChange={handleChange}
@@ -53,7 +52,7 @@ const FormLoginAdmin = () => {
                         <label>clave</label>
                         <input
                             type="password"
-                            className="border border-gray-200 p-2 rounded-lg w-full"
+                            className="w-full p-2 border border-gray-200 rounded-lg"
                             name="password"
                             value={user.password}
                             onChange={handleChange}
@@ -61,7 +60,7 @@ const FormLoginAdmin = () => {
                     </div>
                     {error && <AlertError msg={msg}/>}
                     <div>
-                        <button className="bg-indigo-800 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg">
+                        <button className="px-4 py-2 font-bold text-white bg-indigo-800 rounded-lg hover:bg-indigo-500">
                             Ingresar
                         </button>
                     </div>

@@ -70,7 +70,6 @@ export const getAllPropertiesService = async (query) => {
         
         images.map((image) => {
             if (property[image]) {
-                console.log(`${property.reference}-${image}.jpg`);
                  galleryImgs.push(`${property.reference}-${image}.jpg`);
             }
         });
