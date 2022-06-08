@@ -298,7 +298,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
               rounded="rounded-xl"
               id="endTime"
               type="time"
-              onChange={() => {}}
+              onChange={(e) => console.log(e)}
             />
           </div>
         </div>
@@ -543,16 +543,6 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
 
             {/* SUM */}
             <div className="flex flex-col space-y-4 ">
-                <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-                    <span>$19 x 3 day</span>
-                    <span>$57</span>
-                </div>
-
-                <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
-                <div className="flex justify-between font-semibold">
-                    <span>Total</span>
-                    <span>$199</span>
-                </div>
             </div>
 
             {/* SUBMIT */}
@@ -597,151 +587,143 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({
   };
 
   return (
-    <div
-      className={`nc-ListingCarDetailPage  ${className}`}
-      data-nc-id="ListingCarDetailPage"
-    >
-      {/* SINGLE HEADER */}
-      <>
-        <header className="container rounded-md 2xl:px-14 sm:rounded-xl">
-          <div className="relative grid grid-cols-4 gap-1 sm:gap-2">
-            <div
-              className="relative col-span-2 row-span-2 overflow-hidden rounded-md cursor-pointer sm:rounded-xl"
-              onClick={() => handleOpenModal(0)}
-            >
-              <NcImage
-                containerClassName="absolute inset-0"
-                className="object-cover w-full h-full rounded-md sm:rounded-xl"
-                src={PHOTOS[0]}
+      <div
+          className={`nc-ListingCarDetailPage  ${className}`}
+          data-nc-id="ListingCarDetailPage"
+      >
+          {/* SINGLE HEADER */}
+          <>
+              <header className="container rounded-md 2xl:px-14 sm:rounded-xl">
+                  <div className="relative grid grid-cols-4 gap-1 sm:gap-2">
+                      <div
+                          className="relative col-span-2 row-span-2 overflow-hidden rounded-md cursor-pointer sm:rounded-xl"
+                          onClick={() => handleOpenModal(0)}
+                      >
+                          <NcImage
+                              containerClassName="absolute inset-0"
+                              className="object-cover w-full h-full rounded-md sm:rounded-xl"
+                              src={PHOTOS[0]}
+                          />
+                          <div className="absolute inset-0 transition-opacity opacity-0 bg-neutral-900 bg-opacity-20 hover:opacity-100"></div>
+                      </div>
+
+                      {/*  */}
+                      <div
+                          className="relative col-span-1 row-span-2 overflow-hidden rounded-md cursor-pointer sm:rounded-xl"
+                          onClick={() => handleOpenModal(1)}
+                      >
+                          <NcImage
+                              containerClassName="absolute inset-0"
+                              className="object-cover w-full h-full rounded-md sm:rounded-xl"
+                              src={PHOTOS[1]}
+                          />
+                          <div className="absolute inset-0 transition-opacity opacity-0 bg-neutral-900 bg-opacity-20 hover:opacity-100"></div>
+                      </div>
+
+                      {/*  */}
+                      {PHOTOS.filter((_, i) => i >= 2 && i < 4).map(
+                          (item, index) => (
+                              <div
+                                  key={index}
+                                  className={`relative rounded-md sm:rounded-xl overflow-hidden ${
+                                      index >= 2 ? "block" : ""
+                                  }`}
+                              >
+                                  <NcImage
+                                      containerClassName="aspect-w-4 aspect-h-3"
+                                      className="object-cover w-full h-full rounded-md sm:rounded-xl "
+                                      src={item || ""}
+                                  />
+
+                                  {/* OVERLAY */}
+                                  <div
+                                      className="absolute inset-0 transition-opacity opacity-0 cursor-pointer bg-neutral-900 bg-opacity-20 hover:opacity-100"
+                                      onClick={() => handleOpenModal(index + 2)}
+                                  />
+                              </div>
+                          )
+                      )}
+
+                      <div
+                          className="absolute z-10 hidden px-4 py-2 cursor-pointer md:flex md:items-center md:justify-center left-3 bottom-3 rounded-xl bg-neutral-100 text-neutral-500 hover:bg-neutral-200"
+                          onClick={() => handleOpenModal(0)}
+                      >
+                          <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="w-5 h-5"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                          >
+                              <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                              />
+                          </svg>
+                          <span className="ml-2 text-sm font-medium text-neutral-800">
+                              Show all photos
+                          </span>
+                      </div>
+                  </div>
+              </header>
+              {/* MODAL PHOTOS */}
+              <ModalPhotos
+                  imgs={PHOTOS}
+                  isOpen={isOpen}
+                  onClose={handleCloseModal}
+                  initFocus={openFocusIndex}
+                  uniqueClassName="nc-ListingCarDetailPage__modalPhotos"
               />
-              <div className="absolute inset-0 transition-opacity opacity-0 bg-neutral-900 bg-opacity-20 hover:opacity-100"></div>
-            </div>
+          </>
 
-            {/*  */}
-            <div
-              className="relative col-span-1 row-span-2 overflow-hidden rounded-md cursor-pointer sm:rounded-xl"
-              onClick={() => handleOpenModal(1)}
-            >
-              <NcImage
-                containerClassName="absolute inset-0"
-                className="object-cover w-full h-full rounded-md sm:rounded-xl"
-                src={PHOTOS[1]}
-              />
-              <div className="absolute inset-0 transition-opacity opacity-0 bg-neutral-900 bg-opacity-20 hover:opacity-100"></div>
-            </div>
-
-            {/*  */}
-            {PHOTOS.filter((_, i) => i >= 2 && i < 4).map((item, index) => (
-              <div
-                key={index}
-                className={`relative rounded-md sm:rounded-xl overflow-hidden ${
-                  index >= 2 ? "block" : ""
-                }`}
-              >
-                <NcImage
-                  containerClassName="aspect-w-4 aspect-h-3"
-                  className="object-cover w-full h-full rounded-md sm:rounded-xl "
-                  src={item || ""}
-                />
-
-                {/* OVERLAY */}
-                <div
-                  className="absolute inset-0 transition-opacity opacity-0 cursor-pointer bg-neutral-900 bg-opacity-20 hover:opacity-100"
-                  onClick={() => handleOpenModal(index + 2)}
-                />
+          {/* MAIn */}
+          <main className="container relative z-10 flex flex-col mt-11 lg:flex-row ">
+              {/* CONTENT */}
+              <div className="w-full space-y-8 lg:w-3/5 xl:w-2/3 lg:pr-10 lg:space-y-10">
+                  {renderSection1()}
+                  <div className="block lg:hidden">{renderSidebarDetail()}</div>
+                  {renderSectionTienIch()}
+                  {renderSection2()}
+                  {renderSection3()}
+                  {renderSectionCheckIndate()}
+                  {renderSection5()}
+                  {renderSection6()}
+                  {renderSection7()}
+                  {renderSection8()}
               </div>
-            ))}
 
-            <div
-              className="absolute z-10 hidden px-4 py-2 cursor-pointer md:flex md:items-center md:justify-center left-3 bottom-3 rounded-xl bg-neutral-100 text-neutral-500 hover:bg-neutral-200"
-              onClick={() => handleOpenModal(0)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                />
-              </svg>
-              <span className="ml-2 text-sm font-medium text-neutral-800">
-                Show all photos
-              </span>
-            </div>
+              {/* SIDEBAR */}
+              <div className="flex-grow block mt-14 lg:mt-0">
+                  {renderSidebarDetail()}
+                  <div className="sticky mt-10 top-24">
+                      {renderSidebarPrice()}
+                  </div>
+              </div>
+          </main>
+
+          {/* STICKY FOOTER MOBILE */}
+
+          {/* OTHER SECTION */}
+          <div className="container py-24 lg:py-32">
+              {/* SECTION 1 */}
+              <div className="relative py-16">
+                  <BackgroundSection />
+                  <SectionSliderNewCategories
+                      heading="Explore by types of stays"
+                      subHeading="Explore houses based on 10 types of stays"
+                      categoryCardType="card5"
+                      itemPerRow={5}
+                      sliderStyle="style2"
+                      uniqueClassName="ListingCarDetailPage"
+                  />
+              </div>
+
+              {/* SECTION */}
+              <SectionSubscribe2 className="pt-24 lg:pt-32" />
           </div>
-        </header>
-        {/* MODAL PHOTOS */}
-        <ModalPhotos
-          imgs={PHOTOS}
-          isOpen={isOpen}
-          onClose={handleCloseModal}
-          initFocus={openFocusIndex}
-          uniqueClassName="nc-ListingCarDetailPage__modalPhotos"
-        />
-      </>
-
-      {/* MAIn */}
-      <main className="container relative z-10 flex flex-col mt-11 lg:flex-row ">
-        {/* CONTENT */}
-        <div className="w-full space-y-8 lg:w-3/5 xl:w-2/3 lg:pr-10 lg:space-y-10">
-          {renderSection1()}
-          <div className="block lg:hidden">{renderSidebarDetail()}</div>
-          {renderSectionTienIch()}
-          {renderSection2()}
-          {renderSection3()}
-          {renderSectionCheckIndate()}
-          {renderSection5()}
-          {renderSection6()}
-          {renderSection7()}
-          {renderSection8()}
-        </div>
-
-        {/* SIDEBAR */}
-        <div className="flex-grow block mt-14 lg:mt-0">
-          {renderSidebarDetail()}
-          <div className="sticky mt-10 top-24">{renderSidebarPrice()}</div>
-        </div>
-      </main>
-
-      {/* STICKY FOOTER MOBILE */}
-      <div className="fixed inset-x-0 bottom-0 z-20 block py-4 bg-white border-t lg:hidden text-neutral-900 border-neutral-200">
-        <div className="container flex items-center justify-between">
-          <span className="text-2xl font-semibold">
-            $311
-            <span className="ml-1 text-base font-normal text-neutral-500 dark:text-neutral-400">
-              /day
-            </span>
-          </span>
-
-          <ButtonPrimary href="##">Reserve</ButtonPrimary>
-        </div>
       </div>
-
-      {/* OTHER SECTION */}
-      <div className="container py-24 lg:py-32">
-        {/* SECTION 1 */}
-        <div className="relative py-16">
-          <BackgroundSection />
-          <SectionSliderNewCategories
-            heading="Explore by types of stays"
-            subHeading="Explore houses based on 10 types of stays"
-            categoryCardType="card5"
-            itemPerRow={5}
-            sliderStyle="style2"
-            uniqueClassName="ListingCarDetailPage"
-          />
-        </div>
-
-        {/* SECTION */}
-        <SectionSubscribe2 className="pt-24 lg:pt-32" />
-      </div>
-    </div>
   );
 };
 

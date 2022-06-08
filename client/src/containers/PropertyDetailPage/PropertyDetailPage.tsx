@@ -1,5 +1,4 @@
-import { FC, Fragment, useEffect, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { FC, useEffect, useState } from "react";
 import LocationMarker from "components/AnyReactComponent/LocationMarker";
 import CommentListing from "components/CommentListing/CommentListing";
 import { DateRage } from "components/HeroSearchForm/StaySearchForm";
@@ -10,8 +9,6 @@ import moment from "moment";
 import { DayPickerRangeController, FocusedInputShape } from "react-dates";
 import Avatar from "shared/Avatar/Avatar";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import ButtonSecondary from "shared/Button/ButtonSecondary";
-import ButtonClose from "shared/ButtonClose/ButtonClose";
 import NcImage from "shared/NcImage/NcImage";
 import ModalPhotos from "./ModalPhotos";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
@@ -44,37 +41,6 @@ const COMMENTS = [
     },
 ];
 
-
-const Amenities_demos = [
-    { name: "la-key", icon: "la-key" },
-    { name: "la-luggage-cart", icon: "la-luggage-cart" },
-    { name: "la-shower", icon: "la-shower" },
-    { name: "la-smoking", icon: "la-smoking" },
-    { name: "la-snowflake", icon: "la-snowflake" },
-    { name: "la-spa", icon: "la-spa" },
-    { name: "la-suitcase", icon: "la-suitcase" },
-    { name: "la-suitcase-rolling", icon: "la-suitcase-rolling" },
-    { name: "la-swimmer", icon: "la-swimmer" },
-    { name: "la-swimming-pool", icon: "la-swimming-pool" },
-    { name: "la-tv", icon: "la-tv" },
-    { name: "la-umbrella-beach", icon: "la-umbrella-beach" },
-    { name: "la-utensils", icon: "la-utensils" },
-    { name: "la-wheelchair", icon: "la-wheelchair" },
-    { name: "la-wifi", icon: "la-wifi" },
-    { name: "la-baby-carriage", icon: "la-baby-carriage" },
-    { name: "la-bath", icon: "la-bath" },
-    { name: "la-bed", icon: "la-bed" },
-    { name: "la-briefcase", icon: "la-briefcase" },
-    { name: "la-car", icon: "la-car" },
-    { name: "la-cocktail", icon: "la-cocktail" },
-    { name: "la-coffee", icon: "la-coffee" },
-    { name: "la-concierge-bell", icon: "la-concierge-bell" },
-    { name: "la-dice", icon: "la-dice" },
-    { name: "la-dumbbell", icon: "la-dumbbell" },
-    { name: "la-hot-tub", icon: "la-hot-tub" },
-    { name: "la-infinity", icon: "la-infinity" },
-];
-
 const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
     className = "",
     isPreviewMode,
@@ -89,7 +55,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
 
     const [focusedInputSectionCheckDate, setFocusedInputSectionCheckDate] =
         useState<FocusedInputShape>("startDate");
-    let [isOpenModalAmenities, setIsOpenModalAmenities] = useState(false);
 
     const { id }: any = useParams();
 
@@ -116,14 +81,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
         }
         return 48;
     };
-
-    function closeModalAmenities() {
-        setIsOpenModalAmenities(false);
-    }
-
-    function openModalAmenities() {
-        setIsOpenModalAmenities(true);
-    }
 
     const handleOpenModal = (index: number) => {
         setIsOpen(true);
@@ -236,117 +193,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                     <span>{property.description}</span>
                 </div>
             </div>
-        );
-    };
-
-    const renderSection3 = () => {
-        return (
-            <div className="listingSection__wrap">
-                <div>
-                    <h2 className="text-2xl font-semibold">Amenities </h2>
-                    <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-                        About the property's amenities and services
-                    </span>
-                </div>
-                <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
-                {/* 6 */}
-                <div className="grid grid-cols-1 gap-6 text-sm xl:grid-cols-3 text-neutral-700 dark:text-neutral-300 ">
-                    {Amenities_demos.filter((_, i) => i < 12).map((item) => (
-                        <div
-                            key={item.name}
-                            className="flex items-center space-x-3"
-                        >
-                            <i className={`text-3xl las ${item.icon}`}></i>
-                            <span className="">{item.name}</span>
-                        </div>
-                    ))}
-                </div>
-
-                {/* ----- */}
-                <div className="border-b w-14 border-neutral-200"></div>
-                <div>
-                    <ButtonSecondary onClick={openModalAmenities}>
-                        View more 20 amenities
-                    </ButtonSecondary>
-                </div>
-                {renderMotalAmenities()}
-            </div>
-        );
-    };
-
-    const renderMotalAmenities = () => {
-        return (
-            <Transition appear show={isOpenModalAmenities} as={Fragment}>
-                <Dialog
-                    as="div"
-                    className="fixed inset-0 z-50 overflow-y-auto"
-                    onClose={closeModalAmenities}
-                >
-                    <div className="min-h-screen px-4 text-center">
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0"
-                            enterTo="opacity-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                        >
-                            <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-40" />
-                        </Transition.Child>
-
-                        {/* This element is to trick the browser into centering the modal contents. */}
-                        <span
-                            className="inline-block h-screen align-middle"
-                            aria-hidden="true"
-                        >
-                            &#8203;
-                        </span>
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0 scale-95"
-                            enterTo="opacity-100 scale-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100 scale-100"
-                            leaveTo="opacity-0 scale-95"
-                        >
-                            <div className="inline-block w-full h-screen py-8">
-                                <div className="inline-flex flex-col w-full h-full max-w-4xl overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl dark:bg-neutral-900 dark:border dark:border-neutral-700 dark:text-neutral-100">
-                                    <div className="relative flex-shrink-0 px-6 py-4 text-center border-b border-neutral-200 dark:border-neutral-800">
-                                        <h3
-                                            className="text-lg font-medium leading-6 text-gray-900"
-                                            id="headlessui-dialog-title-70"
-                                        >
-                                            Amenities
-                                        </h3>
-                                        <span className="absolute left-3 top-3">
-                                            <ButtonClose
-                                                onClick={closeModalAmenities}
-                                            />
-                                        </span>
-                                    </div>
-                                    <div className="px-8 overflow-auto divide-y text-neutral-700 dark:text-neutral-300 divide-neutral-200">
-                                        {Amenities_demos.filter(
-                                            (_, i) => i < 1212
-                                        ).map((item) => (
-                                            <div
-                                                key={item.name}
-                                                className="flex items-center py-6 space-x-8"
-                                            >
-                                                <i
-                                                    className={`text-4xl text-neutral-6000 las ${item.icon}`}
-                                                ></i>
-                                                <span>{item.name}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </Transition.Child>
-                    </div>
-                </Dialog>
-            </Transition>
         );
     };
 
@@ -659,7 +505,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                             } relative  row-span-3 overflow-hidden rounded-md cursor-pointer sm:row-span-2 sm:rounded-xl`}
                             onClick={() => handleOpenModal(0)}
                         >
-                           
                             <NcImage
                                 containerClassName={`${
                                     property.galleryImgs &&
@@ -669,8 +514,8 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                                 } inset-0`}
                                 className="object-cover w-full h-full rounded-md sm:rounded-xl"
                                 src={
-                                    (property.galleryImgs?.length &&
-                                        `${process.env.REACT_APP_API_PUBLIC_IMG}/${property.galleryImgs[0]}`) 
+                                    property.galleryImgs?.length &&
+                                    `${process.env.REACT_APP_API_PUBLIC_IMG}/${property.galleryImgs[0]}`
                                 }
                             />
                             <div className="absolute inset-0 transition-opacity opacity-0 bg-neutral-900 bg-opacity-20 hover:opacity-100"></div>
@@ -688,9 +533,7 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                                         <NcImage
                                             containerClassName="aspect-w-4 aspect-h-3 sm:aspect-w-6 sm:aspect-h-5"
                                             className="object-cover w-full h-full rounded-md sm:rounded-xl "
-                                            src={
-                                                `${process.env.REACT_APP_API_PUBLIC_IMG}/${item}`
-                                            }
+                                            src={`${process.env.REACT_APP_API_PUBLIC_IMG}/${item}`}
                                         />
 
                                         {/* OVERLAY */}
@@ -761,20 +604,15 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
             </main>
 
             {/* STICKY FOOTER MOBILE */}
-            {!isPreviewMode && (
+            {/* {!isPreviewMode && (
                 <div className="fixed inset-x-0 bottom-0 z-20 block py-4 bg-white border-t lg:hidden text-neutral-900 border-neutral-200">
                     <div className="container flex items-center justify-between">
-                        <span className="text-2xl font-semibold">
-                            $311
-                            <span className="ml-1 text-base font-normal text-neutral-500 dark:text-neutral-400">
-                                /night
-                            </span>
-                        </span>
-
-                        <ButtonPrimary href="##">Reserve</ButtonPrimary>
+                        <ButtonPrimary href="##">
+                            Quiero que me contacten
+                        </ButtonPrimary>
                     </div>
                 </div>
-            )}
+            )} */}
 
             {/* OTHER SECTION */}
             {!isPreviewMode && (

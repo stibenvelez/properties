@@ -19,10 +19,10 @@ export interface StaySearchFormProps {
     stateForm?: string;
 }
 
-const STATE_FORM:any = {
+const STATE_FORM: any = {
     Venta: "venta",
     Arriendo: "arriendo",
-}
+};
 
 const StaySearchForm: FC<StaySearchFormProps> = ({
     haveDefaultValue = false,
@@ -84,7 +84,7 @@ const StaySearchForm: FC<StaySearchFormProps> = ({
                         className="flex items-center justify-center w-full rounded-full h-14 md:h-16 md:w-16 bg-primary-6000 hover:bg-primary-700 text-neutral-50 focus:outline-none"
                         onClick={handleSearch}
                     >
-                        <span className="mr-3 md:hidden">Search</span>
+                        <span className="mr-3 md:hidden">Buscar</span>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="w-6 h-6"

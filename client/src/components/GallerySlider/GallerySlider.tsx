@@ -1,6 +1,6 @@
 import Glide from "@glidejs/glide";
 import useNcId from "hooks/useNcId";
-import React, { FC, useEffect, useMemo } from "react";
+import { FC, useEffect, useMemo } from "react";
 import NcImage from "shared/NcImage/NcImage";
 import NextPrev from "shared/NextPrev/NextPrev";
 
@@ -80,7 +80,7 @@ const GallerySlider: FC<GallerySliderProps> = ({
                 {renderDots()}
 
                 {/* NAV */}
-                <div className="absolute flex justify-between bgtransition-opacity transform -translate-y-1/2 opacity-0 group-hover:opacity-100 top-1/2 inset-x-2">
+                <div className="absolute flex justify-between transform -translate-y-1/2 opacity-0 bgtransition-opacity group-hover:opacity-100 top-1/2 inset-x-2">
                     <NextPrev
                         className="justify-between w-full"
                         btnClassName="w-8 h-8"

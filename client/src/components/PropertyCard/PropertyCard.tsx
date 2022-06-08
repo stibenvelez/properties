@@ -1,8 +1,6 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import GallerySlider from "components/GallerySlider/GallerySlider";
-import { DEMO_STAY_LISTINGS } from "data/listings";
-import { PropertyDataType, StayDataType } from "data/types";
-import StartRating from "components/StartRating/StartRating";
+import { PropertyDataType } from "data/types";
 import { Link } from "react-router-dom";
 import BtnLikeIcon from "components/BtnLikeIcon/BtnLikeIcon";
 import SaleOffBadge from "components/SaleOffBadge/SaleOffBadge";
@@ -22,17 +20,13 @@ const PropertyCard: FC<StayCardProps> = ({
 }) => {
     const {
         galleryImgs,
-        propertyType,
         address,
         title,
         bedrooms,
-        href,
         like,
         saleOff,
         isAds,
         price,
-        reviewStart,
-        reviewCount,
         idProperty,
         area,
         bathrooms,
@@ -44,7 +38,7 @@ const PropertyCard: FC<StayCardProps> = ({
         return (
             <div className="relative w-full">
                 <GallerySlider
-                    uniqueID={`StayCard_${idProperty}`}
+                    uniqueID={`Property_${idProperty}`}
                     ratioClass="aspect-w-4 aspect-h-3 "
                     galleryImgs={galleryImgs}
                 />
@@ -53,7 +47,6 @@ const PropertyCard: FC<StayCardProps> = ({
                     className="absolute right-3 top-3 z-[1]"
                 />
                 {saleOff ? (
-                     
                     <SaleOffBadge className="absolute left-3 top-3" />
                 ) : null}
             </div>

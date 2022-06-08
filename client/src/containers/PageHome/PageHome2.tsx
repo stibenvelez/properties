@@ -1,10 +1,7 @@
-import SectionSliderNewCategories from "components/SectionSliderNewCategories/SectionSliderNewCategories";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
-import SectionOurFeatures from "components/SectionOurFeatures/SectionSteps";
 import SectionHowItWork from "components/SectionHowItWork/SectionHowItWork";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
-import { TaxonomyType } from "data/types";
 import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
 import { Helmet } from "react-helmet";
 import SectionHero2 from "components/SectionHero2/SectionHero2";
@@ -31,13 +28,12 @@ import HIW3img from "images/HIW2-3.png";
 import HIW1imgDark from "images/HIW2-1-dark.png";
 import HIW2imgDark from "images/HIW2-2-dark.png";
 import HIW3imgDark from "images/HIW2-3-dark.png";
-import rightImgPng from "images/our-features-2.png";
 
 import SectionGridFeatureProperty from "./SectionGridFeatureProperty";
-import SectionDowloadApp from "./SectionDowloadApp";
 
 function PageHome2() {
   useEffect(() => {
+    /*
     const $body = document.querySelector("body");
     if ($body) {
       $body.className = "theme-cyan-blueGrey";
@@ -47,6 +43,7 @@ function PageHome2() {
         $body.className = "";
       }
     };
+    */
   }, []);
 
   return (

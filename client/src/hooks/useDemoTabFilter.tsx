@@ -34,7 +34,7 @@ function useDemoTabFilter({
     // THE DEMO POST DATA WILL RECENT FROM API, OR ANY ...
     let idex = tabs.indexOf(tabActive);
     const fakePosts = !!idex
-      ? DEMO_POSTS.filter((_, i) => {
+      ? DEMO_POSTS.filter((_:any, i:number) => {
           switch (idex) {
             case 1:
               return i >= 10 && i < 22;
