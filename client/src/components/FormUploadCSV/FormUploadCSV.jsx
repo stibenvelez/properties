@@ -37,7 +37,7 @@ const FormUploadCSV = () => {
         }
     };
     return (
-        <div className="bg-whiterounded-lg mb-8">
+        <div className="mb-8 bg-whiterounded-lg">
             <form onSubmit={handleSubmit} encType="multipar/form-data">
                 <div className="flex flex-col gap-4">
                     <div className="flex flex-col p-4 border border-gray-200 rounded-md shadow-sm dark:border-slate-600 border-1">
@@ -51,7 +51,7 @@ const FormUploadCSV = () => {
                         </label>
                     </div>
 
-                    <div>
+                    <div className="flex justify-center md:justify-start">
                         <ButtonPrimary type="submit" className="p-2">
                             {loadingUploadCsv && <SpinnerButton />}
                             {loadingUploadCsv ? "importando" : "Importar datos"}

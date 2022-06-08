@@ -54,7 +54,7 @@ const FormUploadImages = () => {
                         </label>
                     </div>
 
-                    <div>
+                    <div className="flex justify-center md:justify-start">
                         <ButtonPrimary type="submit" className="p-2">
                             {loadingUploadImages && <SpinnerButton />}
                             {loadingUploadImages
