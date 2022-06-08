@@ -16,6 +16,7 @@ import reportWebVitals from "./reportWebVitals";
 import { store } from "./store/";
 import { Provider } from "react-redux";
 import "sweetalert2/src/sweetalert2.scss";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 
 const root = ReactDOM.createRoot(
@@ -29,6 +30,19 @@ root.render(
     </Provider>
     // </React.StrictMode>
 );
+
+serviceWorkerRegistration.register({
+    onUpdate: async (registration:any) => {
+        // Corremos este código si hay una nueva versión de nuestra app
+        // Detalles en: https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle
+        if (registration && registration.waiting) {
+            await registration.unregister();
+            registration.waiting.postMessage({ type: "SKIP_WAITING" });
+            // Des-registramos el SW para recargar la página y obtener la nueva versión. Lo cual permite que el navegador descargue lo nuevo y que invalida la cache que tenía previamente.
+            window.location.reload();
+        }
+    },
+});
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
