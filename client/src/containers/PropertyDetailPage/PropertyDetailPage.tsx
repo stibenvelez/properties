@@ -1,12 +1,8 @@
 import { FC, useEffect, useState } from "react";
 import LocationMarker from "components/AnyReactComponent/LocationMarker";
 import CommentListing from "components/CommentListing/CommentListing";
-import { DateRage } from "components/HeroSearchForm/StaySearchForm";
 import StartRating from "components/StartRating/StartRating";
 import GoogleMapReact from "google-map-react";
-import useWindowSize from "hooks/useWindowResize";
-import moment from "moment";
-import { DayPickerRangeController, FocusedInputShape } from "react-dates";
 import Avatar from "shared/Avatar/Avatar";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import NcImage from "shared/NcImage/NcImage";
@@ -48,13 +44,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
     const [property, setProperty] = useState<any>({});
     const [isOpen, setIsOpen] = useState(false);
     const [openFocusIndex, setOpenFocusIndex] = useState(0);
-    const [selectedDate, setSelectedDate] = useState<DateRage>({
-        startDate: moment(),
-        endDate: moment().add(4, "days"),
-    });
-
-    const [focusedInputSectionCheckDate, setFocusedInputSectionCheckDate] =
-        useState<FocusedInputShape>("startDate");
 
     const { id }: any = useParams();
 
@@ -66,21 +55,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
             })();
         }
     }, []);
-
-    const windowSize = useWindowSize();
-
-    const getDaySize = () => {
-        if (windowSize.width <= 375) {
-            return 34;
-        }
-        if (windowSize.width <= 500) {
-            return undefined;
-        }
-        if (windowSize.width <= 1280) {
-            return 56;
-        }
-        return 48;
-    };
 
     const handleOpenModal = (index: number) => {
         setIsOpen(true);
@@ -191,86 +165,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                 <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
                 <div className="text-neutral-6000 dark:text-neutral-300">
                     <span>{property.description}</span>
-                </div>
-            </div>
-        );
-    };
-
-    const renderSection4 = () => {
-        return (
-            <div className="listingSection__wrap">
-                {/* HEADING */}
-                <div>
-                    <h2 className="text-2xl font-semibold">Room Rates </h2>
-                    <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-                        Prices may increase on weekends or holidays
-                    </span>
-                </div>
-                <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
-                {/* CONTENT */}
-                <div className="flow-root">
-                    <div className="-mb-4 text-sm sm:text-base text-neutral-6000 dark:text-neutral-300">
-                        <div className="flex items-center justify-between p-4 space-x-4 rounded-lg bg-neutral-100 dark:bg-neutral-800">
-                            <span>Monday - Thursday</span>
-                            <span>$199</span>
-                        </div>
-                        <div className="flex items-center justify-between p-4 space-x-4 rounded-lg">
-                            <span>Monday - Thursday</span>
-                            <span>$199</span>
-                        </div>
-                        <div className="flex items-center justify-between p-4 space-x-4 rounded-lg bg-neutral-100 dark:bg-neutral-800">
-                            <span>Friday - Sunday</span>
-                            <span>$219</span>
-                        </div>
-                        <div className="flex items-center justify-between p-4 space-x-4 rounded-lg">
-                            <span>Rent by month</span>
-                            <span>-8.34 %</span>
-                        </div>
-                        <div className="flex items-center justify-between p-4 space-x-4 rounded-lg bg-neutral-100 dark:bg-neutral-800">
-                            <span>Minimum number of nights</span>
-                            <span>1 night</span>
-                        </div>
-                        <div className="flex items-center justify-between p-4 space-x-4 rounded-lg">
-                            <span>Max number of nights</span>
-                            <span>90 nights</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
-    const renderSectionCheckIndate = () => {
-        return (
-            <div className="overflow-hidden listingSection__wrap">
-                {/* HEADING */}
-                <div>
-                    <h2 className="text-2xl font-semibold">Availability</h2>
-                    <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-                        Prices may increase on weekends or holidays
-                    </span>
-                </div>
-                <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
-                {/* CONTENT */}
-
-                <div className="flow-root listingSection__wrap__DayPickerRangeController">
-                    <div className="-mx-4 sm:mx-auto xl:mx-[-22px]">
-                        <DayPickerRangeController
-                            startDate={selectedDate.startDate}
-                            endDate={selectedDate.endDate}
-                            onDatesChange={(date) => setSelectedDate(date)}
-                            focusedInput={focusedInputSectionCheckDate}
-                            onFocusChange={(focusedInput) =>
-                                setFocusedInputSectionCheckDate(
-                                    focusedInput || "startDate"
-                                )
-                            }
-                            initialVisibleMonth={null}
-                            numberOfMonths={windowSize.width < 1280 ? 1 : 2}
-                            daySize={getDaySize()}
-                            hideKeyboardShortcutsPanel={false}
-                        />
-                    </div>
                 </div>
             </div>
         );
@@ -395,64 +289,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                                 lng={property.longitude}
                             />
                         </GoogleMapReact>
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
-    const renderSection8 = () => {
-        return (
-            <div className="listingSection__wrap">
-                {/* HEADING */}
-                <h2 className="text-2xl font-semibold">Things to know</h2>
-                <div className="border-b w-14 border-neutral-200 dark:border-neutral-700" />
-
-                {/* CONTENT */}
-                <div>
-                    <h4 className="text-lg font-semibold">
-                        Cancellation policy
-                    </h4>
-                    <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-                        Refund 50% of the booking value when customers cancel
-                        the room within 48 hours after successful booking and 14
-                        days before the check-in time. <br />
-                        Then, cancel the room 14 days before the check-in time,
-                        get a 50% refund of the total amount paid (minus the
-                        service fee).
-                    </span>
-                </div>
-                <div className="border-b w-14 border-neutral-200 dark:border-neutral-700" />
-
-                {/* CONTENT */}
-                <div>
-                    <h4 className="text-lg font-semibold">Check-in time</h4>
-                    <div className="max-w-md mt-3 text-sm text-neutral-500 dark:text-neutral-400 sm:text-base">
-                        <div className="flex justify-between p-3 space-x-10 rounded-lg bg-neutral-100 dark:bg-neutral-800">
-                            <span>Check-in</span>
-                            <span>08:00 am - 12:00 am</span>
-                        </div>
-                        <div className="flex justify-between p-3 space-x-10">
-                            <span>Check-out</span>
-                            <span>02:00 pm - 04:00 pm</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="border-b w-14 border-neutral-200 dark:border-neutral-700" />
-
-                {/* CONTENT */}
-                <div>
-                    <h4 className="text-lg font-semibold">Special Note</h4>
-                    <div className="prose sm:prose">
-                        <ul className="mt-3 space-y-2 text-neutral-500 dark:text-neutral-400">
-                            <li>
-                                Ban and I will work together to keep the
-                                landscape and environment green and clean by not
-                                littering, not using stimulants and respecting
-                                people around.
-                            </li>
-                            <li>Do not sing karaoke past 11:30</li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -588,13 +424,9 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                 <div className="w-full space-y-8 lg:w-3/5 xl:w-2/3 lg:space-y-10 lg:pr-10">
                     {renderSection1()}
                     {property.desciption && renderSection2()}
-                    {/* {renderSection3()} */}
-                    {/* {renderSection4()} */}
-                    {/* {renderSectionCheckIndate()} */}
                     {renderSection5()}
                     {renderSection6()}
                     {renderSection7()}
-                    {/* {renderSection8()} */}
                 </div>
 
                 {/* SIDEBAR */}

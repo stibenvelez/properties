@@ -1,9 +1,8 @@
 import SpinnerButton from "components/SpinnerButton/SpinnerButton";
-import clientAxios from "config/axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import { uploadImagesAction, uploadPropertiescsvAction } from "store/slice/properties/propertiesActions";
+import { uploadImagesAction} from "store/slice/properties/propertiesActions";
 import Swal from "sweetalert2";
 
 const FormUploadImages = () => {
