@@ -319,6 +319,34 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
 
                 {/* SUBMIT */}
                 <ButtonPrimary>Quiero que me contacten</ButtonPrimary>
+
+                {/* MAP */}
+                <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3">
+                    <div className="overflow-hidden rounded-xl">
+                        <GoogleMapReact
+                            bootstrapURLKeys={{
+                                key: "AIzaSyDkDFnRyELEsM8J-lfKlKEq0zc0HQZzkaU",
+                            }}
+                            yesIWantToUseGoogleMapApiInternals
+                            defaultZoom={12}
+                            defaultCenter={{
+                                lat: 6.247956,
+                                lng: -75.582671,
+                            }}
+                        >
+                            <LocationMarker
+                                lat={property.latitude}
+                                lng={property.longitude}
+                            />
+                        </GoogleMapReact>
+                    </div>
+                </div>
+                <div>
+                    <span className="block text-sm dark:text-neutral-400">
+                        {property.building} - {property.address} -{" "}
+                        <span className="capitalize">{property.city} </span>
+                    </span>
+                </div>
             </div>
         );
     };
@@ -426,7 +454,7 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                     {property.desciption && renderSection2()}
                     {renderSection5()}
                     {renderSection6()}
-                    {renderSection7()}
+            
                 </div>
 
                 {/* SIDEBAR */}

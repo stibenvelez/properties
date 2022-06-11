@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFilters } from "store/slice/properties";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { clearFilter } from "store/slice/properties/propertiesActions"
+import { arrayBuffer } from "stream/consumers";
 
 // DEMO DATA
 const typeOfProperties = [
@@ -56,8 +57,8 @@ const TabFilters = () => {
                       .toLowerCase()
                       .replace(/\s+/g, "")
                       .includes(query.toLowerCase().replace(/\s+/g, ""))
-              );
-
+            );
+    
     const renderXClear = () => {
         return (
             <span className="flex items-center justify-center w-4 h-4 ml-3 text-white rounded-full cursor-pointer bg-primary-500">
@@ -135,7 +136,7 @@ const TabFilters = () => {
                                         .slice(0, 4)
                                         .map((city: any) => (
                                             <Combobox.Option
-                                                key={city.idCity}
+                                                key={city.cityId}
                                                 className={({ active }) =>
                                                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                                         active
@@ -185,85 +186,100 @@ const TabFilters = () => {
 
     const renderTabsTypeProperty = () => {
         return (
-            <Popover className="relative">
-                {({ open, close }) => (
-                    <>
-                        <Popover.Button
-                            className={`flex items-center justify-center px-4 py-2 text-sm rounded-full border border-neutral-300 dark:border-neutral-700 focus:outline-none ${
-                                open ? "!border-primary-500 " : ""
-                            }`}
-                        >
-                            <span>Tipo de propiedad</span>
-                            <i className="ml-2 las la-angle-down"></i>
-                        </Popover.Button>
+            <div className="">
+                <Combobox
+                    value={filters}
+                    onChange={(value) =>
+                        handleChange({
+                            name: "propertyType",
+                            value,
+                        })
+                    }
+                >
+                    <div className="relative">
+                        <div className="relative inline-block">
+                            <Combobox.Input
+                                className="flex items-center justify-center px-4 py-2 text-sm bg-transparent border rounded-full border-neutral-300 dark:border-neutral-700 focus:outline-none"
+                                displayValue={({propertyType}: any) => propertyType}                               
+                                placeholder="Seleccione una ciudad"
+                                onChange={(e) => setQuery(e.target.value)}
+                            />
+                            <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
+                                <SelectorIcon
+                                    className="w-5 h-5 text-gray-400"
+                                    aria-hidden="true"
+                                />
+                            </Combobox.Button>
+                        </div>
                         <Transition
                             as={Fragment}
-                            enter="transition ease-out duration-200"
-                            enterFrom="opacity-0 translate-y-1"
-                            enterTo="opacity-100 translate-y-0"
-                            leave="transition ease-in duration-150"
-                            leaveFrom="opacity-100 translate-y-0"
-                            leaveTo="opacity-0 translate-y-1"
+                            leave="transition ease-in duration-100"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                            afterLeave={() => setQuery("")}
                         >
-                            <Popover.Panel className="absolute left-0 z-10 w-screen max-w-sm px-4 mt-3 sm:px-0 lg:max-w-md">
-                                <div className="overflow-hidden bg-white border shadow-xl rounded-2xl dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700">
-                                    <div className="relative flex flex-col px-5 py-6 space-y-5">
-                                        <Select
-                                            name="propertyType"
-                                            value={filters.propertyType}
-                                            onChange={(e) =>
-                                                handleChange({
-                                                    name: e.target.name,
-                                                    value: e.target.value,
-                                                })
-                                            }
-                                        >
-                                            <option value="">
-                                                -- Todas ---
-                                            </option>
-                                            {typeOfProperties &&
-                                                typeOfProperties.map(
-                                                    (item: any) => (
-                                                        <option
-                                                            key={item.name}
-                                                            className=""
-                                                            value={item.name}
+                            <Combobox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                <Combobox.Option
+                                    className={({ active }) =>
+                                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                            active
+                                                ? "bg-primary-500 text-white"
+                                                : "text-gray-900"
+                                        }`
+                                    }
+                                    value=""
+                                >
+                                    Todas
+                                </Combobox.Option>
+                                {typeOfProperties &&
+                                    typeOfProperties.map(
+                                        (typeProperty: any) => (
+                                            <Combobox.Option
+                                                key={typeProperty.name}
+                                                className={({ active }) =>
+                                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                                        active
+                                                            ? "bg-primary-500 text-white"
+                                                            : "text-gray-900"
+                                                    }`
+                                                }
+                                                value={typeProperty.name}
+                                            >
+                                                {({ selected, active }) => (
+                                                    <>
+                                                        <span
+                                                            className={`block truncate ${
+                                                                selected
+                                                                    ? "font-medium"
+                                                                    : "font-normal"
+                                                            }`}
                                                         >
-                                                            {item.name}
-                                                        </option>
-                                                    )
+                                                            {typeProperty.name}
+                                                        </span>
+                                                        {selected ? (
+                                                            <span
+                                                                className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                                                    active
+                                                                        ? "text-white"
+                                                                        : "text-primary-600"
+                                                                }`}
+                                                            >
+                                                                <CheckIcon
+                                                                    className="w-5 h-5"
+                                                                    aria-hidden="true"
+                                                                />
+                                                            </span>
+                                                        ) : null}
+                                                    </>
                                                 )}
-                                        </Select>
-                                    </div>
-                                    <div className="flex items-center justify-between p-5 bg-neutral-50 dark:bg-neutral-900 dark:border-t dark:border-neutral-800">
-                                        <ButtonThird
-                                            onClick={() => {
-                                                handleChange({
-                                                    name: "propertyType",
-                                                    value: "",
-                                                });
-                                                close();
-                                            }}
-                                            sizeClass="px-4 py-2 sm:px-5"
-                                        >
-                                            Clear
-                                        </ButtonThird>
-                                        {/* <ButtonPrimary
-                                            onClick={() => {
-                                                handleFilter();
-                                                close();
-                                            }}
-                                            sizeClass="px-4 py-2 sm:px-5"
-                                        >
-                                            Apply
-                                        </ButtonPrimary> */}
-                                    </div>
-                                </div>
-                            </Popover.Panel>
+                                            </Combobox.Option>
+                                        )
+                                    )}
+                            </Combobox.Options>
                         </Transition>
-                    </>
-                )}
-            </Popover>
+                    </div>
+                </Combobox>
+            </div>
         );
     };
 
@@ -277,7 +293,23 @@ const TabFilters = () => {
                                 open ? "!border-primary-500 " : ""
                             }`}
                         >
-                            <span>Habitaciones o baños</span>
+                            <span>
+                                <div className="flex gap-3">
+                                    <p>
+                                        {filters.bedrooms
+                                            ? `${filters.bedrooms} habitaciones`
+                                            : null}
+                                    </p>
+                                    <p>
+                                        {filters.bathrooms
+                                            ? `${filters.bathrooms} baños`
+                                            : null}
+                                    </p>
+                                </div>
+                                {!filters.bedrooms &&
+                                    !filters.bathrooms &&
+                                    "Habitaciones o baños "}
+                            </span>
                             <i className="ml-2 las la-angle-down"></i>
                         </Popover.Button>
                         <Transition
@@ -759,15 +791,51 @@ const TabFilters = () => {
     };
 
     return (
-        <div className="flex lg:space-x-4">
-            <div className="hidden space-x-4 lg:flex">
-                {RenderSelectCity()}
-                {renderTabsTypeProperty()}
-                {renderTabsPriceRage()}
-                {renderTabsRoomAndBeds()}
-                {/* {renderTabMoreFilter()} */}
+        <div>
+            <div className="flex lg:space-x-4">
+                <div className="hidden space-x-4 lg:flex">
+                    {RenderSelectCity()}
+                    {renderTabsTypeProperty()}
+                    {renderTabsPriceRage()}
+                    {renderTabsRoomAndBeds()}
+                    {/* {renderTabMoreFilter()} */}
+                    <ButtonThird
+                        onClick={() => {
+                            dispatch(clearFilter());
+                            closeModalMoreFilterMobile();
+                        }}
+                        className="text-sm text-gray-500"
+                        sizeClass="px-4 py-1 sm:px-5"
+                    >
+                        Limpiar filtros
+                    </ButtonThird>
+                </div>
+                {renderTabMoreFilterMobile()}
             </div>
-            {renderTabMoreFilterMobile()}
+            <div className="pt-4 flex gap-2">
+                {filters &&
+                    Object.entries(filters)
+                        .filter(
+                            (filter) =>
+                                filter[1] !== "" &&
+                                (!Array.isArray(filter[1]) && filter[1]) // TODO add filters tags for rangeprice
+                                   
+                        )
+                        .map((filter: any, index: number) => (
+                            <span
+                                key={index}
+                                className="py-1 px-2 bg-indigo-500 text-xs rounded-xl text-white"
+                            >
+                                {!Array.isArray(filter[0])
+                                    ? filter[0]
+                                    : filter[1][0]}
+                                -{" "}
+                                {!Array.isArray(filter[1])
+                                    ? filter[1]
+                                    : `${filter[1][0]} - ${filter[1][1]} `}
+                            </span>
+                        ))}
+            </div>
         </div>
     );
 };

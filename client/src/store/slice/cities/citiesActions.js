@@ -1,7 +1,7 @@
 import clientAxios from "config/axios";
 import { setCities, setCitiesError, setCitiesSuccess } from ".";
 
-export const fetchAllCities = () => async (dispatch) => {
+export const fetchAllCitiesAction = () => async (dispatch) => {
     dispatch(setCities());
     try {
         const response = await clientAxios("/cities");

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchAllProperties } from "store/slice/properties/propertiesActions";
 
 const PropertiesPage = () => {
@@ -61,14 +62,16 @@ const PropertiesPage = () => {
                                         {property.offer}
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap">
-                                        {/* <div className="flex gap-4">
-                                            <a href="/#" className="">
-                                                Editar
-                                            </a>
-                                            <a href="/#" className="">
-                                                Eliminar
-                                            </a>
-                                        </div> */}
+                                        <div className="flex gap-4">
+                                            <button className="bg-gray-500 py-1 px-2 rounded-md">
+                                                <Link
+                                                    to={`/property/${property.idProperty}`}
+                                                    className="text-xs text-white"
+                                                >
+                                                    Ver
+                                                </Link>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}

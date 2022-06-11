@@ -51,6 +51,7 @@ const FormUploadImages = () => {
                                 multiple
                             />
                         </label>
+                       
                     </div>
 
                     <div className="flex justify-center md:justify-start">

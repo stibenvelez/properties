@@ -12,7 +12,6 @@ const INITIAL_STATE_USER = {
 const FormLoginAdmin = () => {
     const dispatch = useDispatch();
     const [user, setUser] = useState(INITIAL_STATE_USER);
-
     const { error, msg, auth } = useSelector(({ auth }) => auth);
 
     const handleChange = (e) => {
@@ -28,18 +27,16 @@ const FormLoginAdmin = () => {
     };
     useEffect(() => {
         if (auth) {
-            <Redirect
-                to="/admin"
-            />;
+            <Redirect to="/admin" />;
         }
     }, []);
-    
+
     return (
         <div className="max-w-2xl p-8 mx-auto bg-white rounded-lg shadow ">
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-4">
                     <div>
-                        <label>usuario</label>
+                        <label className="text-gray-800">usuario</label>
                         <input
                             type="text"
                             className="w-full p-2 border border-gray-200 rounded-lg"
@@ -49,7 +46,7 @@ const FormLoginAdmin = () => {
                         />
                     </div>
                     <div>
-                        <label>clave</label>
+                        <label className="text-gray-800">clave</label>
                         <input
                             type="password"
                             className="w-full p-2 border border-gray-200 rounded-lg"
@@ -58,7 +55,7 @@ const FormLoginAdmin = () => {
                             onChange={handleChange}
                         />
                     </div>
-                    {error && <AlertError msg={msg}/>}
+                    {error && <AlertError msg={msg} />}
                     <div>
                         <button className="px-4 py-2 font-bold text-white bg-indigo-800 rounded-lg hover:bg-indigo-500">
                             Ingresar

@@ -9,17 +9,25 @@ export interface SectionGridFilterCardProps {
     setFilters?: any;
     filters?: any;
     loading?: boolean;
+    categoryProperty?: string;
 }
 
 const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
     className = "",
+    categoryProperty,
 }) => {
     return (
         <div
             className={`nc-SectionGridFilterCard ${className}`}
             data-nc-id="SectionGridFilterCard"
         >
-            <Heading2 heading={"Venta de apartamentos en Colombia"} />
+            <Heading2
+                heading={`${
+                    categoryProperty === "rent"
+                        ? "Arriendo de apartamentos"
+                        : "Venta de apartamentos"
+                }`}
+            />
 
             <div className="mb-8 lg:mb-11">
                 <TabFilters />

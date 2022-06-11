@@ -7,7 +7,7 @@ import { useSearchParams } from "hooks/useSearchParams";
 import {fetchAllProperties} from '../../store/slice/properties/propertiesActions'
 import { useDispatch, useSelector } from "react-redux";
 import useDebounce from "hooks/useDebounce";
-import { fetchAllCities } from "store/slice/cities/citiesActions";
+import { fetchAllCitiesAction } from "store/slice/cities/citiesActions";
 import { useLocation } from "react-router-dom";
 
 export interface ListingStayPageProps {
@@ -21,8 +21,7 @@ const SalesPropertiesPage: FC<ListingStayPageProps> = ({ className = "" }) => {
     const loading:any = useSelector(({ properties }: any) => properties.loading);
     const filters: any = useSelector(({ properties }: any) => properties.filters);
     const debouncedFilters = useDebounce<string>(filters, 500);
-
-
+    
     const CATEGORY:any = {
         arriendo: "rent",
         venta: "sell",
@@ -36,7 +35,7 @@ const SalesPropertiesPage: FC<ListingStayPageProps> = ({ className = "" }) => {
     }, [debouncedFilters]);
      
     useEffect(() => {
-        (() => dispatch(fetchAllCities()))();
+        (() => dispatch(fetchAllCitiesAction()))();
      }, []);
       
    
@@ -47,7 +46,11 @@ const SalesPropertiesPage: FC<ListingStayPageProps> = ({ className = "" }) => {
             data-nc-id="ListingStayPage"
         >
             <Helmet>
-                <title>Venta de apartamentos</title>
+                <title>{`${
+                    categoryProperty === "rent"
+                        ? "Arriendo de apartamentos"
+                        : "Venta de apartamentos"
+                }`}</title>
             </Helmet>
             <BgGlassmorphism />
 
@@ -64,6 +67,7 @@ const SalesPropertiesPage: FC<ListingStayPageProps> = ({ className = "" }) => {
                     className="pb-24 lg:pb-32"
                     properties={properties}
                     loading={loading}
+                    categoryProperty={categoryProperty}
                 />
 
                 {/* SECTION 1 */}

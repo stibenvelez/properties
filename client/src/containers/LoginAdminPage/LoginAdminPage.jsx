@@ -9,7 +9,7 @@ const LoginAdminPage = () => {
     return (
         <div className="flex flex-col bg-slate-800 h-[calc(100vh-85px)] justify-center">
             <h2 className="text-white text-4xl text-center mb-4">
-                Inisiar sesión
+                Iniciar sesión
             </h2>
             <FormLoginAdmin />
         </div>
