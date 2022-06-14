@@ -19,13 +19,20 @@ const CardCategory3: FC<CardCategory3Props> = ({
     setIsOpen,
     setCitySelected,
 }) => {
-    const { count, name, href = "/", thumbnail } = taxonomy;
+    const {
+        count,
+        name,
+        href = "/",
+        thumbnail,
+        countSell,
+        countRent,
+    } = taxonomy;
 
     const handleClick = () => {
         setIsOpen(true);
         setCitySelected({
             name: "city",
-            value: name
+            value: name,
         });
     };
 
@@ -50,11 +57,12 @@ const CardCategory3: FC<CardCategory3Props> = ({
                 >
                     {name}
                 </h2>
-                {/* <span
-          className={`block mt-2 text-sm text-neutral-6000 dark:text-neutral-400`}
-        >
-          {convertNumbThousand(count || 0)} inmuebles
-        </span> */}
+                <span
+                    className={`block mt-2 text-sm text-neutral-6000 dark:text-neutral-400`}
+                >
+                    <p>{countSell? countSell + " En venta": null}</p>
+                    <p>{countRent? countRent + " En arriendo": null}</p>
+                </span>
             </div>
         </div>
     );

@@ -5,11 +5,14 @@ export const allCityes = async () => {
         const sql = `
         SELECT c.*,
         d.departament,
-        COUNT(c.cityId) AS countProperties
+        COUNT(c.cityId) AS countProperties,
+        COUNT(IF(p.offerId = 1, 1, NULL)) countSell,
+        COUNT(IF(p.offerId = 2, 1, NULL)) countRent
         FROM Cities AS c
 
         LEFT JOIN Departaments AS d ON d.idDepartament = c.IdDepartament
         INNER JOIN Properties AS p ON p.cityId = c.cityId
+
         GROUP BY c.cityId
         ORDER BY COUNT(c.cityId) DESC
         `;

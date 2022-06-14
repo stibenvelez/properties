@@ -40,6 +40,7 @@ const SectionSliderNewCategories: FC<SectionSliderNewCategoriesProps> = ({
     city: "",
     value: "",
   });
+console.log(categories);
 
   const UNIQUE_CLASS =
     "SectionSliderNewCategories__" + uniqueClassName + useNcId();
