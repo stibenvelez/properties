@@ -41,6 +41,7 @@ const PropertyCard: FC<StayCardProps> = ({
                     uniqueID={`Property_${idProperty}`}
                     ratioClass="aspect-w-4 aspect-h-3 "
                     galleryImgs={galleryImgs}
+                    id={idProperty}
                 />
                 <BtnLikeIcon
                     isLiked={like}

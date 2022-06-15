@@ -1,6 +1,7 @@
 import Glide from "@glidejs/glide";
 import useNcId from "hooks/useNcId";
 import { FC, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 import NcImage from "shared/NcImage/NcImage";
 import NextPrev from "shared/NextPrev/NextPrev";
 
@@ -9,6 +10,7 @@ export interface GallerySliderProps {
     galleryImgs: string[];
     ratioClass?: string;
     uniqueID: string;
+    id?:number;
 }
 
 const GallerySlider: FC<GallerySliderProps> = ({
@@ -16,6 +18,7 @@ const GallerySlider: FC<GallerySliderProps> = ({
     galleryImgs,
     ratioClass = "aspect-w-4 aspect-h-3",
     uniqueID = "uniqueID",
+    id=false
 }) => {
     const UNIQUE_CLASS = `gallerySlider__${uniqueID}` + useNcId();
 
@@ -28,9 +31,7 @@ const GallerySlider: FC<GallerySliderProps> = ({
     }, [UNIQUE_CLASS]);
 
     useEffect(() => {
-        setTimeout(() => {
-            MY_GLIDEJS.mount();
-        }, 10);
+        MY_GLIDEJS.mount();
     }, [MY_GLIDEJS, UNIQUE_CLASS, galleryImgs]);
 
     const renderDots = () => {
@@ -59,9 +60,11 @@ const GallerySlider: FC<GallerySliderProps> = ({
                             galleryImgs.map((item, index) => (
                                 <li key={index} className="glide__slide">
                                     <div className={ratioClass}>
-                                        <NcImage
-                                            src={`${process.env.REACT_APP_API_PUBLIC_IMG}/${item}`}
-                                        />
+                                        <Link to={`/property/${id}`}>
+                                            <NcImage
+                                                src={`${process.env.REACT_APP_API_PUBLIC_IMG}/${item}`}
+                                            />
+                                        </Link>
                                     </div>
                                 </li>
                             ))
@@ -76,7 +79,8 @@ const GallerySlider: FC<GallerySliderProps> = ({
                 </div>
 
                 {/* DOTS */}
-                <div className="absolute inset-x-0 h-10 -bottom-4 bg-gradient-to-t from-neutral-900"></div>
+                <div className="absolute inset-x-0 h-10 -bottom-4 bg-gradient-to-t from-neutral-900">
+                </div>
                 {renderDots()}
 
                 {/* NAV */}

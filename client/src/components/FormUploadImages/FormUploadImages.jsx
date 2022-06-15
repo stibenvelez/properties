@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 const FormUploadImages = () => {
     const dispatch = useDispatch();
-    const [files, setFiles] = useState(null);
+    const [files, setFiles] = useState({});
 
     const { loadingUploadImages } = useSelector(
         ({ properties }) => properties

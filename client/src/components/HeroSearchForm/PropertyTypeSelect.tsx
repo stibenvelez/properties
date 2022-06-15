@@ -1,7 +1,6 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { FC } from "react";
-import Checkbox from "shared/Checkbox/Checkbox";
 import Select from "shared/Select/Select";
 
 // DEMO DATA
@@ -84,7 +83,7 @@ const PropertyTypeSelect: FC<PropertyTypeSelectProps> = ({
                                 value={value}
                                 onChange={onChange}
                             >
-                                <option value="">-- Todas ---</option>
+                                <option hidden value="">-- seleccione ---</option>
                                 {typeOfProperties &&
                                     typeOfProperties.map((item: any) => (
                                         <option key={item.name} className="">

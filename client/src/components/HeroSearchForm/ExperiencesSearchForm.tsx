@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import{ useEffect, useState } from "react";
 import LocationInput from "./LocationInput";
 import GuestsInput, { GuestsInputProps } from "./GuestsInput";
 import ExperiencesDateSingleInput from "./ExperiencesDateSingleInput";
@@ -44,7 +44,7 @@ const ExperiencesSearchForm: FC<ExperiencesSearchFormProps> = ({
       <form className="relative flex flex-col w-full mt-8 bg-white divide-y shadow-xl md:flex-row rounded-3xl md:rounded-full dark:shadow-2xl dark:bg-neutral-800 divide-neutral-200 dark:divide-neutral-700 md:divide-y-0">
         <LocationInput
           defaultValue={locationInputValue}
-          onChange={(e) => setLocationInputValue(e)}
+          onChange={(e:any) => setLocationInputValue(e)}
           onInputDone={() => setDateFocused(true)}
         />
 

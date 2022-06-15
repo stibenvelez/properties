@@ -15,12 +15,12 @@ const AdminPage = () => {
                             Importar datos csv:
                         </h2>
                         <div className="mb-4">
-                            <p className="text-sm text-gray-700  dark:text-white">
-                                Importe las propiedades mediante un archivo csv.
+                            <p className="text-sm text-gray-700 dark:text-white">
+                                Importe las propiedades por mediod e un archivo en formato csv.
                                 <br />
                                 Algunas consideraciones: <br />
                                 <strong>1.</strong> La columna de referencia,
-                                titulo, descripcion, precio y ciudad son
+                                título, descripción, precio y ciudad son
                                 obligatorias.
                                 <br />
                                 <strong>2.</strong> Las imagenes para cada
@@ -32,7 +32,7 @@ const AdminPage = () => {
                                 plantilla en el siguinete link:{" "}
                             </p>
                             <a
-                                className="text-indigo-700 font-semibold hover:text-indigo-400 dark:text-indigo-400 dark:hover:text-indigo-300"
+                                className="font-semibold text-indigo-700 hover:text-indigo-400 dark:text-indigo-400 dark:hover:text-indigo-300"
                                 href={`${process.env.REACT_APP_API_URL}/files/plantilla_propiedades.csv`}
                             >
                                 Descargar plantilla
@@ -45,7 +45,7 @@ const AdminPage = () => {
                             Importar imagenes:
                         </h2>
                         <div className="mb-4">
-                            <p className="text-sm text-gray-700  dark:text-gray-50">
+                            <p className="text-sm text-gray-700 dark:text-gray-50">
                                 Una vez las propiedades estén en la base de
                                 datos, puede importar las imagenes en formato{" "}
                                 <strong>jpg</strong> para cada una de estas. Las

@@ -1,9 +1,10 @@
 import { insertSuscription } from "./suscriptions.DAL.js";
 import nodemailer from "nodemailer";
+import { templateEmailSuscription } from "../../helpers/templateEmailSuscription.js";
 
 export const inserSuscriptionService = async (email) => {
     try {
-        await insertSuscription(email);
+        //await insertSuscription(email);
 
         // create reusable transporter object using the default SMTP transport
         const transporter = nodemailer.createTransport({
@@ -16,11 +17,11 @@ export const inserSuscriptionService = async (email) => {
         });
 
         const mailOptions = {
-            from: '"Fred Foo 👻" <foster.fahey72@ethereal.email>', // sender address
-            to: "stibenvelez@hotmail.com", // list of receivers
-            subject: "Hello ✔", // Subject line
-            text: "Hello world?", // plain text body
-            html: "<b>Hello world?</b>", // html body
+            from: '<foster.fahey72@ethereal.email>', // sender address
+            to: `"${email}"`, // list of receivers
+            subject: "Bienvendio", // Subject line
+            text: templateEmailSuscription(), // plain text body
+            html: templateEmailSuscription(), // html body
         };
 
 

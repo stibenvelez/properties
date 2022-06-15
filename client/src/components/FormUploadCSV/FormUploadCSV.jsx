@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 const FormUploadCSV = () => {
     const dispatch = useDispatch();
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState({});
 
     const { response, loadingUploadCsv } = useSelector(
         ({ properties }) => properties

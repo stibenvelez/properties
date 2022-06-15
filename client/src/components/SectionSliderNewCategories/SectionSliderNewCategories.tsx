@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import Heading from "components/Heading/Heading";
 import Glide from "@glidejs/glide";
 import { TaxonomyType } from "data/types";
@@ -8,7 +8,6 @@ import NextPrev from "shared/NextPrev/NextPrev";
 import CardCategory5 from "components/CardCategory5/CardCategory5";
 import useNcId from "hooks/useNcId";
 import ModalCategory from "components/SectionSliderNewCategories/ModalCategory";
-import { useHistory } from "react-router-dom";
 
 export interface SectionSliderNewCategoriesProps {
   className?: string;
@@ -21,8 +20,6 @@ export interface SectionSliderNewCategoriesProps {
   sliderStyle?: "style1" | "style2";
   uniqueClassName: string;
 }
-
-
 
 const SectionSliderNewCategories: FC<SectionSliderNewCategoriesProps> = ({
   heading = "Ciudades",
@@ -40,7 +37,6 @@ const SectionSliderNewCategories: FC<SectionSliderNewCategoriesProps> = ({
     city: "",
     value: "",
   });
-console.log(categories);
 
   const UNIQUE_CLASS =
     "SectionSliderNewCategories__" + uniqueClassName + useNcId();

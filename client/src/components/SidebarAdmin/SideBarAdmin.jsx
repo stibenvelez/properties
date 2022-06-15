@@ -1,31 +1,30 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { HomeIcon, UploadIcon, CloudUploadIcon } from "@heroicons/react/solid";
-const SideBarAdmin = () => {
+import { HomeIcon, CloudUploadIcon } from "@heroicons/react/solid";
+const   SideBarAdmin = () => {
 
     const SIDEBAR_DATA = [
         {
             name: "Importar inmuebles",
-            icon: <HomeIcon className="h-6 w-6" />,
+            icon: <HomeIcon className="w-6 h-6" />,
             to: "/admin",
         },
         {
             name: "Inmuebles",
-            icon: <CloudUploadIcon className="h-6 w-6" />,
+            icon: <CloudUploadIcon className="w-6 h-6" />,
             to: "/admin/inmuebles",
         },
     ];
 
 
     return (
-        <div className="w-40 h-screen overflow-hidden bg-gray-900 shadow-md rounded-r-3xl">
+        <div className="w-40 h-screen overflow-hidden bg-gray-900 shadow-md dark:bg-slate-800 rounded-r-3xl">
             <ul>
                 {SIDEBAR_DATA.map((item, index) => (
                     
                 <li key={index}>
-                    <Link to={item.to} className="flex items-center gap-2 p-4 transition duration-200 ease-in-out cursor-pointer first-letter:p-3 hover:bg-indigo-700 text-white">
+                    <Link to={item.to} className="flex items-center gap-2 p-4 text-white transition duration-200 ease-in-out cursor-pointer first-letter:p-3 hover:bg-indigo-700">
                         {item.icon}
-                        <span className="text-white text-sm">{item.name}</span>
+                        <span className="text-sm text-white">{item.name}</span>
                     </Link>
                 </li>
                 ))}

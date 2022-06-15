@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LocationInput from "./LocationInput";
 import { FocusedInputShape } from "react-dates";
 import RentalCarDatesRangeInput from "./RentalCarDatesRangeInput";
@@ -205,7 +205,7 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({ haveDefaultValue }) => {
         >
           One-way
         </div>
-        <div className="my-1 mr-2 border rounded-full  sm:mr-4 border-neutral-300 dark:border-neutral-700">
+        <div className="my-1 mr-2 border rounded-full sm:mr-4 border-neutral-300 dark:border-neutral-700">
           {renderSelectClass()}
         </div>
         <div className="my-1 border rounded-full border-neutral-300 dark:border-neutral-700">
@@ -224,14 +224,14 @@ const FlightSearchForm: FC<FlightSearchFormProps> = ({ haveDefaultValue }) => {
             <div className="relative flex flex-col md:flex-row flex-grow [ nc-divide-field ] ">
               <LocationInput
                 defaultValue={pickUpInputValue}
-                onChange={(e) => setPickUpInputValue(e)}
+                onChange={(e:any) => setPickUpInputValue(e)}
                 onInputDone={() => setFieldFocused("dropOffInput")}
                 placeHolder="Flying from"
                 desc="Where do you want to fly from?"
               />
               <LocationInput
                 defaultValue={dropOffInputValue}
-                onChange={(e) => setDropOffInputValue(e)}
+                onChange={(e:any) => setDropOffInputValue(e)}
                 onInputDone={() => setFieldFocused("startDate")}
                 placeHolder="Flying to"
                 desc="Where you want to fly to?"
