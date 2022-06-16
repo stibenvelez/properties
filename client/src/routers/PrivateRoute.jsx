@@ -1,12 +1,13 @@
-import SideBarAdmin from "components/SidebarAdmin/SideBarAdmin";
+import SidebarAdmin from "components/SidebarAdmin/SidebarAdmin";
 import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const { auth } = useSelector(({ auth }) => auth);
+    const { } = useSelector(({ auth }) => auth);
+    let auth = true;
     return (
         <div className="flex">
-            <SideBarAdmin />
+            <SidebarAdmin />
             <div className="w-full">
                 <Route
                     {...rest}

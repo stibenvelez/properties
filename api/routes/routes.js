@@ -8,7 +8,7 @@ import suscriptionsRoutes from '../components/suscriptions/routes.js'
 routes.use(express.static("public"));
 routes.use("/properties", propertiesRoutes);
 routes.use('/cities', citiesRoutes)
-routes.use("/admin", userRoutes);
+routes.use("/users", userRoutes);
 routes.use("/suscriptions", suscriptionsRoutes);
 
 

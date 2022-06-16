@@ -7,6 +7,7 @@ import {
 } from "./properties.services.js";
 
 export const getAllProperties = async (req, res) => {
+    console.log(req.query);
     const properties = await getAllPropertiesService(req.query);
     res.json(properties);
 };

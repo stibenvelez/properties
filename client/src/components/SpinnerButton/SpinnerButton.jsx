@@ -4,7 +4,7 @@ const SpinnerButton = () => {
   return (
       <svg
           role="status"
-          class="inline w-4 h-4  text-gray-200 animate-spin border-0 dark:text-gray-600"
+          className="inline w-4 h-4  text-gray-200 animate-spin border-0 dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
