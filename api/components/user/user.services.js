@@ -1,5 +1,5 @@
 import { emailCreateUser } from "../../helpers/emails.js";
-import { findUserByEmail, inserUser } from "./user.DAL.js";
+import { findUserByEmail, inserUser, updateUser } from "./user.DAL.js";
 import bcrypt from "bcrypt";
 import generateId from "../../helpers/generateId.js";
 
@@ -36,11 +36,11 @@ export const authService = async (user) => {
         const checkPassword = async () => {
             return await bcrypt.compare(password, rows[0].password);
         };
-        const passwordCorrect = await checkPassword()
+        const passwordCorrect = await checkPassword();
 
         if (!passwordCorrect) {
-             const error = new Error("contraseña incorrecta");
-             throw error;
+            const error = new Error("contraseña incorrecta");
+            throw error;
         }
 
         // valid confirm
@@ -50,6 +50,23 @@ export const authService = async (user) => {
         }
 
         return rows;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
+
+export const forgetPassswordService = async (user) => {
+    try {
+        const { email } = user;
+        const [userExist] = await findUserByEmail(email);
+
+        if (!userExist) {
+            throw new Error("El usuario no existe");
+        }
+
+        userExist.token = generateId();
+        await updateUser(userExist);
     } catch (error) {
         console.log(error);
         throw error;

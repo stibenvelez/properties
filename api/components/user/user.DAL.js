@@ -59,3 +59,43 @@ export const findUserByToken = async (token) => {
         throw error;
     }
 };
+export const findUserById = async (id) => {
+    try {
+        const sql = `SELECT * FROM Users WHERE idUser = '${id}'`;
+        const [user] = await connection.query(sql);
+        return user;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const confirmUserByToken= async (user) => {
+    try {
+        const sql = `UPDATE Users SET
+            token = '${user.token}',
+            confirmed = '${user.confirmed}'
+        WHERE idUser = ${user.idUser}`;
+        return await connection.query(sql);
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const updateUser = async (user) => {
+    try {
+        const sql = `UPDATE Users SET
+            firstName = '${user.firstName}',
+            lastName = '${user.lastName}',
+            email = '${user.email}',
+            idRole = '${user.role}',
+            password = '${user.password}',
+            token = '${user.token}',
+            confirmed = '${user.confirmed}',
+            observations = '${user.observations}',
+            state = ${user.state}
+        WHERE idUser = ${user.idUser}`;
+        return await connection.query(sql);
+    } catch (error) {
+        throw error;
+    }
+}

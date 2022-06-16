@@ -5,6 +5,7 @@ import citiesRoutes from '../components/cities/routes.js'
 import userRoutes from '../components/user/routes.js'
 import suscriptionsRoutes from '../components/suscriptions/routes.js'
 
+
 routes.use(express.static("public"));
 routes.use("/properties", propertiesRoutes);
 routes.use('/cities', citiesRoutes)
