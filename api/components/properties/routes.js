@@ -1,20 +1,14 @@
 import express from "express";
 import { uploadFile } from "../../middlewares/uploadfile.js";
-import {uploadImages} from "../../middlewares/uploadImages.js";
+import { uploadImages } from "../../middlewares/uploadImages.js";
+import checkAuth from "../../middlewares/checkAuth.js";
 const router = express.Router();
 import {
     getAllProperties,
-    addNewProperty,
-    getAllPropertyById,
-    importProperties,
-    importImagesProperties,
+    getPropertyById
 } from "./properties.controller.js";
 
-router.get("/", getAllProperties);
-router.get("/:id", getAllPropertyById);
-router.post("/", addNewProperty);
-
-router.post("/upload/properties", uploadFile, importProperties);
-router.post("/upload/images", uploadImages, importImagesProperties);
+router.get("/", getAllProperties)
+router.route("/:id").get(getPropertyById);
 
 export default router;

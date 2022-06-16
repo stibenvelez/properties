@@ -4,6 +4,7 @@ import {
     addNewPropertyService,
     getPropertyByIdService,
     importPopertiesCSVService,
+    getPropertiesByUserIdService,
 } from "./properties.services.js";
 
 export const getAllProperties = async (req, res) => {
@@ -12,7 +13,7 @@ export const getAllProperties = async (req, res) => {
     res.json(properties);
 };
 
-export const getAllPropertyById = async (req, res) => {
+export const getPropertyById = async (req, res) => {
     try {
         const { id } = req.params;
         const result = await getPropertyByIdService(id);
@@ -26,13 +27,25 @@ export const getAllPropertyById = async (req, res) => {
 export const addNewProperty = async (req, res) => {
     try {
         await addNewPropertyService(req.body);
-        res.json("Property was creaded");
+        res.json("Propiedad registrada");
     } catch (error) {
-        console.log(error);
-        res.status(400).json({ msg: "Error al ingresar la propiedad" });
+
+        if (error.code === "ER_DUP_ENTRY") {
+            const error = new Error(
+                "Propiedad contiene campos duplicados, verifique que la referencia no se repita"
+            );
+            return res.status(400).json({ msg: error.message });
+        }
+
+        res.status(400).json({ msg: "error al registrar la propiedad"});
     }
 
 };
+
+export const editProperty = async (req, res) => {
+}
+
+export const deletProperty = async (req, res) => {};
 
 export const importProperties = async (req, res) =>  {
     try {
@@ -51,5 +64,15 @@ export const importImagesProperties = async (req, res) => {
         res.json(req.files);
     } catch (error) {
         
+    }
+}
+
+export const getPropertiesByUser = async (req, res) => {
+    try {
+        const user = req.user
+        const result = await getPropertiesByUserIdService(user.idUser);
+        res.json(result);
+    } catch (error) {
+        console.log(error);
     }
 }

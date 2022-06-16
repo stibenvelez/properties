@@ -73,9 +73,10 @@ export const allProperties = async ({
 export const propertyById = async (id) => {
     try {
         const sql = `
-        SELECT*
+        SELECT p.*, pt.propertyType, o.offer
         FROM Properties AS p
         LEFT JOIN PropertyTypes AS pt ON pt.propertyTypeId = p.propertyTypeId
+        LEFT JOIN Offer AS o ON p.offerId = o.offerId
         WHERE p.idProperty = ${id}          
         `;
         return await connection.query(sql);
@@ -84,32 +85,55 @@ export const propertyById = async (id) => {
     }
 };
 
+export const allPropertiesByUserId = async (id) => {
+    try {
+        const sql = `
+        SELECT p.*, pt.propertyType, o.offer
+        FROM Properties AS p
+        LEFT JOIN PropertyTypes AS pt ON pt.propertyTypeId = p.propertyTypeId
+        LEFT JOIN Offer AS o ON p.offerId = o.offerId
+        WHERE p.createdBy = ${id}
+        `;
+        return await connection.query(sql);
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 export const insertProperty = async (property) => {
     try {
         const values = [
+            property.reference,
             property.title,
+            property.description,
             property.price,
             property.address,
             property.building,
-            property.emaiL,
+            property.contactName,
+            property.email,
             property.phone,
             property.antiquityYears,
             property.published,
             property.lastAdminprice,
             property.neighborhood,
             property.propertyTypeId,
+            property.offerId,
             property.area,
             property.stratum,
             property.bedrooms,
             property.numElevators,
             property.numFloor,
-            property.numbBathrooms,
+            property.bathrooms,
             property.garage,
+            property.parking,
             property.remodelation,
             property.latitude,
             property.longitude,
             property.city,
+            property.cityId,
             property.contact,
+            property.saleOff,
             property.image1,
             property.image2,
             property.image3,
@@ -119,17 +143,21 @@ export const insertProperty = async (property) => {
         ];
         const sql = `
         INSERT INTO Properties (
+            reference,
             title,
+            description,
             price,
             address,
             building,
-            emaiL,
+            contactName,
+            email,
             phone,
             antiquityYears,
             published,
             lastAdminprice, 
             neighborhood,
             propertyTypeId,
+            offerId,
             area,
             stratum,
             bedrooms,
@@ -137,11 +165,14 @@ export const insertProperty = async (property) => {
             numFloor,
             bathrooms,
             garage,
+            parking,
             remodelation,
             latitude,
             longitude,
             city,
+            cityId,
             contact,
+            saleOff,
             image1,
             image2,
             image3,
@@ -149,7 +180,7 @@ export const insertProperty = async (property) => {
             image5,
             image6
             )
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         
         `;
         return await connection.query(sql, values);

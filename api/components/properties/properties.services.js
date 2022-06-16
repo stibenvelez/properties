@@ -1,10 +1,12 @@
 import {
     allProperties,
+    allPropertiesByUserId,
     importPorperties,
     insertProperty,
     propertyById,
 } from "./properties.DAL.js";
 import csvtojson from "csvtojson";
+import { findUserById } from "../user/user.DAL.js";
 
 const COLUMNS_REQUIRED = [
     "reference",
@@ -51,7 +53,7 @@ const FIELDS_REQUIRED = [
     "address",
     "city",
     "propertyTypeId",
-    "offerId"
+    "offerId",
 ];
 
 export const getAllPropertiesService = async (query) => {
@@ -67,17 +69,17 @@ export const getAllPropertiesService = async (query) => {
         ];
 
         let galleryImgs = [];
-        
+
         images.map((image) => {
             if (property[image]) {
-                 galleryImgs.push(`${property.reference}-${image}.jpg`);
+                galleryImgs.push(`${property.reference}-${image}.jpg`);
             }
         });
 
         if (galleryImgs.length === 0) {
-            galleryImgs = []
+            galleryImgs = [];
         }
-        
+
         delete property.image1;
         delete property.image2;
         delete property.image3;
@@ -99,27 +101,58 @@ export const getAllPropertiesService = async (query) => {
 };
 
 export const getPropertyByIdService = async (id) => {
-    const [[property]] = await propertyById(id);
-    const images = ["image1", "image2", "image3", "image4", "image5", "image6"];
+    try {
+         const [[property]] = await propertyById(id);
 
-    let galleryImgs = [];
+         const images = [
+             "image1",
+             "image2",
+             "image3",
+             "image4",
+             "image5",
+             "image6",
+         ];
 
-    images.map((image) => {
-        if (property[image]) {
-            galleryImgs.push(`${property.reference}-${image}.jpg`);
-        }
-    });
-    
-    delete property.image1;
-    delete property.image2;
-    delete property.image3;
-    delete property.image4;
-    delete property.image5;
-    delete property.image6;
+         let galleryImgs = [];
 
-    property.galleryImgs = galleryImgs;
-    return property;
+         images.map((image) => {
+             if (property[image]) {
+                 galleryImgs.push(`${property.reference}-${image}.jpg`);
+             }
+         });
+
+         delete property.image1;
+         delete property.image2;
+         delete property.image3;
+         delete property.image4;
+         delete property.image5;
+         delete property.image6;
+
+         property.galleryImgs = galleryImgs;
+         const [user] = await findUserById(property.createdBy);
+         property.createBy = {
+             idUser: user.idUser,
+             firstName: user.firstName,
+             lastName: user.lastName,
+             email: user.email,
+         };
+         return property;
+    } catch (error) {
+        throw   error;
+    }
+
+   
 };
+
+export const getPropertiesByUserIdService = async (id) => {
+    try {
+        const [properties] = await allPropertiesByUserId(id);
+        return properties;
+    } catch (error) {
+        throw error;
+    }
+};
+
 
 export const addNewPropertyService = async (property) => {
     try {
@@ -155,15 +188,15 @@ export const importPopertiesCSVService = async (file) => {
             }
         });
 
-        if (errors.length > 0) {    
+        if (errors.length > 0) {
             throw {
                 msg: "Faltan columnas en el archivo",
-                errors
+                errors,
             };
         }
     };
 
-    const validateRows = async  (data) => {
+    const validateRows = async (data) => {
         let errors = [];
         FIELDS_REQUIRED.forEach((field) => {
             data.forEach((property) => {
@@ -171,18 +204,16 @@ export const importPopertiesCSVService = async (file) => {
                     errors.push({
                         reference: property.reference,
                         column: field,
-                        error: `La columna <<${field}>> no puede estar vacia`,   
-                    })
-                     
+                        error: `La columna <<${field}>> no puede estar vacia`,
+                    });
                 }
             });
-            
         });
 
         if (errors.length > 0) {
             throw {
                 msg: "Se encontraron errores en el archivo",
-                errors
+                errors,
             };
         }
     };
@@ -192,7 +223,7 @@ export const importPopertiesCSVService = async (file) => {
         if (extension !== "csv") {
             throw { msg: "El formato del archivo no es valido" };
         }
-    }
+    };
 
     try {
         const filePath = file.path;
