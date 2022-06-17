@@ -39,7 +39,7 @@ export const confirmUser = async (req, res) => {
     try {
         const { token } = req.params;
         const [userToConfirm] = await findUserByToken(token);
-
+        console.log(token, userToConfirm);
         if (!userToConfirm) {
             throw new Error("Token no valido");
         }

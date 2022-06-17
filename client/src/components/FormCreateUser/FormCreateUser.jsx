@@ -9,8 +9,8 @@ import { createUserAction } from "store/slice/user/userActions";
 const FormCreateUser = () => {
     const dispatch = useDispatch();
     const [user, setUser] = useState({
-        firstname: "",
-        lastname: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
         passwordConfirm: "",
@@ -66,11 +66,11 @@ const FormCreateUser = () => {
                             type="text"
                             placeholder="Ingrese un primer nombre"
                             className="mt-1"
-                            name="firstname"
-                            value={user.firstname}
+                            name="firstName"
+                            value={user.firstName}
                             onChange={handleChange}
                         />
-                        {errors.firstname && user.firstname === "" && (
+                        {errors.firstName && user.firstName === "" && (
                             <p className="text-sm text-red-500">
                                 {errors.firstname}
                             </p>
@@ -84,13 +84,13 @@ const FormCreateUser = () => {
                             type="text"
                             placeholder="Ingrese un apellido"
                             className="mt-1"
-                            name="lastname"
-                            value={user.lastname}
+                            name="lastName"
+                            value={user.lastName}
                             onChange={handleChange}
                         />
-                        {errors.lastname && user.lastname === "" && (
+                        {errors.lastName && user.lastName === "" && (
                             <p className="text-sm text-red-500">
-                                {errors.lastname}
+                                {errors.lastName}
                             </p>
                         )}
                     </label>
@@ -147,8 +147,13 @@ const FormCreateUser = () => {
                     )}
                 </label>
                 <ButtonPrimary className="flex gap-2" type="submit">
-                    {loading? <><SpinnerButton /> Agregando</> :"Agregar usuario"}
-                    
+                    {loading ? (
+                        <>
+                            <SpinnerButton /> Agregando
+                        </>
+                    ) : (
+                        "Agregar usuario"
+                    )}
                 </ButtonPrimary>
             </form>
         </Card>

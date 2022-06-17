@@ -1,6 +1,6 @@
 export const SidebarData = [
     {
-        title: "Ingresos",
+        title: "Inmuebles",
         path: "#",
         icon: null,
         iconClosed: null,
@@ -8,20 +8,14 @@ export const SidebarData = [
 
         subNav: [
             {
-                title: "Nueva venta",
-                path: "sales/new-sale",
+                title: "Mis inmuebles",
+                path: "admin/inmuebles",
                 icon: null,
                 cName: "sub-nav",
             },
             {
-                title: "Lista de Ventas",
-                path: "sales",
-                icon: null,
-                cName: "sub-nav",
-            },
-            {
-                title: "Detalle de ventas",
-                path: "sales/SalesDetailsPage",
+                title: "registrar inmueble",
+                path: "admin/nuevo-inmueble",
                 icon: null,
                 cName: "sub-nav",
             },

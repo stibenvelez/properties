@@ -15,9 +15,14 @@ export const createUserService = async (user) => {
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
 
-        await inserUser(user);
+        //await inserUser(user);
         //send confirm email
-        //await emailCreateUser(user);
+        await emailCreateUser({
+            email: user.email,
+            fisrtName: user.firstName,
+            lastName: user.lastName,
+            token: user.token,
+        });
     } catch (error) {
         throw error;
     }

@@ -4,6 +4,8 @@ import {
     importPorperties,
     insertProperty,
     propertyById,
+    propertyByIdByUserId,
+    uploadProperty,
 } from "./properties.DAL.js";
 import csvtojson from "csvtojson";
 import { findUserById } from "../user/user.DAL.js";
@@ -80,6 +82,9 @@ export const getAllPropertiesService = async (query) => {
             galleryImgs = [];
         }
 
+        delete property.createdAt;
+        delete property.updateAt;
+        delete property.createBy;
         delete property.image1;
         delete property.image2;
         delete property.image3;
@@ -102,46 +107,43 @@ export const getAllPropertiesService = async (query) => {
 
 export const getPropertyByIdService = async (id) => {
     try {
-         const [[property]] = await propertyById(id);
+        const [property] = await propertyById(id);
 
-         const images = [
-             "image1",
-             "image2",
-             "image3",
-             "image4",
-             "image5",
-             "image6",
-         ];
+        const images = [
+            "image1",
+            "image2",
+            "image3",
+            "image4",
+            "image5",
+            "image6",
+        ];
 
-         let galleryImgs = [];
+        let galleryImgs = [];
+        images.map((image) => {
+            if (property[image]) {
+                galleryImgs.push(`${property.reference}-${image}.jpg`);
+            }
+        });
 
-         images.map((image) => {
-             if (property[image]) {
-                 galleryImgs.push(`${property.reference}-${image}.jpg`);
-             }
-         });
+        delete property.image1;
+        delete property.image2;
+        delete property.image3;
+        delete property.image4;
+        delete property.image5;
+        delete property.image6;
 
-         delete property.image1;
-         delete property.image2;
-         delete property.image3;
-         delete property.image4;
-         delete property.image5;
-         delete property.image6;
-
-         property.galleryImgs = galleryImgs;
-         const [user] = await findUserById(property.createdBy);
-         property.createBy = {
-             idUser: user.idUser,
-             firstName: user.firstName,
-             lastName: user.lastName,
-             email: user.email,
-         };
-         return property;
+        property.galleryImgs = galleryImgs;
+        const [user] = await findUserById(property.createdBy);
+        property.createBy = {
+            idUser: user.idUser,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+        };
+        return property;
     } catch (error) {
-        throw   error;
+        throw error;
     }
-
-   
 };
 
 export const getPropertiesByUserIdService = async (id) => {
@@ -153,6 +155,45 @@ export const getPropertiesByUserIdService = async (id) => {
     }
 };
 
+export const getPropertyByIdByUserIdService = async (req) => {
+    const id = req.params.id;
+    const userId = req.user.idUser;
+
+    try {
+        const [property] = await propertyByIdByUserId(id, userId);
+        return property;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const editPropertyService = async (req, res) => {
+    const { id } = req.params;
+    const [property] = await propertyById(id);
+
+    if (!property) {
+        return res.status(404).json({
+            status: "error",
+            msg: "Propiedad no encontrada",
+        });
+    }
+
+    if (property.createdBy.toString() !== req.user.idUser.toString()) {
+        return res.status(401).json({msg: "No tienes permisos para editar este inmueble"});
+    }
+
+    const uploadData = {
+        ...req.body,
+        idProperty: id,
+    }
+
+    await uploadProperty(uploadData);
+
+    try {
+    } catch (error) {
+        throw error;
+    }
+};
 
 export const addNewPropertyService = async (property) => {
     try {

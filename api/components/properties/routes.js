@@ -9,6 +9,6 @@ import {
 } from "./properties.controller.js";
 
 router.get("/", getAllProperties)
-router.route("/:id").get(getPropertyById);
+router.get("/:id", getPropertyById);
 
 export default router;

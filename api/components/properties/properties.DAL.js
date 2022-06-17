@@ -79,7 +79,8 @@ export const propertyById = async (id) => {
         LEFT JOIN Offer AS o ON p.offerId = o.offerId
         WHERE p.idProperty = ${id}          
         `;
-        return await connection.query(sql);
+        const [property] = await connection.query(sql);
+        return property;
     } catch (error) {
         throw error;
     }
@@ -99,6 +100,22 @@ export const allPropertiesByUserId = async (id) => {
         throw error;
     }
 };
+
+export const propertyByIdByUserId = async (id, userId) => {
+    try {
+        const sql = `
+        SELECT p.*, pt.propertyType, o.offer
+        FROM Properties AS p
+        LEFT JOIN PropertyTypes AS pt ON pt.propertyTypeId = p.propertyTypeId
+        LEFT JOIN Offer AS o ON p.offerId = o.offerId
+        WHERE p.idProperty = ${id} AND p.createdBy = ${userId}
+        `;
+        return await connection.query(sql);
+    } catch (error) {
+        throw error;
+    }
+};
+
 
 
 export const insertProperty = async (property) => {
@@ -272,3 +289,90 @@ export const columnsPorperties = async () => {
         throw error;
     }
 };
+
+export const uploadProperty = async (property) => {
+    try {
+        console.log('editando', property);
+        const sql = `
+        UPDATE Properties SET
+            reference = ?,
+            title = ?,
+            description = ?,
+            price = ?,
+            address = ?,
+            building = ?,
+            contactName = ?,
+            email = ?,
+            phone = ?,
+            antiquityYears = ?,
+            published = ?,
+            lastAdminprice = ?,
+            neighborhood = ?,
+            propertyTypeId = ?,
+            offerId = ?,
+            area = ?,
+            stratum = ?,
+            bedrooms = ?,
+            numElevators = ?,
+            numFloor = ?,
+            bathrooms = ?,
+            garage = ?,
+            parking = ?,
+            remodelation = ?,
+            latitude = ?,
+            longitude = ?,
+            city = ?,
+            cityId = ?,
+            saleOff = ?,
+            image1 = ?,
+            image2 = ?,
+            image3 = ?,
+            image4 = ?,
+            image5 = ?,
+            image6 = ?
+        WHERE idProperty = ?
+        `;
+        return await connection.query(sql, [
+            property.reference,
+            property.title,
+            property.description,
+            property.price,
+            property.address,
+            property.building,
+            property.contactName,
+            property.email,
+            property.phone,
+            property.antiquityYears,
+            property.published,
+            property.lastAdminprice,
+            property.neighborhood,
+            property.propertyTypeId,
+            property.offerId,
+            property.area,
+            property.stratum,
+            property.bedrooms,
+            property.numElevators,
+            property.numFloor,
+            property.bathrooms,
+            property.garage,
+            property.parking,
+            property.remodelation,
+            property.latitude,
+            property.longitude,
+            property.city,
+            property.cityId,
+            property.saleOff,
+            property.image1,
+            property.image2,
+            property.image3,
+            property.image4,
+            property.image5,
+            property.image6,
+            property.idProperty
+        ]);
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+
+} 

@@ -36,12 +36,12 @@ const FormLoginAdmin = () => {
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-4">
                     <div>
-                        <label className="text-gray-800">usuario</label>
+                        <label className="text-gray-800">Correo</label>
                         <input
-                            type="text"
+                            type="email"
                             className="w-full p-2 border border-gray-200 rounded-lg"
-                            name="user"
-                            value={user.user}
+                            name="email"
+                            value={user.email}
                             onChange={handleChange}
                         />
                     </div>

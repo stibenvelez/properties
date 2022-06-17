@@ -1,11 +1,13 @@
 import mysql from "mysql2/promise";
+import doenv from "dotenv";
+doenv.config();
 
 // Create the connection pool. The pool-specific settings are the defaults
 const connection = mysql.createPool({
-    host: "151.106.97.204",
-    user: "u189463349_admin",
-    database: "u189463349_booking_db",
-    password: "7O#qxa;/itN@",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
     waitForConnections: true,
     connectionLimit: 10,
 });
