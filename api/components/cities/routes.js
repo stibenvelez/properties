@@ -1,7 +1,8 @@
 import express from "express";
-import { getAllCityes } from "./citiees.controller.js";
+import { getAllCityes, getAllCityesWhitProperties } from "./citiees.controller.js";
 const router = express.Router();
 
+router.get("/whitPropeties", getAllCityesWhitProperties);
 router.get('/', getAllCityes)
 
 export default router;

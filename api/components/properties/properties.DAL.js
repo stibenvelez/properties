@@ -7,6 +7,7 @@ export const allProperties = async ({
     bathrooms,
     city,
     category,
+    reference
 }) => {
     try {
         const filterByRangePrices = () => {
@@ -51,6 +52,12 @@ export const allProperties = async ({
             }
             return "";
         };
+        const filterByReference = () => {
+            if (reference && reference !== "") {
+                return `AND reference = '${reference}'`;
+            }
+            return "";
+        };
 
         const sql = `
         SELECT*
@@ -64,6 +71,7 @@ export const allProperties = async ({
         ${filterByBathroomsNumber()}
         ${filterByCity()}
         ${filterByOffer()}
+        ${filterByReference()}
         `;
         return await connection.query(sql);
     } catch (error) {

@@ -5,6 +5,7 @@ import citiesRoutes from '../components/cities/routes.js'
 import userRoutes from '../components/user/routes.js'
 import suscriptionsRoutes from '../components/suscriptions/routes.js'
 import propertyRoutesAdmin from '../components/properties/routes.admin.js'
+import departamentsRoutes from '../components/departaments/routes.js'
 
 
 
@@ -15,6 +16,7 @@ routes.use("/users", userRoutes);
 routes.use("/suscriptions", suscriptionsRoutes);
 
 routes.use("/admin/properties", propertyRoutesAdmin);
+routes.use("/departaments", departamentsRoutes);
 
 
 

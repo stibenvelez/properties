@@ -9,3 +9,11 @@ export const getAllCityesService = async () => {
         throw error
     }
 }
+export const getAllCityesWhitPropertiesService = async () => {
+    try {
+        const [result] = await allCityesWhitProperties();
+        return result;
+    } catch (error) {
+        throw error
+    }
+}

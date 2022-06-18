@@ -4,6 +4,23 @@ export const allCityes = async () => {
     try {
         const sql = `
         SELECT c.*,
+        d.departament
+        FROM Cities AS c
+
+        LEFT JOIN Departaments AS d ON d.idDepartament = c.IdDepartament
+
+        `;
+        return await connection.query(sql);
+    } catch (error) {
+        console.log(error);
+        throw error
+    }
+};
+
+export const allCityesWhitProperties = async () => {
+    try {
+        const sql = `
+        SELECT c.*,
         d.departament,
         COUNT(c.cityId) AS countProperties,
         COUNT(IF(p.offerId = 1, 1, NULL)) countSell,
