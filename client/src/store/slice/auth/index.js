@@ -14,7 +14,8 @@ export const authSlice = createSlice({
             state.loading = true;
         },
         setAuthSuccess: (state, action) => {
-            state.auth = action.payload;
+            state.auth = true;
+            state.user = action.payload;
             state.loading = false;
         },
         setAuthError: (state) => {
@@ -39,6 +40,19 @@ export const authSlice = createSlice({
             state.auth = false;
             state.msg = action.payload;
         },
+        setSignOut: (state, action) => {
+            state.loading = true;
+            state.auth = true;
+        },
+        setSignOutSucces: (state, action) => {
+            state.auth = false;
+            state.user = {};
+            state.loading = false;
+            state.error = false;
+        },
+        setSignOutError: (state, action) => {
+            state.error = true;
+        },
     },
 });
 
@@ -49,6 +63,9 @@ export const {
     setLogin,
     setLoginSuccess,
     setLoginError,
+    setSignOut,
+    setSignOutSucces,
+    setSignOutError,
 } = authSlice.actions;
 
 export default authSlice.reducer;

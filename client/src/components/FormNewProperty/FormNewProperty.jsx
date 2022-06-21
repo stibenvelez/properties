@@ -13,9 +13,16 @@ import clientAxios from "config/axios";
 import GoogleMapReact from "google-map-react";
 import LocationMarker from "components/AnyReactComponent/LocationMarker";
 import { formValidate } from "./utils/FormValidate";
+import { TrashIcon } from "@heroicons/react/solid";
+import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { createPropertyAction } from "store/slice/properties/propertiesActions";
 
 const FormNewProperty = () => {
-    const [newProperty, setNewProperty] = useState(INITIAL_STATE_NEW_PROPERTY);
+    const dispatch = useDispatch()
+    const [newProperty, setNewProperty] = useState(
+        TEST_INITIAL_STATE_NEW_PROPERTY
+    );
     const [errors, setErrors] = useState({});
     const [departaments, setDepartaments] = useState([]);
     const [cities, setCities] = useState([]);
@@ -27,16 +34,37 @@ const FormNewProperty = () => {
         });
     };
 
+    const handleImages = (e) => {
+        const { files } = e.target;
+        const images = [];
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+            let id = Math.random().toString(36)
+            file.id = id;
+            images.push(file);
+        }
+        const limitImages = newProperty.images.concat(images).slice(0,5)
+
+        setNewProperty({
+            ...newProperty,
+            images: limitImages,
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const result = await formValidate(newProperty);
         if (Object.keys(result).length > 0) {
             setErrors(result);
-            return
+            Swal.fire({
+                icon: "error",
+                title: "Faltan campos por llenar",
+                text: "Verifique que todos los campos obligatorios se encuentren diligenciados",
+            });
+            return;
         }
         setErrors({});
-        console.log("registrando", result);
-
+        dispatch(createPropertyAction(newProperty))
     };
 
     useMemo(() => {
@@ -84,12 +112,22 @@ const FormNewProperty = () => {
         })();
     }, [newProperty.reference]);
 
+    const handleDeleteImage = (item) => {
+        const newArrayImages = newProperty.images.filter(
+            (image) => image.id !== item.id
+        );
+        setNewProperty({
+            ...newProperty,
+            images: newArrayImages,
+        });
+    };
+
     return (
         <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div className="flex flex-col md:flex-row">
                 <div className="flex-grow w-full mt-10 space-y-6 md:mt-0 md:pl-16">
                     <h3>Información del inmueble</h3>
-                    <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div className="w-full">
                             <Label>
                                 Reference{" "}
@@ -105,11 +143,10 @@ const FormNewProperty = () => {
                                         value: e.target.value,
                                     })
                                 }
-                                
                             />
                             {errors.reference &&
                                 newProperty.reference === "" && (
-                                    <p className="text-red-500 text-sm py-1">
+                                    <p className="py-1 text-sm text-red-500">
                                         {errors.reference}
                                     </p>
                                 )}
@@ -130,13 +167,13 @@ const FormNewProperty = () => {
                                 }
                             />
                             {errors.title && newProperty.title === "" && (
-                                <p className="text-red-500 text-sm py-1">
+                                <p className="py-1 text-sm text-red-500">
                                     {errors.title}
                                 </p>
                             )}
                         </div>
                     </div>
-                    <div className="grid lg:grid-cols-4 grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
                         <div className="w-full">
                             <Label>
                                 Tipo de oferta{" "}
@@ -158,7 +195,7 @@ const FormNewProperty = () => {
                                 <option value="2">Arriendo</option>
                             </Select>
                             {errors.offer && newProperty.offer === "" && (
-                                <p className="text-red-500 text-sm py-1">
+                                <p className="py-1 text-sm text-red-500">
                                     {errors.offer}
                                 </p>
                             )}
@@ -190,7 +227,7 @@ const FormNewProperty = () => {
                             </Select>
                             {errors.propertyType &&
                                 newProperty.propertyType === "" && (
-                                    <p className="text-red-500 text-sm py-1">
+                                    <p className="py-1 text-sm text-red-500">
                                         {errors.propertyType}
                                     </p>
                                 )}
@@ -215,7 +252,7 @@ const FormNewProperty = () => {
                             {errors.price &&
                                 (newProperty.price === "" ||
                                     newProperty.price === 0) && (
-                                    <p className="text-red-500 text-sm py-1">
+                                    <p className="py-1 text-sm text-red-500">
                                         {errors.price}
                                     </p>
                                 )}
@@ -237,7 +274,7 @@ const FormNewProperty = () => {
                             />
                         </div>
                     </div>
-                    <div className="grid lg:grid-cols-3 grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div className="w-full">
                             <Label>
                                 Departamento{" "}
@@ -245,7 +282,7 @@ const FormNewProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                defaultValue={newProperty.neighborhood}
+                                value={newProperty.departament}
                                 name="departament"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -269,7 +306,7 @@ const FormNewProperty = () => {
                             </Select>
                             {errors.departament &&
                                 newProperty.departament === "" && (
-                                    <p className="text-red-500 text-sm py-1">
+                                    <p className="py-1 text-sm text-red-500">
                                         {errors.departament}
                                     </p>
                                 )}
@@ -280,7 +317,7 @@ const FormNewProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                defaultValue={newProperty.city}
+                                value={newProperty.city}
                                 name="city"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -307,13 +344,11 @@ const FormNewProperty = () => {
                                         </option>
                                     ))}
                             </Select>
-                            {errors.city &&
-                                newProperty.city === "" && (
-                                    <p className="text-red-500 text-sm py-1">
-                                        {errors.city}
-                                    </p>
-                                )}
-                            
+                            {errors.city && newProperty.city === "" && (
+                                <p className="py-1 text-sm text-red-500">
+                                    {errors.city}
+                                </p>
+                            )}
                         </div>
                         <div className="w-full">
                             <Label>Barrio</Label>
@@ -331,7 +366,7 @@ const FormNewProperty = () => {
                             />
                         </div>
                     </div>
-                    <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div className="w-full">
                             <Label>Direccion</Label>
                             <Input
@@ -364,7 +399,7 @@ const FormNewProperty = () => {
                             />
                         </div>
                     </div>
-                    <div className="grid lg:grid-cols-5 grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">
                         <div className="w-full">
                             <Label>
                                 Area (m²){" "}
@@ -384,13 +419,12 @@ const FormNewProperty = () => {
                                 }
                             />
                             {errors.area &&
-                                (newProperty.area === "" || 
+                                (newProperty.area === "" ||
                                     newProperty.area === 0) && (
-                                    <p className="text-red-500 text-sm py-1">
+                                    <p className="py-1 text-sm text-red-500">
                                         {errors.area}
                                     </p>
                                 )}
-                            
                         </div>
                         <div className="w-full">
                             <Label>estrato</Label>
@@ -405,7 +439,9 @@ const FormNewProperty = () => {
                                     })
                                 }
                             >
-                                <option hidden value="">ninguno</option>
+                                <option hidden value="">
+                                    ninguno
+                                </option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -463,7 +499,7 @@ const FormNewProperty = () => {
                             />
                         </div>
                     </div>
-                    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 md:grid-cols-2">
                         <div className="w-full">
                             <Label>
                                 Habitaciones{" "}
@@ -485,11 +521,10 @@ const FormNewProperty = () => {
                             {errors.bedrooms &&
                                 (newProperty.bedrooms === "" ||
                                     newProperty.bedrooms === 0) && (
-                                    <p className="text-red-500 text-sm py-1">
+                                    <p className="py-1 text-sm text-red-500">
                                         {errors.bedrooms}
                                     </p>
                                 )}
-                            
                         </div>
                         <div className="w-full">
                             <Label>
@@ -507,13 +542,12 @@ const FormNewProperty = () => {
                                     })
                                 }
                             />
-                            {errors.bathrooms &&    
-                                (newProperty.bathrooms === "") && (
-                                    <p className="text-red-500 text-sm py-1">
+                            {errors.bathrooms &&
+                                newProperty.bathrooms === "" && (
+                                    <p className="py-1 text-sm text-red-500">
                                         {errors.bathrooms}
                                     </p>
                                 )}
-                                
                         </div>
                         <div className="w-full">
                             <Label>Piso</Label>
@@ -546,7 +580,7 @@ const FormNewProperty = () => {
                             />
                         </div>
                     </div>
-                    <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div className="w-full">
                             <Label>Garage</Label>
                             <Select
@@ -584,7 +618,7 @@ const FormNewProperty = () => {
                     </div>
 
                     <h3>Informacion de contacto</h3>
-                    <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div className="w-full">
                             <Label>
                                 Nombre del contacto{" "}
@@ -606,7 +640,7 @@ const FormNewProperty = () => {
                             {errors.contactName &&
                                 (newProperty.contactName === "" ||
                                     newProperty.contactName === 0) && (
-                                    <p className="text-red-500 text-sm py-1">
+                                    <p className="py-1 text-sm text-red-500">
                                         {errors.contactName}
                                     </p>
                                 )}
@@ -628,7 +662,7 @@ const FormNewProperty = () => {
                             />
                         </div>
                     </div>
-                    <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div className="w-full">
                             <Label>
                                 Celular <span className="text-red-500"> *</span>
@@ -646,11 +680,12 @@ const FormNewProperty = () => {
                                     })
                                 }
                             />
-                            {errors.cellPhone && newProperty.cellPhone === "" && (
-                                <p className="text-red-500 text-sm py-1">
-                                    {errors.cellPhone}
-                                </p>
-                            )}
+                            {errors.cellPhone &&
+                                newProperty.cellPhone === "" && (
+                                    <p className="py-1 text-sm text-red-500">
+                                        {errors.cellPhone}
+                                    </p>
+                                )}
                         </div>
                         <div className="w-full">
                             <Label>telefono fijo</Label>
@@ -717,15 +752,34 @@ const FormNewProperty = () => {
 
                     <div>
                         <h3>Imagenes</h3>
-                        <div className="py-4 flex flex-wrap gap-4 lg:justify-start justify-center">
-                            <div className="bg-gray-200 w-44 h-28 rounded"></div>
-                            <div className="bg-gray-200 w-44 h-28 rounded"></div>
-                            <div className="bg-gray-200 w-44 h-28 rounded"></div>
-                            <div className="bg-gray-200 w-44 h-28 rounded"></div>
-                            <div className="bg-gray-200 w-44 h-28 rounded"></div>
-                            <div className="bg-gray-200 w-44 h-28 rounded"></div>
+                        <p className="text-sm text-gray-400">
+                            Aqui puedes subir las imagenes del inmueble. Puedes
+                            cargar hasta 6 imagenes
+                        </p>
+                        <div className="flex flex-wrap justify-center gap-4 py-4 lg:justify-start">
+                            {newProperty.images &&
+                                newProperty.images.map((image, index) => (
+                                    <div
+                                        key={index}
+                                        className="relative overflow-hidden bg-gray-200 rounded shadow w-44 h-28"
+                                    >
+                                        <button
+                                            onClick={() =>
+                                                handleDeleteImage(image)
+                                            }
+                                            type="button"
+                                            className="absolute p-1 rounded-full bottom-1 right-1 text-gray-50 bg-gray-100/70 hover:bg-red-100/80 hover:text-red-400 "
+                                        >
+                                            <TrashIcon className="w-4 h-4" />
+                                        </button>
+                                        <img
+                                            className="object-contain object-center"
+                                            src={URL.createObjectURL(image)}
+                                        />
+                                    </div>
+                                ))}
                         </div>
-                        <div className="boder border-gray-200">
+                        <div className="border-gray-200 boder">
                             <label className="block">
                                 <span className="sr-only">Choose File</span>
                                 <input
@@ -735,17 +789,23 @@ const FormNewProperty = () => {
                                     aria-describedby="user_avatar_help"
                                     id="user_avatar"
                                     name="images"
-                                    onChange={(e) =>
-                                        handleOnChange({
-                                            name: e.target.name,
-                                            value: e.target.files,
-                                        })
-                                    }
+                                    onChange={handleImages}
                                 />
                             </label>
+                            <div className="py-2">
+                                {newProperty.images &&
+                                    newProperty.images.map((image, index) => (
+                                        <p
+                                            key={index}
+                                            className="text-sm text-gray-500"
+                                        >
+                                            {image.name}
+                                        </p>
+                                    ))}
+                            </div>
                         </div>
                     </div>
-                    <div className="pt-2 flex gap-2">
+                    <div className="flex gap-2 pt-2">
                         <ButtonPrimary type="submit">
                             Registrar inmueble
                         </ButtonPrimary>

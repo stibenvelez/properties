@@ -1,13 +1,56 @@
 import clientAxios from "config/axios";
-import { setLogin, setLoginError, setLoginSuccess } from ".";
+import { setAuth, setAuthError, setAuthSuccess, setLogin, setLoginError, setLoginSuccess, setSignOut, setSignOutError, setSignOutSucces } from ".";
 
+export const authAction = () => async dispatch => {
+   dispatch(setAuth());
+   try {
+       const token = localStorage.getItem("token");
+       if (!token) {
+           console.log("no hay token");
+           return
+       }
+       
+       const config = {
+           headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`,
+           },
+       };
+       const {data} = await clientAxios.get("/users/profile", config);
+       dispatch(setAuthSuccess(data));
+   } catch (error) {
+       dispatch(setAuthError());
+   } 
+}
 
 export const loginAction = (user) => async (dispatch) => {
     dispatch(setLogin());
     try {
-        const response = await clientAxios.post("/users/login", user);
-        dispatch(setLoginSuccess(response.data[0]));
+        const { data } = await clientAxios.post("/users/login", user);
+        localStorage.setItem("token", data.token);
+        dispatch(setLoginSuccess(data));
     } catch (error) {
         dispatch(setLoginError(error.response.data.msg));
     }
-}
+};
+
+export const forgetPasswordAction = (email) => async (dispatch) => {
+    try {
+        const result = clientAxios.post("/users/forget-password", { email });
+        console.log(result);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const singOutAction = () => {
+    return async (dispatch) => {
+        dispatch(setSignOut());
+        try {
+            localStorage.removeItem("token");
+            dispatch(setSignOutSucces());
+        } catch (error) {
+            dispatch(setSignOutError());
+        }
+    };
+};

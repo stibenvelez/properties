@@ -59,9 +59,16 @@ export const propertiesSlice = createSlice({
         },
         setUploadImagesError: (state, action) => {
             state.loadingUploadImages = false;
-        }
-
-        
+        },
+        setCreateProperty: (state, action) => {
+            state.loading = true;
+        },
+        setCreatePropertySuccess: (state, action) => {
+            state.loading = false;
+        },
+        setCreatePropertyError: (state, action) => {
+            state.loading = false;
+        },
     },
 });
 
@@ -76,7 +83,10 @@ export const {
     setUploadPropertiescsvError,
     setUploadImages,
     setUploadImagesSucces,
-    setUploadImagesError
+    setUploadImagesError,
+    setCreateProperty,
+    setCreatePropertySuccess,
+    setCreatePropertyError
 } = propertiesSlice.actions;
 
 export default propertiesSlice.reducer;

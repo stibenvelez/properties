@@ -1,4 +1,4 @@
-import { emailCreateUser } from "../../helpers/emails.js";
+import { emailCreateUser, emailForgetPassword } from "../../helpers/emails.js";
 import { findUserByEmail, inserUser, updateUser } from "./user.DAL.js";
 import bcrypt from "bcrypt";
 import generateId from "../../helpers/generateId.js";
@@ -72,6 +72,14 @@ export const forgetPassswordService = async (user) => {
 
         userExist.token = generateId();
         await updateUser(userExist);
+
+        //send email
+        emailForgetPassword({
+            email: userExist.email,
+            fisrtName: userExist.firstName,
+            lastName: userExist.lastName,
+            token: userExist.token,
+        });
     } catch (error) {
         console.log(error);
         throw error;

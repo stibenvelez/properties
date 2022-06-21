@@ -3,7 +3,7 @@ import { SidebarData } from "./SidebarData";
 import SubMenu from "./SubMenu";
 
 import { useState } from "react";
-import { HomeIcon, CloudUploadIcon, XIcon } from "@heroicons/react/solid";
+import { HomeIcon, CloudUploadIcon, XIcon, LogoutIcon } from "@heroicons/react/solid";
 import { MenuIcon } from "@heroicons/react/outline";
 const SidebarAdmin = () => {
     const SIDEBAR_DATA = [

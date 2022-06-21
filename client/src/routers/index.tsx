@@ -38,6 +38,7 @@ import ForgetPasswordPage from "containers/ForgetPasswordPage/ForgetPasswordPage
 import NewPasswordPage from "containers/NewPasswordPage/NewPasswordPage";
 import ConfirmUserPage from "containers/ConfirmUserPage/ConfirmUserPage";
 import NewPropertyPage from "containers/NewPropertyPage/NewPropertyPage";
+import ProfilePage from "containers/ProfilePage/ProfilePage";
 
 export const pages: Page[] = [
     { path: "/", exact: true, component: PageHome },
@@ -119,7 +120,7 @@ const Routes = () => {
                   component={ForgetPasswordPage}
               />
               <PrivateRoute
-                  path="/admin/users/new-password"
+                  path="/admin/users/forget-password/:token"
                   exact
                   component={NewPasswordPage}
               />
@@ -129,6 +130,7 @@ const Routes = () => {
                   component={ConfirmUserPage}
               />
               <Route path="/admin/login" exact component={LoginAdminPage} />
+              <Route path="/admin/profile/:id" exact component={ProfilePage} />
               <Route component={Page404} />
           </Switch>
           <Footer />

@@ -1,5 +1,8 @@
 import {
     setclearFilter,
+    setCreateProperty,
+    setCreatePropertyError,
+    setCreatePropertySuccess,
     setFilters,
     setProperties,
     setPropertiesError,
@@ -14,7 +17,8 @@ import {
 import clientAxios from "../../../config/axios";
 import Swal from "sweetalert2";
 
-export const fetchAllProperties = (filters, categoryProperty) => async (dispatch) => {
+export const fetchAllProperties =
+    (filters, categoryProperty) => async (dispatch) => {
         dispatch(setProperties());
         try {
             const response = await clientAxios(
@@ -68,16 +72,15 @@ export const uploadPropertiescsvAction = (file) => async (dispatch) => {
         dispatch(setUploadPropertiescsvError(error.response.data));
         Swal.fire(
             error.response.data.msg,
-            error.response.data.text||"",
+            error.response.data.text || "",
             "error"
         );
-        
     }
 };
 
 export const uploadImagesAction = (files) => async (dispatch) => {
     dispatch(setUploadImages());
-    
+
     try {
         const res = await clientAxios.post("/properties/upload/images", files);
         Swal.fire(
@@ -91,10 +94,39 @@ export const uploadImagesAction = (files) => async (dispatch) => {
         dispatch(setUploadImagesError(error.response.data));
         Swal.fire(
             error.response.data.msg,
-            error.response.data.text||"",
+            error.response.data.text || "",
             "error"
         );
-        
     }
-}
+};
 
+export const createPropertyAction = (property) => async (dispatch) => {
+    dispatch(setCreateProperty());
+    try {
+        let data = new FormData();
+        Object.entries(property).forEach(([key, value]) => {
+            data.append(key, value);
+        });
+        const token = localStorage.getItem("token");
+        if (!token) {
+            console.log("no hay token");
+        }
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        console.log("desde action", data);
+        const result = await clientAxios.post(
+            "/admin/properties",
+            data,
+            config
+        );
+        console.log(result);
+        dispatch(setCreatePropertySuccess());
+    } catch (error) {
+        dispatch(setCreatePropertyError());
+        console.log(error);
+    }
+};

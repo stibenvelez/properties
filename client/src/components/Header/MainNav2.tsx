@@ -20,23 +20,21 @@ const MainNav2: FC<MainNav2Props> = ({ isTop }) => {
         isTop ? "onTop " : "notOnTop backdrop-filter"
       }`}
     >
-      <div className="container py-5 relative flex justify-between items-center space-x-4 xl:space-x-8">
-        <div className="flex justify-start flex-grow items-center space-x-3 sm:space-x-8 lg:space-x-10">
+      <div className="container relative flex items-center justify-between py-5 space-x-4 xl:space-x-8">
+        <div className="flex items-center justify-start flex-grow space-x-3 sm:space-x-8 lg:space-x-10">
           <Logo />
-          <div className="hidden sm:block h-10 border-l border-neutral-300 dark:border-neutral-500"></div>
+          <div className="hidden h-10 border-l sm:block border-neutral-300 dark:border-neutral-500"></div>
           <div className="hidden sm:block">
             <DropdownTravelers />
           </div>
         </div>
-        <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
-          <div className="hidden items-center xl:flex space-x-1">
+        <div className="flex items-center justify-end flex-shrink-0 space-x-1 text-neutral-700 dark:text-neutral-100">
+          <div className="items-center hidden space-x-1 xl:flex">
             <CurrencyDropdown />
             <LangDropdown />
             <Link
               to="/add-listing-1"
-              className="
-                text-opacity-90
-                group px-4 py-2 border border-neutral-300 hover:border-neutral-400 dark:border-neutral-700 rounded-full inline-flex items-center text-sm text-gray-700 dark:text-neutral-300 font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+              className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 border rounded-full text-opacity-90 group border-neutral-300 hover:border-neutral-400 dark:border-neutral-700 dark:text-neutral-300 hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
             >
               List your property
             </Link>

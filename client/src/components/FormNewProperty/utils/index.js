@@ -26,9 +26,10 @@ export const INITIAL_STATE_NEW_PROPERTY = {
     remodelation: 0,
     latitude: 6.228418741427521,
     longitude: -75.5626006542638,
-    city: 1,
     departament: "",
+    city: "",
     saleOff: 0,
+    images: [],
 };
 
 export const TEST_INITIAL_STATE_NEW_PROPERTY = {
@@ -60,8 +61,8 @@ export const TEST_INITIAL_STATE_NEW_PROPERTY = {
     remodelation: 0,
     latitude: 6.228418741427521,
     longitude: -75.5626006542638,
-    cityId: 1,
-    city: "MEDELLIN",
-    departament: "",
+    departament: "1",
+    city: "1",
     saleOff: 100000,
+    images: [],
 };

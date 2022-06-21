@@ -1,13 +1,13 @@
 import nodeMailer from "nodemailer";
 
-export const emailCreateUser = async ({email, fisrtName,lastName, token}) => {
+export const emailCreateUser = async  ({email, fisrtName,lastName, token})   => {
 
     const transport = nodeMailer.createTransport({
-        host: "smtp.mailtrap.io",
-        port: 2525,
+        host: procces.env.EMAIL_HOST,
+        port: procces.env.EMAIL_PORT,
         auth: {
-            user: "60b83bea1cfbbc",
-            pass: "1c341d0113bffd",
+            user: procces.env.EMAIL_USER,
+            pass: procces.env.EMAIL_PASSWORD,
         },
     });
 
@@ -29,3 +29,31 @@ export const emailCreateUser = async ({email, fisrtName,lastName, token}) => {
     });
 
 };
+
+export const emailForgetPassword = async ({ email, fisrtName, lastName, token }) => {
+
+    const transport = nodeMailer.createTransport({
+        host: procces.env.EMAIL_HOST,
+        port: procces.env.EMAIL_PORT,
+        auth: {
+            user: procces.env.EMAIL_USER,
+            pass: procces.env.EMAIL_PASSWORD,
+        },
+    });
+
+    // info email
+    const info = await transport.sendMail({
+        from: '"Properties" <properties@correo.com>',
+        to: email,
+        subject: "Properties - Restablece tu contraseña",
+        text: "Has solicitado restablecer tu contraseña",
+        html: `
+            <p>Hola: ${fisrtName}, Has solicitado generar una nueva contraseña</p>
+            <p>Sigue el siguiente enlace:</p>
+            <a href="${process.env.FRONTEND_URL}/admin/users/forget-password/${token}">Restrablecer contraseña</a>
+
+            <p>Si no hiciste la solicitud, ignora este correo</p>
+
+        `,
+    });
+}

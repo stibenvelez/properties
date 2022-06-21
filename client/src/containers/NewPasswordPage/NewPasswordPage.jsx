@@ -14,7 +14,8 @@ const NewPasswordPage = () => {
 
             <div className="container py-4 space-y-16 lg:py-4 lg:space-y-28 ">
                 <div className="py-4">
-                    <h1 className="text-2xl text-gray-800">Nueva contraseña</h1>
+                    <h1 className="text-2xl font-bold text-gray-800">Nueva contraseña</h1>
+                    <p>Ingrese una nueva contraseña</p>
                 </div>
                 <FormNewPassword />
             </div>

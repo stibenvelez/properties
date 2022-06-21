@@ -21,7 +21,7 @@ const MenuBar: React.FC<MenuBarProps> = () => {
           className="fixed inset-0 z-50 overflow-y-auto"
           onClose={handleCloseMenu}
         >
-          <div className="fixed left-0 top-0 bottom-0 w-full md:w-auto z-max outline-none focus:outline-none">
+          <div className="fixed top-0 bottom-0 left-0 w-full outline-none md:w-auto z-max focus:outline-none">
             <React.Fragment>
               <Transition.Child
                 as={Fragment}
@@ -32,7 +32,7 @@ const MenuBar: React.FC<MenuBarProps> = () => {
                 leaveFrom="opacity-100 translate-x-0"
                 leaveTo="opacity-0 -translate-x-14"
               >
-                <div className="z-10 relative">
+                <div className="relative z-10">
                   <NavMobile onClickClose={handleCloseMenu} />
                 </div>
               </Transition.Child>
@@ -46,7 +46,7 @@ const MenuBar: React.FC<MenuBarProps> = () => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Dialog.Overlay className="fixed inset-0 bg-neutral-900 bg-opacity-50" />
+                <Dialog.Overlay className="fixed inset-0 bg-opacity-50 bg-neutral-900" />
               </Transition.Child>
             </React.Fragment>
           </div>
@@ -74,7 +74,7 @@ const MenuBar: React.FC<MenuBarProps> = () => {
           />
         </svg>
       </button>
-
+     
       {renderContent()}
     </>
   );

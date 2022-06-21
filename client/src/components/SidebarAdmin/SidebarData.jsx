@@ -9,13 +9,13 @@ export const SidebarData = [
         subNav: [
             {
                 title: "Mis inmuebles",
-                path: "admin/inmuebles",
+                path: "/admin/inmuebles",
                 icon: null,
                 cName: "sub-nav",
             },
             {
                 title: "registrar inmueble",
-                path: "admin/nuevo-inmueble",
+                path: "/admin/nuevo-inmueble",
                 icon: null,
                 cName: "sub-nav",
             },
