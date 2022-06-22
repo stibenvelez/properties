@@ -127,6 +127,7 @@ export const propertyByIdByUserId = async (id, userId) => {
 
 
 export const insertProperty = async (property) => {
+    //console.log({ property });
     try {
         const values = [
             property.reference,
@@ -142,8 +143,8 @@ export const insertProperty = async (property) => {
             property.published,
             property.lastAdminprice,
             property.neighborhood,
-            property.propertyTypeId,
-            property.offerId,
+            property.propertyType,
+            property.offer,
             property.area,
             property.stratum,
             property.bedrooms,
@@ -156,7 +157,6 @@ export const insertProperty = async (property) => {
             property.latitude,
             property.longitude,
             property.city,
-            property.cityId,
             property.contact,
             property.saleOff,
             property.image1,
@@ -165,6 +165,7 @@ export const insertProperty = async (property) => {
             property.image4,
             property.image5,
             property.image6,
+            property.createdBy,
         ];
         const sql = `
         INSERT INTO Properties (
@@ -194,7 +195,6 @@ export const insertProperty = async (property) => {
             remodelation,
             latitude,
             longitude,
-            city,
             cityId,
             contact,
             saleOff,
@@ -203,7 +203,8 @@ export const insertProperty = async (property) => {
             image3,
             image4,
             image5,
-            image6
+            image6,
+            createdBy
             )
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         

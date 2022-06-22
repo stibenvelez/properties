@@ -26,16 +26,18 @@ export const getPropertyById = async (req, res) => {
 };
 
 export const addNewProperty = async (req, res) => {
+    const body = req.body;
+    const files = req.files;
+    const user = req.user;
 
-    console.log(req.body);
     try {
-        //await addNewPropertyService(req.body);
+        await addNewPropertyService(body, files, user);
         res.json("Propiedad registrada");
     } catch (error) {
         console.log(error)
         if (error.code === "ER_DUP_ENTRY") {
             const error = new Error(
-                "Propiedad contiene campos duplicados, verifique que la referencia no se repita"
+                "Propiedad contiene campos duplicados, verifique que la referencia no esté duplicada"
             );
             return res.status(400).json({ msg: error.message });
         }

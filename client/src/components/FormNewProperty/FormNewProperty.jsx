@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import Label from "components/Label/Label";
 import Input from "shared/Input/Input";
@@ -19,14 +19,12 @@ import { useDispatch } from "react-redux";
 import { createPropertyAction } from "store/slice/properties/propertiesActions";
 
 const FormNewProperty = () => {
-    const dispatch = useDispatch()
-    const [newProperty, setNewProperty] = useState(
-        TEST_INITIAL_STATE_NEW_PROPERTY
-    );
+    const dispatch = useDispatch();
+    const [newProperty, setNewProperty] = useState(INITIAL_STATE_NEW_PROPERTY);
     const [errors, setErrors] = useState({});
     const [departaments, setDepartaments] = useState([]);
     const [cities, setCities] = useState([]);
-
+    const inputFilesRef = useRef();
     const handleOnChange = (data) => {
         setNewProperty({
             ...newProperty,
@@ -39,33 +37,16 @@ const FormNewProperty = () => {
         const images = [];
         for (let i = 0; i < files.length; i++) {
             let file = files[i];
-            let id = Math.random().toString(36)
-            file.id = id;
+            file.id = Math.random().toString(36);
             images.push(file);
         }
-        const limitImages = newProperty.images.concat(images).slice(0,5)
+
+        const limitImages = newProperty.files.concat(images).slice(0, 5);
 
         setNewProperty({
             ...newProperty,
-            images: limitImages,
+            files: limitImages,
         });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log('enviando')
-        const result = await formValidate(newProperty);
-        if (Object.keys(result).length > 0) {
-            setErrors(result);
-            Swal.fire({
-                icon: "error",
-                title: "Faltan campos por llenar",
-                text: "Verifique que todos los campos obligatorios se encuentren diligenciados",
-            });
-            return;
-        }
-        setErrors({});
-        dispatch(createPropertyAction(newProperty));
     };
 
     useMemo(() => {
@@ -114,17 +95,42 @@ const FormNewProperty = () => {
     }, [newProperty.reference]);
 
     const handleDeleteImage = (item) => {
-        const newArrayImages = newProperty.images.filter(
-            (image) => image.id !== item.id
+        const newArrayImages = newProperty.files.filter(
+            (file) => file.id !== item.id
         );
         setNewProperty({
             ...newProperty,
-            images: newArrayImages,
+            files: newArrayImages,
         });
     };
 
+    useEffect(() => {
+        if (newProperty.files.length === 0) {
+            inputFilesRef.current.value = "";
+        }
+    }, [newProperty.files]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("enviando");
+        const result = await formValidate(newProperty);
+        if (Object.keys(result).length > 0) {
+            setErrors(result);
+            Swal.fire({
+                icon: "error",
+                title: "Faltan campos por llenar",
+                text: "Verifique que todos los campos obligatorios se encuentren diligenciados",
+            });
+            return;
+        }
+        setErrors({});
+        
+        dispatch(createPropertyAction(newProperty));
+        setNewProperty(INITIAL_STATE_NEW_PROPERTY);
+    };
+
     return (
-        <form onSubmit={handleSubmit} enctype="multipart/form-data">
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div className="flex flex-col md:flex-row">
                 <div className="flex-grow w-full mt-10 space-y-6 md:mt-0 md:pl-16">
                     <h3>Información del inmueble</h3>
@@ -136,7 +142,7 @@ const FormNewProperty = () => {
                             </Label>
                             <Input
                                 className="mt-1.5"
-                                defaultValue={newProperty.reference}
+                                value={newProperty.reference}
                                 name="reference"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -145,12 +151,11 @@ const FormNewProperty = () => {
                                     })
                                 }
                             />
-                            {errors.reference &&
-                                newProperty.reference === "" && (
-                                    <p className="py-1 text-sm text-red-500">
-                                        {errors.reference}
-                                    </p>
-                                )}
+                            {errors.reference && (
+                                <p className="py-1 text-sm text-red-500">
+                                    {errors.reference}
+                                </p>
+                            )}
                         </div>
                         <div className="w-full">
                             <Label>
@@ -158,7 +163,7 @@ const FormNewProperty = () => {
                             </Label>
                             <Input
                                 className="mt-1.5"
-                                defaultValue={newProperty.title}
+                                value={newProperty.title}
                                 name="title"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -182,7 +187,7 @@ const FormNewProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                defaultValue={newProperty.offer}
+                                value={newProperty.offer}
                                 name="offer"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -208,7 +213,7 @@ const FormNewProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                defaultValue={newProperty.propertyType}
+                                value   ={newProperty.propertyType}
                                 name="propertyType"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -241,7 +246,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 type="text"
                                 placeholder="$ 0"
-                                defaultValue={newProperty.price}
+                                value={newProperty.price}
                                 name="price"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -264,7 +269,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 type="text"
                                 placeholder="$ 0"
-                                defaultValue={newProperty.saleOff}
+                                value={newProperty.saleOff}
                                 name="saleOff"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -357,7 +362,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 placeholder="barrio donde esta ubicado el inmuble"
                                 name="neighborhood"
-                                defaultValue={newProperty.neighborhood}
+                                value={newProperty.neighborhood}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -374,7 +379,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 placeholder="direccion del inmuble"
                                 name="address"
-                                defaultValue={newProperty.address}
+                                value={newProperty.address}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -390,7 +395,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 placeholder="direccion del inmuble"
                                 name="building"
-                                defaultValue={newProperty.building}
+                                value={newProperty.building}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -411,7 +416,7 @@ const FormNewProperty = () => {
                                 type="number"
                                 placeholder="area del inmuble"
                                 name="area"
-                                defaultValue={newProperty.area}
+                                value={newProperty.area}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -431,7 +436,7 @@ const FormNewProperty = () => {
                             <Label>estrato</Label>
                             <Select
                                 className="mt-1.5"
-                                defaultValue={newProperty.stratum}
+                                value={newProperty.stratum}
                                 name="stratum"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -458,7 +463,7 @@ const FormNewProperty = () => {
                                 type="number"
                                 placeholder="antiguedad del inmuble"
                                 name="antiquityYears"
-                                defaultValue={newProperty.antiquityYears}
+                                value={newProperty.antiquityYears}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -474,7 +479,7 @@ const FormNewProperty = () => {
                                 type="number"
                                 placeholder="remodelaciones del inmuble"
                                 name="remodelation"
-                                defaultValue={newProperty.remodelation}
+                                value={newProperty.remodelation}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -490,7 +495,7 @@ const FormNewProperty = () => {
                                 type="number"
                                 placeholder="$ 0000"
                                 name="lastAdminprice"
-                                defaultValue={newProperty.lastAdminprice}
+                                value={newProperty.lastAdminprice}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -511,7 +516,7 @@ const FormNewProperty = () => {
                                 type="number"
                                 placeholder="habitaciones del inmuble"
                                 name="bedrooms"
-                                defaultValue={newProperty.bedrooms}
+                                value={newProperty.bedrooms}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -535,7 +540,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 type="number"
                                 name="bathrooms"
-                                defaultValue={newProperty.bathrooms}
+                                value={newProperty.bathrooms}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -556,7 +561,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 type="number"
                                 name="numFloor"
-                                defaultValue={newProperty.numFloor}
+                                value={newProperty.numFloor}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -571,7 +576,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 type="number"
                                 name="numElevators"
-                                defaultValue={newProperty.numElevators}
+                                value={newProperty.numElevators}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -586,7 +591,7 @@ const FormNewProperty = () => {
                             <Label>Garage</Label>
                             <Select
                                 className="mt-1.5"
-                                defaultValue={newProperty.garage}
+                                value={newProperty.garage}
                                 name="garage"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -603,7 +608,7 @@ const FormNewProperty = () => {
                             <Label>Parqueadero</Label>
                             <Select
                                 className="mt-1.5"
-                                defaultValue={newProperty.parking}
+                                value={newProperty.parking}
                                 name="parking"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -630,7 +635,7 @@ const FormNewProperty = () => {
                                 type="text"
                                 placeholder="nombre del contacto"
                                 name="contactName"
-                                defaultValue={newProperty.contactName}
+                                value={newProperty.contactName}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -653,7 +658,7 @@ const FormNewProperty = () => {
                                 type="email"
                                 placeholder="ejemplo@correo.com"
                                 name="email"
-                                defaultValue={newProperty.email}
+                                value={newProperty.email}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -673,7 +678,7 @@ const FormNewProperty = () => {
                                 type="text"
                                 placeholder="000 000 0000"
                                 name="cellPhone"
-                                defaultValue={newProperty.cellPhone}
+                                value={newProperty.cellPhone}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -695,7 +700,7 @@ const FormNewProperty = () => {
                                 type="text"
                                 placeholder="60 0 000  0000"
                                 name="phone"
-                                defaultValue={newProperty.phone}
+                                value={newProperty.phone}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -758,15 +763,15 @@ const FormNewProperty = () => {
                             cargar hasta 6 imagenes
                         </p>
                         <div className="flex flex-wrap justify-center gap-4 py-4 lg:justify-start">
-                            {newProperty.images &&
-                                newProperty.images.map((image, index) => (
+                            {newProperty.files &&
+                                newProperty.files.map((file, index) => (
                                     <div
                                         key={index}
                                         className="relative overflow-hidden bg-gray-200 rounded shadow w-44 h-28"
                                     >
                                         <button
                                             onClick={() =>
-                                                handleDeleteImage(image)
+                                                handleDeleteImage(file)
                                             }
                                             type="button"
                                             className="absolute p-1 rounded-full bottom-1 right-1 text-gray-50 bg-gray-100/70 hover:bg-red-100/80 hover:text-red-400 "
@@ -775,7 +780,7 @@ const FormNewProperty = () => {
                                         </button>
                                         <img
                                             className="object-contain object-center"
-                                            src={URL.createObjectURL(image)}
+                                            src={URL.createObjectURL(file)}
                                         />
                                     </div>
                                 ))}
@@ -789,21 +794,23 @@ const FormNewProperty = () => {
                                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-slate-700 file:text-white hover:file:bg-slate-600 hover:file:text-white focus:outline-none focus:shadow-outline hover:file:cursor-pointer"
                                     aria-describedby="user_avatar_help"
                                     id="user_avatar"
-                                    name="images"
+                                    name="files"
                                     onChange={handleImages}
+                                   
+                                    ref={inputFilesRef}
                                 />
                             </label>
-                            <div className="py-2">
-                                {newProperty.images &&
-                                    newProperty.images.map((image, index) => (
+                            {/* <div className="py-2">
+                                {newProperty.files &&
+                                    newProperty.files.map((file, index) => (
                                         <p
                                             key={index}
                                             className="text-sm text-gray-500"
                                         >
-                                            {image.name}
+                                            {file.name}
                                         </p>
                                     ))}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="flex gap-2 pt-2">

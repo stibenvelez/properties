@@ -11,7 +11,7 @@ export const INITIAL_STATE_NEW_PROPERTY = {
     cellPhone: "",
     antiquityYears: "",
     published: false,
-    lastAdminprice: "",
+    lastAdminprice: 0,
     neighborhood: "",
     propertyType: "",
     offer: "",
@@ -29,7 +29,7 @@ export const INITIAL_STATE_NEW_PROPERTY = {
     departament: "",
     city: "",
     saleOff: 0,
-    images: [],
+    files: [],
 };
 
 export const TEST_INITIAL_STATE_NEW_PROPERTY = {
@@ -64,5 +64,5 @@ export const TEST_INITIAL_STATE_NEW_PROPERTY = {
     departament: "1",
     city: "1",
     saleOff: 100000,
-    images: [],
+    files: [],
 };

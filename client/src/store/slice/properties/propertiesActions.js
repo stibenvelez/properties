@@ -48,9 +48,7 @@ export const readFilters = (filters) => async (dispatch) => {
 
 export const clearFilter = () => async (dispatch) => {
     try {
-
         dispatch(setclearFilter());
-
     } catch (error) {
         console.log(error);
     }
@@ -107,9 +105,15 @@ export const createPropertyAction = (property) => async (dispatch) => {
     dispatch(setCreateProperty());
     try {
         let data = new FormData();
+
         Object.entries(property).forEach(([key, value]) => {
             data.append(key, value);
         });
+        
+        property.files.forEach((file) => {
+            data.append("files", file);
+        });
+
         const token = localStorage.getItem("token");
         if (!token) {
             console.log("no hay token");
@@ -121,18 +125,24 @@ export const createPropertyAction = (property) => async (dispatch) => {
             Authorization: `Bearer ${token}`,
         };
 
-        const test = new FormData();
-        test.append("nombre", "Andres");
-        test.append("Rol", "Admin");
-
         const result = await clientAxios.post(
-            "http://localhost:4000/api/v1/admin/properties",
-            test
+            "/admin/properties",
+            data,
+            {headers}
         );
 
-        console.log(result.data);
-        dispatch(setCreatePropertySuccess());
+        Swal.fire({
+            icon: "success",
+            title: "Inmueble registrado",
+            text: "Se ha registrado el inmueble correctamente",
+        });
+        dispatch(setCreatePropertySuccess())
     } catch (error) {
+        Swal.fire({
+            icon: "error",
+            title: "Hubo un error",
+            text: error.response.data.msg
+        });
         dispatch(setCreatePropertyError());
         console.log(error);
     }

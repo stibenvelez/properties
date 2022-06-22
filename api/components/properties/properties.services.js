@@ -108,7 +108,6 @@ export const getAllPropertiesService = async (query) => {
 export const getPropertyByIdService = async (id) => {
     try {
         const [property] = await propertyById(id);
-
         const images = [
             "image1",
             "image2",
@@ -121,7 +120,7 @@ export const getPropertyByIdService = async (id) => {
         let galleryImgs = [];
         images.map((image) => {
             if (property[image]) {
-                galleryImgs.push(`${property.reference}-${image}.jpg`);
+                galleryImgs.push(property[image]);
             }
         });
 
@@ -195,10 +194,14 @@ export const editPropertyService = async (req, res) => {
     }
 };
 
-export const addNewPropertyService = async (property) => {
+export const addNewPropertyService = async (body, files, user) => {
+    const images = ["image1", "image2", "image3", "image4", "image5", "image6"];
     try {
-        
-        const result = await insertProperty(property);
+        images.forEach(
+            (image, index) => (body[image] = files[index]?.originalname || null)
+        );
+        body.createdBy = user.idUser;
+        const result = await insertProperty(body);
         return result;
     } catch (error) {
         throw error;
