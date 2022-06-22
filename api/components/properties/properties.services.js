@@ -197,6 +197,7 @@ export const editPropertyService = async (req, res) => {
 
 export const addNewPropertyService = async (property) => {
     try {
+        
         const result = await insertProperty(property);
         return result;
     } catch (error) {

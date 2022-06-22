@@ -53,6 +53,7 @@ const FormNewProperty = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('enviando')
         const result = await formValidate(newProperty);
         if (Object.keys(result).length > 0) {
             setErrors(result);
@@ -64,7 +65,7 @@ const FormNewProperty = () => {
             return;
         }
         setErrors({});
-        dispatch(createPropertyAction(newProperty))
+        dispatch(createPropertyAction(newProperty));
     };
 
     useMemo(() => {
@@ -123,7 +124,7 @@ const FormNewProperty = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <form onSubmit={handleSubmit} enctype="multipart/form-data">
             <div className="flex flex-col md:flex-row">
                 <div className="flex-grow w-full mt-10 space-y-6 md:mt-0 md:pl-16">
                     <h3>Información del inmueble</h3>

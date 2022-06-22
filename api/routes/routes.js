@@ -17,6 +17,7 @@ routes.use("/suscriptions", suscriptionsRoutes);
 
 routes.use("/admin/properties", propertyRoutesAdmin);
 routes.use("/departaments", departamentsRoutes);
+routes.post('/prueba', (req, res)=> res.json(req.body))
 
 
 

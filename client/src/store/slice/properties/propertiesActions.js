@@ -16,6 +16,7 @@ import {
 } from "store/slice/properties";
 import clientAxios from "../../../config/axios";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 export const fetchAllProperties =
     (filters, categoryProperty) => async (dispatch) => {
@@ -47,7 +48,9 @@ export const readFilters = (filters) => async (dispatch) => {
 
 export const clearFilter = () => async (dispatch) => {
     try {
+
         dispatch(setclearFilter());
+
     } catch (error) {
         console.log(error);
     }
@@ -111,19 +114,23 @@ export const createPropertyAction = (property) => async (dispatch) => {
         if (!token) {
             console.log("no hay token");
         }
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
+
+        let headers = {
+            Accept: "application/json",
+            "content-type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
         };
-        console.log("desde action", data);
+
+        const test = new FormData();
+        test.append("nombre", "Andres");
+        test.append("Rol", "Admin");
+
         const result = await clientAxios.post(
-            "/admin/properties",
-            data,
-            config
+            "http://localhost:4000/api/v1/admin/properties",
+            test
         );
-        console.log(result);
+
+        console.log(result.data);
         dispatch(setCreatePropertySuccess());
     } catch (error) {
         dispatch(setCreatePropertyError());
