@@ -13,7 +13,7 @@ import clientAxios from "config/axios";
 import GoogleMapReact from "google-map-react";
 import LocationMarker from "components/AnyReactComponent/LocationMarker";
 import { formValidate } from "./utils/FormValidate";
-import { TrashIcon } from "@heroicons/react/solid";
+import { CheckIcon, TrashIcon } from "@heroicons/react/solid";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { createPropertyAction } from "store/slice/properties/propertiesActions";
@@ -213,7 +213,7 @@ const FormNewProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                value   ={newProperty.propertyType}
+                                value={newProperty.propertyType}
                                 name="propertyType"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -734,10 +734,10 @@ const FormNewProperty = () => {
                                         key: "AIzaSyDkDFnRyELEsM8J-lfKlKEq0zc0HQZzkaU",
                                     }}
                                     yesIWantToUseGoogleMapApiInternals
-                                    defaultZoom={10}
+                                    defaultZoom={15}
                                     defaultCenter={{
-                                        lat: 6.247956,
-                                        lng: -75.582671,
+                                        lat: newProperty.latitude,
+                                        lng: newProperty.longitude,
                                     }}
                                     onClick={(e) => {
                                         setNewProperty({
@@ -796,21 +796,23 @@ const FormNewProperty = () => {
                                     id="user_avatar"
                                     name="files"
                                     onChange={handleImages}
-                                   
                                     ref={inputFilesRef}
                                 />
                             </label>
-                            {/* <div className="py-2">
+                            <div className="py-2">
                                 {newProperty.files &&
                                     newProperty.files.map((file, index) => (
-                                        <p
-                                            key={index}
-                                            className="text-sm text-gray-500"
-                                        >
-                                            {file.name}
-                                        </p>
+                                        <div className="flex items-center">
+                                            <CheckIcon className="w-4 h-4 text-green-400" />
+                                            <p
+                                                key={index}
+                                                className="text-sm text-gray-500"
+                                            >
+                                                {file.name}
+                                            </p>
+                                        </div>
                                     ))}
-                            </div> */}
+                            </div>
                         </div>
                     </div>
                     <div className="flex gap-2 pt-2">

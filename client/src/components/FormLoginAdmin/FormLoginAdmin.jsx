@@ -1,3 +1,4 @@
+import SpinnerButton from "components/SpinnerButton/SpinnerButton";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -5,14 +6,14 @@ import { loginAction } from "store/slice/auth/authActions";
 import AlertError from "./AlertError";
 
 const INITIAL_STATE_USER = {
-    user: "",
+    email: "",
     password: "",
 };
 
 const FormLoginAdmin = () => {
     const dispatch = useDispatch();
     const [user, setUser] = useState(INITIAL_STATE_USER);
-    const { error, msg, auth } = useSelector(({ auth }) => auth);
+    const { loading,  error, msg, auth } = useSelector(({ auth }) => auth);
 
     const handleChange = (e) => {
         setUser({
@@ -57,8 +58,9 @@ const FormLoginAdmin = () => {
                     </div>
                     {error && <AlertError msg={msg} />}
                     <div>
-                        <button className="px-4 py-2 font-bold text-white bg-indigo-800 rounded-lg hover:bg-indigo-500">
-                            Ingresar
+                        <button className="flex gap-2 items-center px-4 py-2 font-bold text-white bg-indigo-800 rounded-lg hover:bg-indigo-500">
+                            {loading&&<SpinnerButton />}
+                            {!loading ? "Ingresar" : "Cargando..."}
                         </button>
                     </div>
                 </div>

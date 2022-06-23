@@ -33,6 +33,7 @@ export const SidebarData = [
                 title: "Usuarios",
                 path: "/admin/users",
                 icon: null,
+                onlyAdmin: true,
             },
         ],
     },

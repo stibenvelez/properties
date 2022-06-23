@@ -6,21 +6,29 @@ export const authSlice = createSlice({
         auth: false,
         user: {},
         msg: null,
-        loading: false,
+        loading: true,
         error: false,
     },
     reducers: {
         setAuth: (state) => {
             state.loading = true;
         },
+        setNotAuth: (state) => {
+            state.loading = false;
+            state.auth = false;
+            state.user = {};
+            state.msg = null;
+            state.error = false;
+        },
         setAuthSuccess: (state, action) => {
             state.auth = true;
             state.user = action.payload;
             state.loading = false;
         },
-        setAuthError: (state) => {
+        setAuthError: (state, action) => {
             state.loading = false;
             state.error = true;
+            state.msg = action.payload;
         },
         setLogin: (state) => {
             state.loading = true;
@@ -58,6 +66,7 @@ export const authSlice = createSlice({
 
 export const {
     setAuth,
+    setNotAuth,
     setAuthSuccess,
     setAuthError,
     setLogin,

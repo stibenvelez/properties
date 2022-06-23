@@ -1,9 +1,6 @@
 import generateJWT from "../../helpers/generatejwt.js";
 import {
     confirmUserByToken,
-    findUserByEmail,
-    findUserById,
-    findUserByNameUser,
     findUserByToken,
     updateUser,
 } from "./user.DAL.js";
@@ -11,6 +8,8 @@ import {
     authService,
     createUserService,
     forgetPassswordService,
+    getUserByIdService,
+    getUsersService,
 } from "./user.services.js";
 import bcrypt from "bcrypt";
 
@@ -23,11 +22,13 @@ export const auth = async (req, res) => {
             firstName: result.firstName,
             lastName: result.lastName,
             email: result.email,
+            role: result.role,
             token: generateJWT({
                 idUser: result.idUser,
                 firstName: result.firstName,
                 lastName: result.lastName,
                 email: result.email,
+                role: result.role,
             }),
         });
     } catch (error) {
@@ -125,8 +126,41 @@ export const newPassword = async (req, res) => {
 
 export const getProfile = async (req, res) => {
     try {
-        const { user } = req;
+        console.log("user");
+        const user= req.user;
         res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: error.message });
+    }
+};
+
+export const getUsers = async (req, res) => {
+        const user = req.user;
+    if (user.role !== "admin") {
+        res.status(403).json({ msg: "No tienes permisos necesarios para acceder a este sitio" });
+        return
+    }    
+    try {
+        const users = await getUsersService(req);
+        res.json(users);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: error.message });
+    }
+}
+export const getUserById = async (req, res) => {
+    const user = req.user;
+    const {id} = req.params
+    if (user.role !== "admin") {
+        res.status(403).json({
+            msg: "No tienes permisos necesarios para acceder a este sitio",
+        });
+        return;
+    }
+    try {
+        const users = await getUserByIdService(id);
+        res.json(users);
     } catch (error) {
         console.log(error);
         res.status(500).json({ msg: error.message });

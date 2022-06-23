@@ -1,37 +1,35 @@
 import SidebarAdmin from "components/SidebarAdmin/SidebarAdmin";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, useHistory } from "react-router-dom";
 import { authAction } from "store/slice/auth/authActions";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     const dispatch = useDispatch()
+
     const { auth, loading } = useSelector(({ auth }) => auth);
-    
-    useEffect(() => {
-        (() => {
-          dispatch(authAction());
-      })()
-    }, [])
-    
-    if (!auth && loading) return <div>hola</div>;
+
+
+    if (loading) {
+        return <div></div>
+    }
     
     return (
-        <div className="flex">
+        <div className="relative flex w-full overflow-hidden bg-gray-50 ">
             <SidebarAdmin />
-            <div className="w-full">
+
+            <div className="w-full h-full overflow-y-auto">
                 <Route
                     {...rest}
                     render={(props) =>
-                        !auth? (
-                            <Redirect to="/admin/login" />
-                        ) : (
+                        auth ? (
                             <Component {...props} />
+                        ) : (
+                            <Redirect to="/admin/login" />
                         )
                     }
                 />
             </div>
-            s
         </div>
     );
 };

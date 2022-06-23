@@ -26,7 +26,7 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
                 </div>
                 <div className="flex items-center justify-end flex-shrink-0 space-x-1 text-neutral-700 dark:text-neutral-100">
                     <div className="items-center hidden space-x-1 xl:flex">
-                        {auth&&<MenuProfile />}
+                        {auth && <MenuProfile />}
                         <SwitchDarkMode />
                         {/* <SearchDropdown /> */}
                         <div className="px-1" />
@@ -36,6 +36,7 @@ const MainNav1: FC<MainNav1Props> = ({ isTop }) => {
                         <SwitchDarkMode />
                         <div className="px-1" />
                         <MenuBar />
+                        {auth && <MenuProfile />}
                     </div>
                 </div>
             </div>

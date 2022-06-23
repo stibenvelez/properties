@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
+import { useSelector } from "react-redux";
 
 const SubMenu = ({ item }) => {
     const [subnav, setSubnav] = useState(false);
-
     const showSubnav = () => setSubnav(!subnav);
-
+    const { role } = useSelector(({ auth }) => auth.user); 
     return (
         <>
             <NavLink
@@ -34,6 +34,7 @@ const SubMenu = ({ item }) => {
             </NavLink>
             {subnav &&
                 item.subNav.map((item, index) => {
+                    if (item.onlyAdmin && role !== "admin") return null;
                     return (
                         <Link
                             className="flex items-center p-5 pl-5 text-white bg-slate-900 hover:bg-slate-600"
@@ -41,7 +42,7 @@ const SubMenu = ({ item }) => {
                             key={index}
                         >
                             {item.icon} <span>{item.title}</span>
-                        </Link>
+                        </Link> 
                     );
                 })}
             

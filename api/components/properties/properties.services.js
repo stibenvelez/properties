@@ -74,7 +74,7 @@ export const getAllPropertiesService = async (query) => {
 
         images.map((image) => {
             if (property[image]) {
-                galleryImgs.push(`${property.reference}-${image}.jpg`);
+                galleryImgs.push(property[image]);
             }
         });
 
@@ -123,7 +123,8 @@ export const getPropertyByIdService = async (id) => {
                 galleryImgs.push(property[image]);
             }
         });
-
+        property.latitude = parseFloat(property.latitude);
+        property.longitude = parseFloat(property.longitude);
         delete property.image1;
         delete property.image2;
         delete property.image3;
@@ -148,7 +149,11 @@ export const getPropertyByIdService = async (id) => {
 export const getPropertiesByUserIdService = async (id) => {
     try {
         const [properties] = await allPropertiesByUserId(id);
-        return properties;
+        const dataPropeties = {
+            results: properties,
+            count: properties.length,
+        };
+        return dataPropeties;
     } catch (error) {
         throw error;
     }
@@ -178,13 +183,15 @@ export const editPropertyService = async (req, res) => {
     }
 
     if (property.createdBy.toString() !== req.user.idUser.toString()) {
-        return res.status(401).json({msg: "No tienes permisos para editar este inmueble"});
+        return res
+            .status(401)
+            .json({ msg: "No tienes permisos para editar este inmueble" });
     }
 
     const uploadData = {
         ...req.body,
         idProperty: id,
-    }
+    };
 
     await uploadProperty(uploadData);
 

@@ -11,8 +11,6 @@ import ListingExperiencesDetailPage from "containers/ListingDetailPage/ListingEx
 import ListingCarDetailPage from "containers/ListingDetailPage/ListingCarDetailPage";
 import CheckOutPage from "containers/CheckOutPage/CheckOutPage";
 import PayPage from "containers/PayPage/PayPage";
-import AuthorPage from "containers/AuthorPage/AuthorPage";
-import AccountPage from "containers/AccountPage/AccountPage";
 import AccountPass from "containers/AccountPage/AccountPass";
 import AccountSavelists from "containers/AccountPage/AccountSavelists";
 import AccountBilling from "containers/AccountPage/AccountBilling";
@@ -39,6 +37,8 @@ import NewPasswordPage from "containers/NewPasswordPage/NewPasswordPage";
 import ConfirmUserPage from "containers/ConfirmUserPage/ConfirmUserPage";
 import NewPropertyPage from "containers/NewPropertyPage/NewPropertyPage";
 import ProfilePage from "containers/ProfilePage/ProfilePage";
+import PublicRoute from "./PublicRoute";
+import UserPage from "containers/UserPage/UserPage";
 
 export const pages: Page[] = [
     { path: "/", exact: true, component: PageHome },
@@ -63,8 +63,6 @@ export const pages: Page[] = [
     { path: "/checkout", component: CheckOutPage },
     { path: "/pay-done", component: PayPage },
     //
-    { path: "/author", component: AuthorPage },
-    { path: "/account", component: AccountPage },
     { path: "/account-password", component: AccountPass },
     { path: "/account-savelists", component: AccountSavelists },
     { path: "/account-billing", component: AccountBilling },
@@ -81,61 +79,69 @@ export const pages: Page[] = [
 ];
 
 const Routes = () => {
-  return (
-      <BrowserRouter basename="/">
-          <ScrollToTop />
-          <SiteHeader />
+    return (
+        <BrowserRouter basename="/">
+            <ScrollToTop />
+            <SiteHeader />
 
-          <Switch>
-              {pages.map(({ component, path, exact }) => {
-                  return (
-                      <Route
-                          key={path}
-                          component={component}
-                          exact={!!exact}
-                          path={path}
-                      />
-                  );
-              })}
-              <PrivateRoute path="/admin" exact component={AdminPage} />
-              <PrivateRoute
-                  path="/admin/inmuebles"
-                  exact
-                  component={PropertiesPage}
-              />
-              <PrivateRoute
-                  path="/admin/nuevo-inmueble"
-                  exact
-                  component={NewPropertyPage}
-              />
-              <PrivateRoute path="/admin/users" exact component={UsersPage} />
-              <PrivateRoute
-                  path="/admin/users/add-user"
-                  exact
-                  component={AddUserPage}
-              />
-              <PrivateRoute
-                  path="/admin/users/forget-password"
-                  exact
-                  component={ForgetPasswordPage}
-              />
-              <PrivateRoute
-                  path="/admin/users/forget-password/:token"
-                  exact
-                  component={NewPasswordPage}
-              />
-              <PrivateRoute
-                  path="/confirm/:token"
-                  exact
-                  component={ConfirmUserPage}
-              />
-              <Route path="/admin/login" exact component={LoginAdminPage} />
-              <Route path="/admin/profile/:id" exact component={ProfilePage} />
-              <Route component={Page404} />
-          </Switch>
-          <Footer />
-      </BrowserRouter>
-  );
+            <Switch>
+                {pages.map(({ component, path, exact }) => {
+                    return (
+                        <PublicRoute
+                            key={path}
+                            component={component}
+                            exact={!!exact}
+                            path={path}
+                        />
+                    );
+                })}
+                <PrivateRoute path="/admin" exact component={AdminPage} />
+                <PrivateRoute
+                    path="/admin/inmuebles"
+                    exact
+                    component={PropertiesPage}
+                />
+                <PrivateRoute
+                    path="/admin/nuevo-inmueble"
+                    exact
+                    component={NewPropertyPage}
+                />
+                <PrivateRoute path="/admin/users" exact component={UsersPage} />
+                <PrivateRoute path="/admin/users/get-user/:id" exact component={UserPage} />
+                <PrivateRoute
+                    path="/admin/users/add-user"
+                    exact
+                    component={AddUserPage}
+                />
+                <PrivateRoute
+                    path="/admin/users/forget-password"
+                    exact
+                    component={ForgetPasswordPage}
+                />
+                <PrivateRoute
+                    path="/admin/users/forget-password/:token"
+                    exact
+                    component={NewPasswordPage}
+                />
+                <PublicRoute
+                    path="/confirm/:token"
+                    exact
+                    component={ConfirmUserPage}
+                />
+                <PublicRoute
+                    path="/admin/login"
+                    exact
+                    component={LoginAdminPage}
+                />
+                <PrivateRoute
+                    path="/admin/profile/:id"
+                    exact
+                    component={ProfilePage}
+                />
+                <Route component={Page404} />
+            </Switch>
+        </BrowserRouter>
+    );
 };
 
 export default Routes;

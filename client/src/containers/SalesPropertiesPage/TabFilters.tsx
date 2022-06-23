@@ -11,7 +11,7 @@ import Select from "shared/Select/Select";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilters } from "store/slice/properties";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
-import { clearFilter } from "store/slice/properties/propertiesActions"
+import { clearFilter } from "store/slice/properties/propertiesActions";
 import { arrayBuffer } from "stream/consumers";
 
 // DEMO DATA
@@ -27,7 +27,6 @@ const typeOfProperties = [
     },
 ];
 
-
 const TabFilters = () => {
     const dispatch: any = useDispatch();
     const [isOpenMoreFilterMobile, setisOpenMoreFilterMobile] = useState(false);
@@ -39,12 +38,12 @@ const TabFilters = () => {
     //
     const filters = useSelector(({ properties }: any) => properties.filters);
     const cities = useSelector(({ cities }: any) => cities.cities);
-
+    console.log(cities);
     const handleChange = (item: any) => {
         dispatch(
             setFilters({
                 ...filters,
-                [item.name]: item.value
+                [item.name]: item.value,
             })
         );
     };
@@ -57,8 +56,8 @@ const TabFilters = () => {
                       .toLowerCase()
                       .replace(/\s+/g, "")
                       .includes(query.toLowerCase().replace(/\s+/g, ""))
-            );
-    
+              );
+
     const renderXClear = () => {
         return (
             <span className="flex items-center justify-center w-4 h-4 ml-3 text-white rounded-full cursor-pointer bg-primary-500">
@@ -155,7 +154,7 @@ const TabFilters = () => {
                                                                     : "font-normal"
                                                             }`}
                                                         >
-                                                            {city.city}
+                                                            {city.city} ({city.countProperties})
                                                         </span>
                                                         {selected ? (
                                                             <span
@@ -200,7 +199,9 @@ const TabFilters = () => {
                         <div className="relative inline-block">
                             <Combobox.Input
                                 className="flex items-center justify-center px-4 py-2 text-sm bg-transparent border rounded-full border-neutral-300 dark:border-neutral-700 focus:outline-none"
-                                displayValue={({propertyType}: any) => propertyType}                               
+                                displayValue={({ propertyType }: any) =>
+                                    propertyType
+                                }
                                 placeholder="Seleccione una ciudad"
                                 onChange={(e) => setQuery(e.target.value)}
                             />
@@ -379,7 +380,6 @@ const TabFilters = () => {
                 {({ open, close }) => (
                     <>
                         <Popover.Button
-                            
                             className={`flex items-center justify-center px-4 py-2 text-sm rounded-full border dark:border-neutral-700   focus:outline-none ${
                                 filters && filters?.rangePrices[1] !== 0
                                     ? "border-primary-500 bg-primary-50 text-primary-700"
@@ -456,7 +456,6 @@ const TabFilters = () => {
                                                                 .rangePrices[0]
                                                         }
                                                     />
-                                                  
                                                 </div>
                                             </div>
                                             <div>
@@ -478,7 +477,10 @@ const TabFilters = () => {
                                                         name="maxPrice"
                                                         id="maxPrice"
                                                         className="block w-full pr-3 rounded-full focus:ring-indigo-500 focus:border-indigo-500 pl-7 sm:text-sm border-neutral-200 text-neutral-900"
-                                                        value={filters.rangePrices[1]}
+                                                        value={
+                                                            filters
+                                                                .rangePrices[1]
+                                                        }
                                                     />
                                                 </div>
                                             </div>
@@ -730,36 +732,35 @@ const TabFilters = () => {
                                                 <h3 className="text-xl font-medium">
                                                     Rooms and beds
                                                 </h3>
-                                                
-                                                    <div className="relative flex flex-col px-5 py-6 space-y-5">
-                                                        <NcInputNumber
-                                                            label="Habitaciones desde"
-                                                            max={10}
-                                                            onChange={(value) =>
-                                                                handleChange({
-                                                                    name: "bedrooms",
-                                                                    value,
-                                                                })
-                                                            }
-                                                            defaultValue={
-                                                                filters.bedrooms
-                                                            }
-                                                        />
-                                                        <NcInputNumber
-                                                            label="Baños desde"
-                                                            max={10}
-                                                            onChange={(value) =>
-                                                                handleChange({
-                                                                    name: "bathrooms",
-                                                                    value,
-                                                                })
-                                                            }
-                                                            defaultValue={
-                                                                filters.bathrooms
-                                                            }
-                                                        />
-                                                    </div>
-                                             
+
+                                                <div className="relative flex flex-col px-5 py-6 space-y-5">
+                                                    <NcInputNumber
+                                                        label="Habitaciones desde"
+                                                        max={10}
+                                                        onChange={(value) =>
+                                                            handleChange({
+                                                                name: "bedrooms",
+                                                                value,
+                                                            })
+                                                        }
+                                                        defaultValue={
+                                                            filters.bedrooms
+                                                        }
+                                                    />
+                                                    <NcInputNumber
+                                                        label="Baños desde"
+                                                        max={10}
+                                                        onChange={(value) =>
+                                                            handleChange({
+                                                                name: "bathrooms",
+                                                                value,
+                                                            })
+                                                        }
+                                                        defaultValue={
+                                                            filters.bathrooms
+                                                        }
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -818,8 +819,8 @@ const TabFilters = () => {
                         .filter(
                             (filter) =>
                                 filter[1] !== "" &&
-                                (!Array.isArray(filter[1]) && filter[1]) // TODO add filters tags for rangeprice
-                                   
+                                !Array.isArray(filter[1]) &&
+                                filter[1] // TODO add filters tags for rangeprice
                         )
                         .map((filter: any, index: number) => (
                             <span

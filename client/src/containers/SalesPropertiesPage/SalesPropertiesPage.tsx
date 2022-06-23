@@ -7,7 +7,7 @@ import { useSearchParams } from "hooks/useSearchParams";
 import {fetchAllProperties} from '../../store/slice/properties/propertiesActions'
 import { useDispatch, useSelector } from "react-redux";
 import useDebounce from "hooks/useDebounce";
-import { fetchAllCitiesAction } from "store/slice/cities/citiesActions";
+import { fetchAllCitiesAction, fetchAllCitieswhitPropetiesAction } from "store/slice/cities/citiesActions";
 import { useLocation } from "react-router-dom";
 
 export interface ListingStayPageProps {
@@ -35,7 +35,7 @@ const SalesPropertiesPage: FC<ListingStayPageProps> = ({ className = "" }) => {
     }, [debouncedFilters]);
      
     useEffect(() => {
-        (() => dispatch(fetchAllCitiesAction()))();
+        (() => dispatch(fetchAllCitieswhitPropetiesAction()))();
      }, []);
       
    

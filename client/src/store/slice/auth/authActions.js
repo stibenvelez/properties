@@ -1,27 +1,40 @@
 import clientAxios from "config/axios";
-import { setAuth, setAuthError, setAuthSuccess, setLogin, setLoginError, setLoginSuccess, setSignOut, setSignOutError, setSignOutSucces } from ".";
+import {
+    setAuth,
+    setAuthError,
+    setAuthSuccess,
+    setLogin,
+    setLoginError,
+    setLoginSuccess,
+    setNotAuth,
+    setSignOut,
+    setSignOutError,
+    setSignOutSucces,
+} from ".";
 
-export const authAction = () => async dispatch => {
-   dispatch(setAuth());
-   try {
-       const token = localStorage.getItem("token");
-       if (!token) {
-           console.log("no hay token");
-           return
-       }
-       
-       const config = {
-           headers: {
-               "Content-Type": "application/json",
-               Authorization: `Bearer ${token}`,
-           },
-       };
-       const {data} = await clientAxios.get("/users/profile", config);
-       dispatch(setAuthSuccess(data));
-   } catch (error) {
-       dispatch(setAuthError());
-   } 
-}
+export const authAction = () => async (dispatch) => {
+    dispatch(setAuth());
+    try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            console.log("no hay token");
+            dispatch(setNotAuth());
+            return;
+        }
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        const { data } = await clientAxios.get("/users/profile", config);
+        dispatch(setAuthSuccess(data));
+    } catch (error) {
+        console.log(error.response.data.msg);
+        dispatch(setAuthError(error.response.data.msg));
+    }
+};
 
 export const loginAction = (user) => async (dispatch) => {
     dispatch(setLogin());

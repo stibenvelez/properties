@@ -1,4 +1,4 @@
-import { allCityes } from "./cities.DAL.js";
+import { allCityes, allCityesWhitProperties } from "./cities.DAL.js";
 
 
 export const getAllCityesService = async () => {

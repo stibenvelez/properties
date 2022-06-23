@@ -278,10 +278,10 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                                 key: "AIzaSyDkDFnRyELEsM8J-lfKlKEq0zc0HQZzkaU",
                             }}
                             yesIWantToUseGoogleMapApiInternals
-                            defaultZoom={10}
+                            defaultZoom={15}
                             defaultCenter={{
-                                lat: 6.247956,
-                                lng: -75.582671,
+                                lat: property.latitude,
+                                lng: property.longitude,
                             }}
                         >
                             <LocationMarker
@@ -328,10 +328,10 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                                 key: "AIzaSyDkDFnRyELEsM8J-lfKlKEq0zc0HQZzkaU",
                             }}
                             yesIWantToUseGoogleMapApiInternals
-                            defaultZoom={12}
-                            defaultCenter={{
-                                lat: 6.247956,
-                                lng: -75.582671,
+                            defaultZoom={15}
+                            center={{
+                                lat: property.latitude,
+                                lng: property.longitude,
                             }}
                         >
                             <LocationMarker

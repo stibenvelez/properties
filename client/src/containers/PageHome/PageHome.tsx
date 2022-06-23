@@ -11,7 +11,7 @@ import SectionVideos from "./SectionVideos";
 import SectionClientSay from "components/SectionClientSay/SectionClientSay";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllCitiesAction } from "store/slice/cities/citiesActions";
+import { fetchAllCitiesAction, fetchAllCitieswhitPropetiesAction } from "store/slice/cities/citiesActions";
 
 
 const DEMO_CATS: TaxonomyType[] = [
@@ -86,7 +86,7 @@ const CITIES_IMAGES:any = {
 function PageHome() {
     const dispatch: any = useDispatch();
     useEffect(() => {
-        (() => dispatch(fetchAllCitiesAction()))();
+        (() => dispatch(fetchAllCitieswhitPropetiesAction()))();
     }, []);
 
     const { loading, cities } = useSelector(({ cities }: any) => cities);

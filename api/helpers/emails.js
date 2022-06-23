@@ -1,13 +1,16 @@
 import nodeMailer from "nodemailer";
+import doenv from "dotenv";
+
+doenv.config();
 
 export const emailCreateUser = async  ({email, fisrtName,lastName, token})   => {
 
     const transport = nodeMailer.createTransport({
-        host: procces.env.EMAIL_HOST,
-        port: procces.env.EMAIL_PORT,
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
         auth: {
-            user: procces.env.EMAIL_USER,
-            pass: procces.env.EMAIL_PASSWORD,
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD,
         },
     });
 
@@ -33,11 +36,11 @@ export const emailCreateUser = async  ({email, fisrtName,lastName, token})   => 
 export const emailForgetPassword = async ({ email, fisrtName, lastName, token }) => {
 
     const transport = nodeMailer.createTransport({
-        host: procces.env.EMAIL_HOST,
-        port: procces.env.EMAIL_PORT,
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
         auth: {
-            user: procces.env.EMAIL_USER,
-            pass: procces.env.EMAIL_PASSWORD,
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD,
         },
     });
 

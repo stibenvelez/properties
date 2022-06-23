@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchAllProperties } from "store/slice/properties/propertiesActions";
+import { fetchAllProperties, fetchAllPropertiesByUser } from "store/slice/properties/propertiesActions";
 
 const PropertiesPage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        (() => dispatch(fetchAllProperties()))();
+        (() => dispatch(fetchAllPropertiesByUser()))();
     }, []);
 
     const properties = useSelector(({ properties }) => properties.properties.results);
-
+    
     return (
         <div className="container">
             <h1 className="text-2xl">Lista de propiedades</h1>

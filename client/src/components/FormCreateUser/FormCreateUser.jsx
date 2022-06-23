@@ -17,12 +17,13 @@ const FormCreateUser = () => {
     });
     const [errors, setErrors] = useState({});
 
-    const {loading} = useSelector(({users}) => users);
-    console.log(loading);
+    const { loading } = useSelector(({ users }) => users);
+    const {role} = useSelector(({auth}) => auth.user);
+
     const validateForm = () => {
         let errors = {};
-        if (user.firstname === "") errors.firstname = "El nombre es requerido";
-        if (user.lastname === "") errors.lastname = "El apellido es requerido";
+        if (user.firstName === "") errors.firstname = "El nombre es requerido";
+        if (user.lastName === "") errors.lastname = "El apellido es requerido";
         if (user.email === "") errors.email = "El email es requerido";
         if (user.password === "")
             errors.password = "La contraseña es requerida";
@@ -34,10 +35,10 @@ const FormCreateUser = () => {
 
         if (Object.keys(errors).length > 0) {
             setErrors(errors);
-           return true
+            return true;
         }
         setErrors(errors);
-        return false
+        return false;
     };
 
     const handleChange = (e) => {
@@ -50,10 +51,18 @@ const FormCreateUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const Errors = validateForm();
-        if (Errors) return false
+        if (Errors) return false;
         dispatch(createUserAction(user));
     };
-    
+
+    if (role !== "admin") {
+        return (
+            <div className="relative py-2 px-3 bg-red-200 text-sm text-red-800 rounded shadow">
+                "No tiene los permisos suficientes para crear un usuario"
+            </div>
+        );
+    }
+
     return (
         <Card className=" max-w-4xl mx-auto">
             <form className="grid grid-cols-1 gap-6" onSubmit={handleSubmit}>
@@ -107,6 +116,7 @@ const FormCreateUser = () => {
                         autoComplete="email"
                         value={user.email}
                         onChange={handleChange}
+                        required
                     />
                     {errors.email && user.email === "" && (
                         <p className="text-sm text-red-500"> {errors.email}</p>

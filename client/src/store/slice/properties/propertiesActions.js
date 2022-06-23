@@ -16,20 +16,45 @@ import {
 } from "store/slice/properties";
 import clientAxios from "../../../config/axios";
 import Swal from "sweetalert2";
-import axios from "axios";
 
-export const fetchAllProperties =
+export const fetchAllProperties = (filters, categoryProperty) => async (dispatch) => {
+        dispatch(setProperties());
+        try {
+            const token = localStorage.getItem("token");
+            let headers = {
+                Accept: "application/json",
+                "content-type": "multipart/form-data",
+                Authorization: `Bearer ${token}`,
+            };
+
+            const response = await clientAxios(`/properties${categoryProperty ? `?category=${categoryProperty}` : "?"}`,{ headers, params: filters }
+            );
+            console.log(response.data);
+            dispatch(setPropertiesSucces(response.data));
+        } catch (error) {
+            console.log(error);
+            dispatch(setPropertiesError());
+        }
+};
+    
+export const fetchAllPropertiesByUser =
     (filters, categoryProperty) => async (dispatch) => {
         dispatch(setProperties());
         try {
+            const token = localStorage.getItem("token");
+            let headers = {
+                Accept: "application/json",
+                "content-type": "multipart/form-data",
+                Authorization: `Bearer ${token}`,
+            };
+
             const response = await clientAxios(
-                `/properties${
+                `/admin/properties${
                     categoryProperty ? `?category=${categoryProperty}` : "?"
                 }`,
-                {
-                    params: filters,
-                }
+                { headers, params: filters }
             );
+            console.log(response.data);
             dispatch(setPropertiesSucces(response.data));
         } catch (error) {
             console.log(error);
@@ -109,7 +134,7 @@ export const createPropertyAction = (property) => async (dispatch) => {
         Object.entries(property).forEach(([key, value]) => {
             data.append(key, value);
         });
-        
+
         property.files.forEach((file) => {
             data.append("files", file);
         });
@@ -125,23 +150,21 @@ export const createPropertyAction = (property) => async (dispatch) => {
             Authorization: `Bearer ${token}`,
         };
 
-        const result = await clientAxios.post(
-            "/admin/properties",
-            data,
-            {headers}
-        );
+        const result = await clientAxios.post("/admin/properties", data, {
+            headers,
+        });
 
         Swal.fire({
             icon: "success",
             title: "Inmueble registrado",
             text: "Se ha registrado el inmueble correctamente",
         });
-        dispatch(setCreatePropertySuccess())
+        dispatch(setCreatePropertySuccess());
     } catch (error) {
         Swal.fire({
             icon: "error",
             title: "Hubo un error",
-            text: error.response.data.msg
+            text: error.response.data.msg,
         });
         dispatch(setCreatePropertyError());
         console.log(error);

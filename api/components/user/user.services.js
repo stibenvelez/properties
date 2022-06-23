@@ -1,5 +1,11 @@
 import { emailCreateUser, emailForgetPassword } from "../../helpers/emails.js";
-import { findUserByEmail, inserUser, updateUser } from "./user.DAL.js";
+import {
+    allUsers,
+    findUserByEmail,
+    findUserById,
+    inserUser,
+    updateUser,
+} from "./user.DAL.js";
 import bcrypt from "bcrypt";
 import generateId from "../../helpers/generateId.js";
 
@@ -15,7 +21,8 @@ export const createUserService = async (user) => {
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
 
-        //await inserUser(user);
+        await inserUser(user);
+
         //send confirm email
         await emailCreateUser({
             email: user.email,
@@ -80,6 +87,31 @@ export const forgetPassswordService = async (user) => {
             lastName: userExist.lastName,
             token: userExist.token,
         });
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
+
+export const getUsersService = async () => {
+    try {
+        const rows = await allUsers();
+        return rows;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
+
+export const getUserByIdService = async (id) => {
+
+    try {
+        
+        const [user] = await findUserById(id);
+        delete user.password;
+        delete user.token;
+        return user;
+        
     } catch (error) {
         console.log(error);
         throw error;

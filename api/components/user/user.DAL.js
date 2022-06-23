@@ -7,14 +7,6 @@ const USERS_TABLE = [
     password: "admin"}
 ];
 
-
-export const findUserByNameUser = async (user) => {
-    
-    const query = USERS_TABLE.filter((data) => data.user === user);
-
-    return query;
-}
-
 export const inserUser = async (user) => {
     console.log('desde DAL', user)
     try {
@@ -43,7 +35,10 @@ export const inserUser = async (user) => {
 
 export const findUserByEmail = async (email) => {
     try {
-        const sql = `SELECT * FROM Users WHERE email = '${email}'`;
+        const sql = `
+        SELECT * FROM Users
+        LEFT JOIN Roles ON Users.idRole = Roles.idRole      
+        WHERE email = '${email}'`;
         const [user] = await connection.query(sql);
         return user;
     } catch (error) {
@@ -52,7 +47,9 @@ export const findUserByEmail = async (email) => {
 }
 export const findUserByToken = async (token) => {
     try {
-        const sql = `SELECT * FROM Users WHERE token = '${token}'`;
+        const sql = `SELECT * FROM Users 
+        LEFT JOIN Roles ON Users.idRole = Roles.idRole   
+        WHERE token = '${token}'`;
         const [user] = await connection.query(sql);
         return user;
     } catch (error) {
@@ -61,7 +58,9 @@ export const findUserByToken = async (token) => {
 };
 export const findUserById = async (id) => {
     try {
-        const sql = `SELECT * FROM Users WHERE idUser = '${id}'`;
+        const sql = `SELECT * FROM Users 
+        LEFT JOIN Roles ON Users.idRole = Roles.idRole   
+        WHERE idUser = '${id}'`;
         const [user] = await connection.query(sql);
         return user;
     } catch (error) {
@@ -95,6 +94,17 @@ export const updateUser = async (user) => {
             state = ${user.state}
         WHERE idUser = ${user.idUser}`;
         return await connection.query(sql);
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const allUsers = async () => {
+    try {
+        const sql = `SELECT * FROM Users
+        LEFT JOIN Roles ON Users.idRole = Roles.idRole`;
+        const [users] = await connection.query(sql);
+        return users;
     } catch (error) {
         throw error;
     }

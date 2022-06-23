@@ -1,10 +1,22 @@
 import BgGlassmorphism from 'components/BgGlassmorphism/BgGlassmorphism';
+import UserList from 'components/UsersList/UserList';
+import { useEffect } from 'react';
 import { Helmet } from "react-helmet";
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getAllUsersAction } from 'store/slice/user/userActions';
 
 
 
 const UsersPage = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        (() => {
+          dispatch(getAllUsersAction());
+      })()
+    }, [])
+
+
   return (
       <div
           className={`nc-PageAbout overflow-hidden relative `}
@@ -26,6 +38,7 @@ const UsersPage = () => {
               >
                   Agregar usuario
               </Link>
+              <UserList/>
           </div>
 
       </div>

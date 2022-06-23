@@ -11,3 +11,14 @@ export const fetchAllCitiesAction = () => async (dispatch) => {
         dispatch(setCitiesError());
     }
 };
+
+export const fetchAllCitieswhitPropetiesAction = () => async (dispatch) => {
+    dispatch(setCities());
+    try {
+        const response = await clientAxios("/cities/whitpropeties");
+        dispatch(setCitiesSuccess(response.data));
+    } catch (error) {
+        console.log(error);
+        dispatch(setCitiesError());
+    }
+};
