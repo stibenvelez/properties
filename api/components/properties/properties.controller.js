@@ -34,7 +34,7 @@ export const addNewProperty = async (req, res) => {
         await addNewPropertyService(body, files, user);
         res.json("Propiedad registrada");
     } catch (error) {
-        console.log(error)
+        console.log(error);
         if (error.code === "ER_DUP_ENTRY") {
             const error = new Error(
                 "Propiedad contiene campos duplicados, verifique que la referencia no esté duplicada"
@@ -54,13 +54,9 @@ export const editProperty = async (req, res) => {
         console.log(error);
         res.status(400).json({ msg: "error al editar la propiedad" });
     }
-        
-    
 };
 
-export const deletProperty = async (req, res) => {
-
-};
+export const deletProperty = async (req, res) => {};
 
 export const importProperties = async (req, res) => {
     try {
@@ -92,7 +88,7 @@ export const getPropertiesByUser = async (req, res) => {
 
 export const getPropertyByIdByUserId = async (req, res) => {
     try {
-        const [property] = await getPropertyByIdByUserIdService(req);
+        const property = await getPropertyByIdByUserIdService(req);
         if (!property) {
             return res.status(400).json({ msg: "No se encontro el proyecto" });
         }
@@ -102,4 +98,3 @@ export const getPropertyByIdByUserId = async (req, res) => {
         res.json(400).json({ msg: "eror al obtener la propiedad" });
     }
 };
-

@@ -8,7 +8,6 @@ const USERS_TABLE = [
 ];
 
 export const inserUser = async (user) => {
-    console.log('desde DAL', user)
     try {
         const sql = `INSERT INTO Users (
             firstName,

@@ -125,14 +125,16 @@ export const allPropertiesByUserId = async (id) => {
 export const propertyByIdByUserId = async (id, userId) => {
     try {
         const sql = `
-        SELECT p.*, pt.propertyType, o.offer, c.city
+        SELECT p.*, pt.propertyType, o.offer, c.city, d.idDepartament, d.departament
         FROM Properties AS p
         LEFT JOIN PropertyTypes AS pt ON pt.propertyTypeId = p.propertyTypeId
         LEFT JOIN Offer AS o ON p.offerId = o.offerId
-        LEFT JOIN Cities AS c ON cod.cityId = p.cityId
+        LEFT JOIN Cities AS c ON c.cityId = p.cityId
+        LEFT JOIN Departaments AS d ON d.idDepartament = c.idDepartament
         WHERE p.idProperty = ${id} AND p.createdBy = ${userId}
         `;
-        return await connection.query(sql);
+        const [rows] = await connection.query(sql);
+        return rows;
     } catch (error) {
         throw error;
     }

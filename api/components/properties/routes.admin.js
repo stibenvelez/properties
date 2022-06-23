@@ -16,7 +16,10 @@ const router = express.Router();
 
 router.get("/", checkAuth, getPropertiesByUser);
 router.post("/", checkAuth, uploadImagesProperty, addNewProperty);
-router.route("/:id").put(checkAuth, editProperty);
+router
+    .route("/:id")
+    .get(checkAuth, getPropertyByIdByUserId)
+    .put(checkAuth, editProperty);
 
 router.post("/upload/properties", checkAuth, uploadFile, importProperties);
 router.post("/upload/images", checkAuth, uploadImages, importImagesProperties);

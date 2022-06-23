@@ -162,9 +162,25 @@ export const getPropertiesByUserIdService = async (id) => {
 export const getPropertyByIdByUserIdService = async (req) => {
     const id = req.params.id;
     const userId = req.user.idUser;
+    const images = ["image1", "image2", "image3", "image4", "image5", "image6"];
 
+    
     try {
         const [property] = await propertyByIdByUserId(id, userId);
+        
+        let galleryImgs = [];
+        images.map((image) => {
+
+            if (property[image]) {
+                galleryImgs.push(property[image]);
+            }
+            
+        });
+        property.galleryImgs = galleryImgs;
+        console.log(property);
+        property.latitude = parseFloat(property.latitude);
+        property.longitude = parseFloat(property.longitude);
+
         return property;
     } catch (error) {
         throw error;

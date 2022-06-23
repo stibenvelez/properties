@@ -8,7 +8,7 @@ const ProfilePage = () => {
     );
     return (
         <div className="nc-CommonLayoutProps bg-neutral-50 dark:bg-neutral-900">
-            <div className="container pt-10 sm:pt-20 pb-24 lg:pb-32">
+            <div className="container pt-4 sm:pt-8 pb-24 lg:pb-32">
                 <div className="pb-4 border-b">
                     <div className="pb-4">
                         <h1 className="text-2xl font-bold">

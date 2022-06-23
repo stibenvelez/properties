@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    properties: [],
+    properties: {
+        results: []
+    },
     filters: {
         propertyType: "",
         city: "",
@@ -13,6 +15,7 @@ const initialState = {
     loadingUploadCsv: false,
     loadingUploadImages: false,
     response: null,
+    property:{}
 };
 
 export const propertiesSlice = createSlice({
@@ -69,6 +72,19 @@ export const propertiesSlice = createSlice({
         setCreatePropertyError: (state, action) => {
             state.loading = false;
         },
+        setPropertyByUser: (state, action) => {
+            state.loading = true;
+            state.properties = action.payload;
+        },
+        setPropertyByUserSucces: (state, action) => {
+            state.loading = false;
+            state.property = action.payload;
+        },
+        setPropertyByUserError: (state, action) => {
+            state.loading = false;
+            state.properties = action.payload;
+        }
+
     },
 });
 
@@ -86,7 +102,10 @@ export const {
     setUploadImagesError,
     setCreateProperty,
     setCreatePropertySuccess,
-    setCreatePropertyError
+    setCreatePropertyError,
+    setPropertyByUser,
+    setPropertyByUserSucces,
+    setPropertyByUserError,
 } = propertiesSlice.actions;
 
 export default propertiesSlice.reducer;

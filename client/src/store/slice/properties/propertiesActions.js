@@ -7,6 +7,9 @@ import {
     setProperties,
     setPropertiesError,
     setPropertiesSucces,
+    setPropertyByUser,
+    setPropertyByUserError,
+    setPropertyByUserSucces,
     setUploadImages,
     setUploadImagesError,
     setUploadImagesSucces,
@@ -54,13 +57,40 @@ export const fetchAllPropertiesByUser =
                 }`,
                 { headers, params: filters }
             );
-            console.log(response.data);
             dispatch(setPropertiesSucces(response.data));
         } catch (error) {
             console.log(error);
             dispatch(setPropertiesError());
         }
     };
+
+export const getPropertyByIdByUserId = (idProperty) => async (dispatch) => {
+    dispatch(setPropertyByUser());
+    try {
+        const token = localStorage.getItem("token");
+        let headers = {
+            Accept: "application/json",
+            "content-type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+        };
+
+        const response = await clientAxios(`/admin/properties/${idProperty}`, {
+            headers,
+        });
+        dispatch(setPropertyByUserSucces(response.data));
+    } catch (error) {
+        console.log(error);
+        dispatch(setPropertyByUserError());
+
+        Swal.fire({
+            title: "Error",
+            text: "Error al obtener la propiedad",
+            icon: "error",
+            confirmButtonText: "Ok",
+        });
+    }
+}
+
 
 export const readFilters = (filters) => async (dispatch) => {
     try {

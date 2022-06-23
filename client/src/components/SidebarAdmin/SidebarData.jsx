@@ -35,6 +35,6 @@ export const SidebarData = [
                 icon: null,
                 onlyAdmin: true,
             },
-        ],
+        ]
     },
 ];
