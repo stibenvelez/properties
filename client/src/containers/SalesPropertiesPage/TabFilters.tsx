@@ -38,7 +38,7 @@ const TabFilters = () => {
     //
     const filters = useSelector(({ properties }: any) => properties.filters);
     const cities = useSelector(({ cities }: any) => cities.cities);
-    console.log(cities);
+
     const handleChange = (item: any) => {
         dispatch(
             setFilters({
@@ -154,7 +154,11 @@ const TabFilters = () => {
                                                                     : "font-normal"
                                                             }`}
                                                         >
-                                                            {city.city} ({city.countProperties})
+                                                            {city.city} (
+                                                            {
+                                                                city.countProperties
+                                                            }
+                                                            )
                                                         </span>
                                                         {selected ? (
                                                             <span
