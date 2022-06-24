@@ -6,7 +6,7 @@ import {
     importPopertiesCSVService,
     getPropertiesByUserIdService,
     getPropertyByIdByUserIdService,
-    editPropertyService,
+    updatePropertyService,
 } from "./properties.services.js";
 
 export const getAllProperties = async (req, res) => {
@@ -46,9 +46,9 @@ export const addNewProperty = async (req, res) => {
     }
 };
 
-export const editProperty = async (req, res) => {
+export const updateProperty = async (req, res) => {
     try {
-        await editPropertyService(req, res);
+        await updatePropertyService(req, res);
         res.json("Propiedad actualizada");
     } catch (error) {
         console.log(error);

@@ -212,21 +212,41 @@ export const createPropertyAction = (property) => async (dispatch) => {
 
 export const updatePropertyAction = (property) => async (dispatch) => {
     dispatch(setUpdateProperty());
+    const IMAGES_ALLOWED = [
+    "image1",
+    "image2",
+    "image3",
+    "image4",
+    "image5",
+    "image6",
+];
     try {
+        console.log('llegua', property);
         let data = new FormData();
 
         Object.entries(property).forEach(([key, value]) => {
             data.append(key, value);
         });
 
-        property.files.forEach((file) => {
-            data.append("files", file);
+        //process img string
+        property.galleryImgs.forEach((file, index) => {
+            console.log("file", file, index);
+            if (typeof file === "string") {                
+                data.append(`images`, file);
+              
+            }
+            if (typeof file === "object") {
+                data.append(`files`, file);
+                return;
+            }
+            
         });
-
-        /*
+        
+        
         const token = localStorage.getItem("token");
         if (!token) {
             console.log("no hay token");
+            return 
         }
 
         let headers = {
@@ -236,7 +256,7 @@ export const updatePropertyAction = (property) => async (dispatch) => {
         };
 
         const result = await clientAxios.put(
-            `/admin/properties/${property.id}`,
+            `/admin/properties/${property.idProperty}`,
             data,
             { headers }
         );
@@ -246,7 +266,7 @@ export const updatePropertyAction = (property) => async (dispatch) => {
             title: "Inmueble actualizado",
             text: "Se ha actualizado el inmueble correctamente",
         });
-        */
+        
         dispatch(setUpdatePropertySuccess());
     } catch (error) {
         Swal.fire({

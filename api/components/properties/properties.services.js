@@ -58,21 +58,21 @@ const FIELDS_REQUIRED = [
     "offerId",
 ];
 
+const IMAGES_ALLOWED = [
+    "image1",
+    "image2",
+    "image3",
+    "image4",
+    "image5",
+    "image6",
+];
+
 export const getAllPropertiesService = async (query) => {
     const [rows] = await allProperties(query);
     const addGalleryImgs = rows.map((property) => {
-        const images = [
-            "image1",
-            "image2",
-            "image3",
-            "image4",
-            "image5",
-            "image6",
-        ];
-
         let galleryImgs = [];
 
-        images.map((image) => {
+        IMAGES_ALLOWED.map((image) => {
             if (property[image]) {
                 galleryImgs.push(property[image]);
             }
@@ -107,17 +107,8 @@ export const getAllPropertiesService = async (query) => {
 export const getPropertyByIdService = async (id) => {
     try {
         const [property] = await propertyById(id);
-        const images = [
-            "image1",
-            "image2",
-            "image3",
-            "image4",
-            "image5",
-            "image6",
-        ];
-
         let galleryImgs = [];
-        images.map((image) => {
+        IMAGES_ALLOWED.map((image) => {
             if (property[image]) {
                 galleryImgs.push(property[image]);
             }
@@ -162,15 +153,8 @@ export const getPropertyByIdByUserIdService = async (req, res) => {
     const id = req.params.id;
     const user = req.user;
 
+
     try {
-        const images = [
-            "image1",
-            "image2",
-            "image3",
-            "image4",
-            "image5",
-            "image6",
-        ];
         const [property] = await propertyByIdByUserId(id, user);
 
         if (user.idUser !== property.createdBy && user.role !== "admin") {
@@ -178,16 +162,14 @@ export const getPropertyByIdByUserIdService = async (req, res) => {
                 msg: "No tienes permisos necesarios para acceder a este sitio",
             });
             return;
-        }    
+        }
 
-        const galleryImgs = images
-            .map((item) => {
-                if (!property[item] && typeof property[item] === undefined) {
-                    return false;
-                }
-                return property[item];
-            })
-            .filter((item) => item);
+        const galleryImgs = IMAGES_ALLOWED.map((item) => {
+            if (!property[item] && typeof property[item] === undefined) {
+                return false;
+            }
+            return property[item];
+        }).filter((item) => item);
         property.galleryImgs = galleryImgs;
         property.latitude = parseFloat(property.latitude);
         property.longitude = parseFloat(property.longitude);
@@ -198,9 +180,11 @@ export const getPropertyByIdByUserIdService = async (req, res) => {
     }
 };
 
-export const editPropertyService = async (req, res) => {
+export const updatePropertyService = async (req, res) => {
     const { id } = req.params;
     const [property] = await propertyById(id);
+    const files = req.files;
+    const body = req.body;
 
     if (!property) {
         return res.status(404).json({
@@ -209,14 +193,35 @@ export const editPropertyService = async (req, res) => {
         });
     }
 
-    if (property.createdBy.toString() !== req.user.idUser.toString()) {
+    if (
+        property.createdBy.toString() !== req.user.idUser.toString() &&
+        req.user.role !== "admin"
+    ) {
         return res
             .status(401)
             .json({ msg: "No tienes permisos para editar este inmueble" });
     }
+    
+    const filesNames = files.map((file) => file.originalname);
+    if (typeof body.images === "string") {
+        body.images = [body.images]
+    }
 
+    let images = []
+    if (body.images) {
+        images = body.images.concat(filesNames);
+    }   
+
+    IMAGES_ALLOWED.map((image, index) => {
+        if (images[index] !== undefined) {
+            body[image] = images[index];
+        } else {
+            body[image] = null;
+        }
+    })
+    
     const uploadData = {
-        ...req.body,
+        ...body,
         idProperty: id,
     };
 
@@ -229,9 +234,8 @@ export const editPropertyService = async (req, res) => {
 };
 
 export const addNewPropertyService = async (body, files, user) => {
-    const images = ["image1", "image2", "image3", "image4", "image5", "image6"];
     try {
-        images.forEach(
+        IMAGES_ALLOWED.forEach(
             (image, index) => (body[image] = files[index]?.originalname || null)
         );
         body.createdBy = user.idUser;

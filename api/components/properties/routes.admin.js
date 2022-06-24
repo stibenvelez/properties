@@ -5,7 +5,7 @@ import { uploadImages } from "../../middlewares/uploadImages.js";
 import { uploadImagesProperty } from "../../middlewares/uploadImagesProperty.js";
 import {
     addNewProperty,
-    editProperty,
+    updateProperty,
     getPropertiesByUser,
     getPropertyByIdByUserId,
     importImagesProperties,
@@ -19,7 +19,7 @@ router.post("/", checkAuth, uploadImagesProperty, addNewProperty);
 router
     .route("/:id")
     .get(checkAuth, getPropertyByIdByUserId)
-    .put(checkAuth, editProperty);
+    .put(checkAuth, uploadImagesProperty, updateProperty);
 
 router.post("/upload/properties", checkAuth, uploadFile, importProperties);
 router.post("/upload/images", checkAuth, uploadImages, importImagesProperties);

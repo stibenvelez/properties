@@ -16,7 +16,7 @@ import { formValidate } from "./utils/FormValidate";
 import { CheckIcon, TrashIcon } from "@heroicons/react/solid";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { createPropertyAction } from "store/slice/properties/propertiesActions";
+import { createPropertyAction, updatePropertyAction } from "store/slice/properties/propertiesActions";
 import { useParams } from "react-router-dom";
 
 const FormEditProperty = () => {
@@ -134,7 +134,6 @@ const FormEditProperty = () => {
 */
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("enviando", editedProperty);
         const result = await formValidate(editedProperty);
         if (Object.keys(result).length > 0) {
             setErrors(result);
@@ -146,8 +145,8 @@ const FormEditProperty = () => {
             return;
         }
         setErrors({});
-
-        //dispatch(createPropertyAction(editedProperty));
+        console.log(editedProperty);
+        dispatch(updatePropertyAction(editedProperty));
         //setEditedProperty(INITIAL_STATE_NEW_PROPERTY);
     };
 
