@@ -20,30 +20,12 @@ import { createPropertyAction } from "store/slice/properties/propertiesActions";
 import { Link } from "react-router-dom";
 
 const FormviewProperty = () => {
-    const dispatch = useDispatch();
+
     const { property, loading } = useSelector(({ properties }) => properties);
-    console.log(property);
-    const [newProperty, setNewProperty] = useState(
-        INITIAL_STATE_NEW_PROPERTY
-    );
     const [errors, setErrors] = useState({});
     const [departaments, setDepartaments] = useState([]);
     const [cities, setCities] = useState([]);
     const inputFilesRef = useRef();
-
-    useEffect(() => {
-        if (property) {
-            setNewProperty(property);
-        }
-    }, [property]);
-
-    const handleOnChange = (data) => {
-        setNewProperty({
-            ...property,
-            [data.name]: data.value,
-        });
-    };
-
 
     useMemo(() => {
         const getDepartaments = async () => {
@@ -480,12 +462,6 @@ const FormviewProperty = () => {
                             type="checkbox"
                             name="published"
                             defaultChecked={property.published}
-                            onChange={(e) =>
-                                handleOnChange({
-                                    name: e.target.name,
-                                    value: e.target.checked,
-                                })
-                            }
                         />
                     </div>
                     <div>

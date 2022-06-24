@@ -65,8 +65,6 @@ const SalesPropertiesPage: FC<ListingStayPageProps> = ({ className = "" }) => {
                 {/* SECTION */}
                 <SectionGridFilterCard
                     className="pb-24 lg:pb-32"
-                    properties={properties}
-                    loading={loading}
                     categoryProperty={categoryProperty}
                 />
 

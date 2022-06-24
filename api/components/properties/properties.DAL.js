@@ -103,7 +103,7 @@ export const propertyById = async (id) => {
     }
 };
 
-export const allPropertiesByUserId = async (id) => {
+export const allPropertiesByUserId = async ({ idUser, role }) => {
     try {
         const sql = `
         SELECT p.*, pt.propertyType, o.offer, c.city
@@ -114,15 +114,17 @@ export const allPropertiesByUserId = async (id) => {
         INNER JOIN PropertyTypes AS pt ON p.propertyTypeId = pt.propertyTypeId 
         INNER JOIN Offer AS o ON p.offerId = o.offerId
 
-        WHERE p.createdBy = ${id}
+        ${role !== "admin" ? `WHERE p.createdBy = ${idUser}` : ""}
         `;
+        const [properties] = await connection.query(sql);
+        console.log(properties);
         return await connection.query(sql);
     } catch (error) {
         throw error;
     }
 };
 
-export const propertyByIdByUserId = async (id, userId) => {
+export const propertyByIdByUserId = async (id, user) => {
     try {
         const sql = `
         SELECT p.*, pt.propertyType, o.offer, c.city, d.idDepartament, d.departament
@@ -131,7 +133,10 @@ export const propertyByIdByUserId = async (id, userId) => {
         LEFT JOIN Offer AS o ON p.offerId = o.offerId
         LEFT JOIN Cities AS c ON c.cityId = p.cityId
         LEFT JOIN Departaments AS d ON d.idDepartament = c.idDepartament
-        WHERE p.idProperty = ${id} AND p.createdBy = ${userId}
+        WHERE p.idProperty = ${id} 
+        ${`
+        ${user.role !== "admin" ? `AND p.createdBy = ${user.userId}` : ""}`}
+    
         `;
         const [rows] = await connection.query(sql);
         return rows;

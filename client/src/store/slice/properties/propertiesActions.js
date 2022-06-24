@@ -10,6 +10,9 @@ import {
     setPropertyByUser,
     setPropertyByUserError,
     setPropertyByUserSucces,
+    setUpdateProperty,
+    setUpdatePropertyError,
+    setUpdatePropertySuccess,
     setUploadImages,
     setUploadImagesError,
     setUploadImagesSucces,
@@ -20,7 +23,8 @@ import {
 import clientAxios from "../../../config/axios";
 import Swal from "sweetalert2";
 
-export const fetchAllProperties = (filters, categoryProperty) => async (dispatch) => {
+export const fetchAllProperties =
+    (filters, categoryProperty) => async (dispatch) => {
         dispatch(setProperties());
         try {
             const token = localStorage.getItem("token");
@@ -30,7 +34,11 @@ export const fetchAllProperties = (filters, categoryProperty) => async (dispatch
                 Authorization: `Bearer ${token}`,
             };
 
-            const response = await clientAxios(`/properties${categoryProperty ? `?category=${categoryProperty}` : "?"}`,{ headers, params: filters }
+            const response = await clientAxios(
+                `/properties${
+                    categoryProperty ? `?category=${categoryProperty}` : "?"
+                }`,
+                { headers, params: filters }
             );
             console.log(response.data);
             dispatch(setPropertiesSucces(response.data));
@@ -38,8 +46,8 @@ export const fetchAllProperties = (filters, categoryProperty) => async (dispatch
             console.log(error);
             dispatch(setPropertiesError());
         }
-};
-    
+    };
+
 export const fetchAllPropertiesByUser =
     (filters, categoryProperty) => async (dispatch) => {
         dispatch(setProperties());
@@ -57,6 +65,7 @@ export const fetchAllPropertiesByUser =
                 }`,
                 { headers, params: filters }
             );
+
             dispatch(setPropertiesSucces(response.data));
         } catch (error) {
             console.log(error);
@@ -89,8 +98,7 @@ export const getPropertyByIdByUserId = (idProperty) => async (dispatch) => {
             confirmButtonText: "Ok",
         });
     }
-}
-
+};
 
 export const readFilters = (filters) => async (dispatch) => {
     try {
@@ -200,3 +208,53 @@ export const createPropertyAction = (property) => async (dispatch) => {
         console.log(error);
     }
 };
+
+
+export const updatePropertyAction = (property) => async (dispatch) => {
+    dispatch(setUpdateProperty());
+    try {
+        let data = new FormData();
+
+        Object.entries(property).forEach(([key, value]) => {
+            data.append(key, value);
+        });
+
+        property.files.forEach((file) => {
+            data.append("files", file);
+        });
+
+        /*
+        const token = localStorage.getItem("token");
+        if (!token) {
+            console.log("no hay token");
+        }
+
+        let headers = {
+            Accept: "application/json",
+            "content-type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+        };
+
+        const result = await clientAxios.put(
+            `/admin/properties/${property.id}`,
+            data,
+            { headers }
+        );
+
+        Swal.fire({
+            icon: "success",
+            title: "Inmueble actualizado",
+            text: "Se ha actualizado el inmueble correctamente",
+        });
+        */
+        dispatch(setUpdatePropertySuccess());
+    } catch (error) {
+        Swal.fire({
+            icon: "error",
+            title: "Hubo un error",
+            text: error.response.data.msg,
+        });
+        dispatch(setUpdatePropertyError());
+        console.log(error);
+    }
+}

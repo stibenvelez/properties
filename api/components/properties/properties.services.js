@@ -81,7 +81,6 @@ export const getAllPropertiesService = async (query) => {
         if (galleryImgs.length === 0) {
             galleryImgs = [];
         }
-
         delete property.createdAt;
         delete property.updateAt;
         delete property.createBy;
@@ -146,9 +145,9 @@ export const getPropertyByIdService = async (id) => {
     }
 };
 
-export const getPropertiesByUserIdService = async (id) => {
+export const getPropertiesByUserIdService = async (user) => {
     try {
-        const [properties] = await allPropertiesByUserId(id);
+        const [properties] = await allPropertiesByUserId(user);
         const dataPropeties = {
             results: properties,
             count: properties.length,
@@ -159,25 +158,37 @@ export const getPropertiesByUserIdService = async (id) => {
     }
 };
 
-export const getPropertyByIdByUserIdService = async (req) => {
+export const getPropertyByIdByUserIdService = async (req, res) => {
     const id = req.params.id;
-    const userId = req.user.idUser;
-    const images = ["image1", "image2", "image3", "image4", "image5", "image6"];
+    const user = req.user;
 
-    
     try {
-        const [property] = await propertyByIdByUserId(id, userId);
-        
-        let galleryImgs = [];
-        images.map((image) => {
+        const images = [
+            "image1",
+            "image2",
+            "image3",
+            "image4",
+            "image5",
+            "image6",
+        ];
+        const [property] = await propertyByIdByUserId(id, user);
 
-            if (property[image]) {
-                galleryImgs.push(property[image]);
-            }
-            
-        });
+        if (user.idUser !== property.createdBy && user.role !== "admin") {
+            res.status(403).json({
+                msg: "No tienes permisos necesarios para acceder a este sitio",
+            });
+            return;
+        }    
+
+        const galleryImgs = images
+            .map((item) => {
+                if (!property[item] && typeof property[item] === undefined) {
+                    return false;
+                }
+                return property[item];
+            })
+            .filter((item) => item);
         property.galleryImgs = galleryImgs;
-        console.log(property);
         property.latitude = parseFloat(property.latitude);
         property.longitude = parseFloat(property.longitude);
 

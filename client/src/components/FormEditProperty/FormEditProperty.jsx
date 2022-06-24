@@ -15,19 +15,28 @@ import LocationMarker from "components/AnyReactComponent/LocationMarker";
 import { formValidate } from "./utils/FormValidate";
 import { CheckIcon, TrashIcon } from "@heroicons/react/solid";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPropertyAction } from "store/slice/properties/propertiesActions";
+import { useParams } from "react-router-dom";
 
-const FormNewProperty = () => {
+const FormEditProperty = () => {
     const dispatch = useDispatch();
-    const [newProperty, setNewProperty] = useState(INITIAL_STATE_NEW_PROPERTY);
+    const property = useSelector(({ properties }) => properties.property);
+
+    const [editedProperty, setEditedProperty] = useState({});
+    const [pruebaProperty, setPruebaProperty] = useState();
     const [errors, setErrors] = useState({});
     const [departaments, setDepartaments] = useState([]);
     const [cities, setCities] = useState([]);
     const inputFilesRef = useRef();
+
+    useEffect(() => {
+        setEditedProperty(property);
+    }, [property]);
+
     const handleOnChange = (data) => {
-        setNewProperty({
-            ...newProperty,
+        setEditedProperty({
+            ...editedProperty,
             [data.name]: data.value,
         });
     };
@@ -40,12 +49,13 @@ const FormNewProperty = () => {
             file.id = Math.random().toString(36);
             images.push(file);
         }
+        const limitImages = editedProperty.galleryImgs
+            .concat(images)
+            .slice(0, 5);
 
-        const limitImages = newProperty.files.concat(images).slice(0, 5);
-
-        setNewProperty({
-            ...newProperty,
-            files: limitImages,
+        setEditedProperty({
+            ...editedProperty,
+            galleryImgs: limitImages,
         });
     };
 
@@ -60,23 +70,30 @@ const FormNewProperty = () => {
         const getCities = async () => {
             const response = await clientAxios.get("/cities");
             let filteredCities = response.data.filter(
-                (city) => city.IdDepartament === newProperty.departament * 1
+                (city) => city.IdDepartament === editedProperty.departament * 1
             );
             setCities(filteredCities);
         };
         getCities();
-    }, [newProperty.departament]);
+    }, [editedProperty.departament]);
 
     useEffect(() => {
         (async () => {
             try {
-                if (newProperty.reference === "") {
+                if (editedProperty.reference === "") {
                     return false;
                 }
                 const res = await clientAxios.get(
-                    `properties?reference=${newProperty.reference}`
+                    `properties?reference=${editedProperty.reference}`
                 );
-                if (res.data.results.length > 0) {
+                console.log(
+                    editedProperty.reference,
+                    res.data.results[0].reference
+                );
+                if (
+                    res.data.results.length > 0 &&
+                    property.reference !== res.data.results[0].reference
+                ) {
                     setErrors({
                         ...errors,
                         reference: "La referencia ya existe",
@@ -89,31 +106,36 @@ const FormNewProperty = () => {
                     reference: "",
                 });
             } catch (error) {
+                setErrors({
+                    ...errors,
+                    reference: "",
+                });
                 console.log(error);
             }
         })();
-    }, [newProperty.reference]);
+    }, [editedProperty.reference]);
 
     const handleDeleteImage = (item) => {
-        const newArrayImages = newProperty.files.filter(
-            (file) => file.id !== item.id
+        const newArrayImages = editedProperty.galleryImgs.filter(
+            (file) => file !== item
         );
-        setNewProperty({
-            ...newProperty,
-            files: newArrayImages,
+
+        setEditedProperty({
+            ...editedProperty,
+            galleryImgs: newArrayImages,
         });
     };
-
+    /*
     useEffect(() => {
-        if (newProperty.files.length === 0) {
+        if (editedProperty?.galleryImgs.length === 0) {
             inputFilesRef.current.value = "";
         }
-    }, [newProperty.files]);
-
+    }, [editedProperty.galleryImgs]);
+*/
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("enviando");
-        const result = await formValidate(newProperty);
+        console.log("enviando", editedProperty);
+        const result = await formValidate(editedProperty);
         if (Object.keys(result).length > 0) {
             setErrors(result);
             Swal.fire({
@@ -124,9 +146,27 @@ const FormNewProperty = () => {
             return;
         }
         setErrors({});
-        
-        dispatch(createPropertyAction(newProperty));
-        setNewProperty(INITIAL_STATE_NEW_PROPERTY);
+
+        //dispatch(createPropertyAction(editedProperty));
+        //setEditedProperty(INITIAL_STATE_NEW_PROPERTY);
+    };
+
+    const RenderImgPreviw = (image) => {
+
+        if (typeof image === "string") {
+            return <img
+                className="object-contain object-center"
+                src={`${process.env.REACT_APP_API_PUBLIC_IMG}/${image}`}
+            />;
+        }
+        if (typeof image === "object") {
+            return (
+                <img
+                    className="object-contain object-center"
+                    src={URL.createObjectURL(image)}
+                />
+            );
+        }
     };
 
     return (
@@ -142,7 +182,8 @@ const FormNewProperty = () => {
                             </Label>
                             <Input
                                 className="mt-1.5"
-                                value={newProperty.reference}
+                                value={editedProperty.reference}
+                                defaultValue={property.reference}
                                 name="reference"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -163,16 +204,17 @@ const FormNewProperty = () => {
                             </Label>
                             <Input
                                 className="mt-1.5"
-                                value={newProperty.title}
+                                defaultValue={property.title}
+                                value={editedProperty.title}
                                 name="title"
                                 onChange={(e) =>
-                                    handleOnChange({
+                                    setPruebaProperty({
                                         name: e.target.name,
                                         value: e.target.value,
                                     })
                                 }
                             />
-                            {errors.title && newProperty.title === "" && (
+                            {errors.title && editedProperty.title === "" && (
                                 <p className="py-1 text-sm text-red-500">
                                     {errors.title}
                                 </p>
@@ -187,7 +229,7 @@ const FormNewProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                value={newProperty.offer}
+                                value={editedProperty.offer}
                                 name="offer"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -200,7 +242,7 @@ const FormNewProperty = () => {
                                 <option value="1">Venta</option>
                                 <option value="2">Arriendo</option>
                             </Select>
-                            {errors.offer && newProperty.offer === "" && (
+                            {errors.offer && editedProperty.offer === "" && (
                                 <p className="py-1 text-sm text-red-500">
                                     {errors.offer}
                                 </p>
@@ -213,7 +255,7 @@ const FormNewProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                value={newProperty.propertyType}
+                                value={editedProperty.propertyType}
                                 name="propertyType"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -232,7 +274,7 @@ const FormNewProperty = () => {
                                 <option value="4">Lote</option>
                             </Select>
                             {errors.propertyType &&
-                                newProperty.propertyType === "" && (
+                                editedProperty.propertyType === "" && (
                                     <p className="py-1 text-sm text-red-500">
                                         {errors.propertyType}
                                     </p>
@@ -246,7 +288,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 type="number"
                                 placeholder="$ 0"
-                                value={newProperty.price}
+                                value={editedProperty.price}
                                 min="0"
                                 name="price"
                                 onChange={(e) =>
@@ -257,8 +299,8 @@ const FormNewProperty = () => {
                                 }
                             />
                             {errors.price &&
-                                (newProperty.price === "" ||
-                                    newProperty.price === 0) && (
+                                (editedProperty.price === "" ||
+                                    editedProperty.price === 0) && (
                                     <p className="py-1 text-sm text-red-500">
                                         {errors.price}
                                     </p>
@@ -270,7 +312,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 type="number"
                                 placeholder="$ 0"
-                                value={newProperty.saleOff}
+                                value={editedProperty.saleOff}
                                 name="saleOff"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -289,7 +331,7 @@ const FormNewProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                value={newProperty.departament}
+                                value={editedProperty.departament}
                                 name="departament"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -312,7 +354,7 @@ const FormNewProperty = () => {
                                     ))}
                             </Select>
                             {errors.departament &&
-                                newProperty.departament === "" && (
+                                editedProperty.departament === "" && (
                                     <p className="py-1 text-sm text-red-500">
                                         {errors.departament}
                                     </p>
@@ -324,7 +366,7 @@ const FormNewProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                value={newProperty.city}
+                                value={editedProperty.city}
                                 name="city"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -333,7 +375,7 @@ const FormNewProperty = () => {
                                     })
                                 }
                                 disabled={
-                                    newProperty.departament === ""
+                                    editedProperty.departament === ""
                                         ? true
                                         : false
                                 }
@@ -351,7 +393,7 @@ const FormNewProperty = () => {
                                         </option>
                                     ))}
                             </Select>
-                            {errors.city && newProperty.city === "" && (
+                            {errors.city && editedProperty.city === "" && (
                                 <p className="py-1 text-sm text-red-500">
                                     {errors.city}
                                 </p>
@@ -363,7 +405,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 placeholder="barrio donde esta ubicado el inmuble"
                                 name="neighborhood"
-                                value={newProperty.neighborhood}
+                                value={editedProperty.neighborhood}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -380,7 +422,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 placeholder="direccion del inmuble"
                                 name="address"
-                                value={newProperty.address}
+                                value={editedProperty.address}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -396,7 +438,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 placeholder="direccion del inmuble"
                                 name="building"
-                                value={newProperty.building}
+                                value={editedProperty.building}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -418,7 +460,7 @@ const FormNewProperty = () => {
                                 placeholder="area del inmuble"
                                 name="area"
                                 min="0"
-                                value={newProperty.area}
+                                value={editedProperty.area}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -427,8 +469,8 @@ const FormNewProperty = () => {
                                 }
                             />
                             {errors.area &&
-                                (newProperty.area === "" ||
-                                    newProperty.area === 0) && (
+                                (editedProperty.area === "" ||
+                                    editedProperty.area === 0) && (
                                     <p className="py-1 text-sm text-red-500">
                                         {errors.area}
                                     </p>
@@ -438,7 +480,7 @@ const FormNewProperty = () => {
                             <Label>estrato</Label>
                             <Select
                                 className="mt-1.5"
-                                value={newProperty.stratum}
+                                value={editedProperty.stratum}
                                 name="stratum"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -465,7 +507,7 @@ const FormNewProperty = () => {
                                 type="number"
                                 placeholder="antiguedad del inmuble"
                                 name="antiquityYears"
-                                value={newProperty.antiquityYears}
+                                value={editedProperty.antiquityYears}
                                 min="0"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -482,7 +524,7 @@ const FormNewProperty = () => {
                                 type="number"
                                 placeholder="remodelaciones del inmuble"
                                 name="remodelation"
-                                value={newProperty.remodelation}
+                                value={editedProperty.remodelation}
                                 min="0"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -499,7 +541,7 @@ const FormNewProperty = () => {
                                 type="number"
                                 placeholder="$ 0000"
                                 name="lastAdminprice"
-                                value={newProperty.lastAdminprice}
+                                value={editedProperty.lastAdminprice}
                                 min="0"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -521,7 +563,7 @@ const FormNewProperty = () => {
                                 type="number"
                                 placeholder="habitaciones del inmuble"
                                 name="bedrooms"
-                                value={newProperty.bedrooms}
+                                value={editedProperty.bedrooms}
                                 min="0"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -531,8 +573,8 @@ const FormNewProperty = () => {
                                 }
                             />
                             {errors.bedrooms &&
-                                (newProperty.bedrooms === "" ||
-                                    newProperty.bedrooms === 0) && (
+                                (editedProperty.bedrooms === "" ||
+                                    editedProperty.bedrooms === 0) && (
                                     <p className="py-1 text-sm text-red-500">
                                         {errors.bedrooms}
                                     </p>
@@ -546,7 +588,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 type="number"
                                 name="bathrooms"
-                                value={newProperty.bathrooms}
+                                value={editedProperty.bathrooms}
                                 min="0"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -556,7 +598,7 @@ const FormNewProperty = () => {
                                 }
                             />
                             {errors.bathrooms &&
-                                newProperty.bathrooms === "" && (
+                                editedProperty.bathrooms === "" && (
                                     <p className="py-1 text-sm text-red-500">
                                         {errors.bathrooms}
                                     </p>
@@ -568,7 +610,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 type="number"
                                 name="numFloor"
-                                value={newProperty.numFloor}
+                                value={editedProperty.numFloor}
                                 min="0"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -584,7 +626,7 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 type="number"
                                 name="numElevators"
-                                value={newProperty.numElevators}
+                                value={editedProperty.numElevators}
                                 min="0"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -600,7 +642,7 @@ const FormNewProperty = () => {
                             <Label>Garage</Label>
                             <Select
                                 className="mt-1.5"
-                                value={newProperty.garage}
+                                value={editedProperty.garage}
                                 name="garage"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -617,7 +659,7 @@ const FormNewProperty = () => {
                             <Label>Parqueadero</Label>
                             <Select
                                 className="mt-1.5"
-                                value={newProperty.parking}
+                                value={editedProperty.parking}
                                 name="parking"
                                 onChange={(e) =>
                                     handleOnChange({
@@ -644,7 +686,7 @@ const FormNewProperty = () => {
                                 type="text"
                                 placeholder="nombre del contacto"
                                 name="contactName"
-                                value={newProperty.contactName}
+                                value={editedProperty.contactName}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -653,8 +695,8 @@ const FormNewProperty = () => {
                                 }
                             />
                             {errors.contactName &&
-                                (newProperty.contactName === "" ||
-                                    newProperty.contactName === 0) && (
+                                (editedProperty.contactName === "" ||
+                                    editedProperty.contactName === 0) && (
                                     <p className="py-1 text-sm text-red-500">
                                         {errors.contactName}
                                     </p>
@@ -667,7 +709,7 @@ const FormNewProperty = () => {
                                 type="email"
                                 placeholder="ejemplo@correo.com"
                                 name="email"
-                                value={newProperty.email}
+                                value={editedProperty.email}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -687,7 +729,7 @@ const FormNewProperty = () => {
                                 type="text"
                                 placeholder="000 000 0000"
                                 name="cellPhone"
-                                value={newProperty.cellPhone}
+                                value={editedProperty.cellPhone}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -696,7 +738,7 @@ const FormNewProperty = () => {
                                 }
                             />
                             {errors.cellPhone &&
-                                newProperty.cellPhone === "" && (
+                                editedProperty.cellPhone === "" && (
                                     <p className="py-1 text-sm text-red-500">
                                         {errors.cellPhone}
                                     </p>
@@ -709,7 +751,7 @@ const FormNewProperty = () => {
                                 type="text"
                                 placeholder="60 0 000  0000"
                                 name="phone"
-                                value={newProperty.phone}
+                                value={editedProperty.phone}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -725,7 +767,7 @@ const FormNewProperty = () => {
                             className="mt-1.5"
                             type="checkbox"
                             name="published"
-                            defaultChecked={newProperty.published}
+                            defaultChecked={editedProperty.published}
                             onChange={(e) =>
                                 handleOnChange({
                                     name: e.target.name,
@@ -744,21 +786,21 @@ const FormNewProperty = () => {
                                     }}
                                     yesIWantToUseGoogleMapApiInternals
                                     defaultZoom={15}
-                                    defaultCenter={{
-                                        lat: newProperty.latitude,
-                                        lng: newProperty.longitude,
+                                    center={{
+                                        lat: editedProperty?.latitude,
+                                        lng: editedProperty?.longitude,
                                     }}
                                     onClick={(e) => {
-                                        setNewProperty({
-                                            ...newProperty,
+                                        setEditedProperty({
+                                            ...editedProperty,
                                             latitude: e.lat,
                                             longitude: e.lng,
                                         });
                                     }}
                                 >
                                     <LocationMarker
-                                        lat={newProperty.latitude}
-                                        lng={newProperty.longitude}
+                                        lat={editedProperty?.latitude}
+                                        lng={editedProperty?.longitude}
                                     />
                                 </GoogleMapReact>
                             </div>
@@ -772,27 +814,30 @@ const FormNewProperty = () => {
                             cargar hasta 6 imagenes
                         </p>
                         <div className="flex flex-wrap justify-center gap-4 py-4 lg:justify-start">
-                            {newProperty.files &&
-                                newProperty.files.map((file, index) => (
-                                    <div
-                                        key={index}
-                                        className="relative overflow-hidden bg-gray-200 rounded shadow w-44 h-28"
-                                    >
-                                        <button
-                                            onClick={() =>
-                                                handleDeleteImage(file)
-                                            }
-                                            type="button"
-                                            className="absolute p-1 rounded-full bottom-1 right-1 text-gray-50 bg-gray-100/70 hover:bg-red-100/80 hover:text-red-400 "
+                            {editedProperty.galleryImgs &&
+                                editedProperty.galleryImgs.map(
+                                    (image, index) => (
+                                        <div
+                                            key={index}
+                                            className="relative overflow-hidden bg-gray-200 rounded shadow w-44 h-28"
                                         >
-                                            <TrashIcon className="w-4 h-4" />
-                                        </button>
-                                        <img
-                                            className="object-contain object-center"
-                                            src={URL.createObjectURL(file)}
-                                        />
-                                    </div>
-                                ))}
+                                            <button
+                                                onClick={() =>
+                                                    handleDeleteImage(image)
+                                                }
+                                                type="button"
+                                                className="absolute p-1 rounded-full bottom-1 right-1 text-gray-50 bg-gray-100/70 hover:bg-red-100/80 hover:text-red-400 "
+                                            >
+                                                <TrashIcon className="w-4 h-4" />
+                                            </button>
+                                            {RenderImgPreviw(image)}
+                                            {/* <img
+                                                className="object-contain object-center"
+                                                src={`${process.env.REACT_APP_API_PUBLIC_IMG}/${image}`}
+                                            /> */}
+                                        </div>
+                                    )
+                                )}
                         </div>
                         <div className="border-gray-200 boder">
                             <label className="block">
@@ -809,8 +854,8 @@ const FormNewProperty = () => {
                                 />
                             </label>
                             <div className="py-2">
-                                {newProperty.files &&
-                                    newProperty.files.map((file, index) => (
+                                {editedProperty.files &&
+                                    editedProperty.files.map((file, index) => (
                                         <div className="flex items-center">
                                             <CheckIcon className="w-4 h-4 text-green-400" />
                                             <p
@@ -836,4 +881,4 @@ const FormNewProperty = () => {
     );
 };
 
-export default FormNewProperty;
+export default FormEditProperty;

@@ -79,7 +79,7 @@ export const importImagesProperties = async (req, res) => {
 export const getPropertiesByUser = async (req, res) => {
     try {
         const user = req.user;
-        const result = await getPropertiesByUserIdService(user.idUser);
+        const result = await getPropertiesByUserIdService(user);
         res.json(result);
     } catch (error) {
         console.log(error);
@@ -88,7 +88,7 @@ export const getPropertiesByUser = async (req, res) => {
 
 export const getPropertyByIdByUserId = async (req, res) => {
     try {
-        const property = await getPropertyByIdByUserIdService(req);
+        const property = await getPropertyByIdByUserIdService(req, res);
         if (!property) {
             return res.status(400).json({ msg: "No se encontro el proyecto" });
         }

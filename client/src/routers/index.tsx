@@ -40,6 +40,7 @@ import ProfilePage from "containers/ProfilePage/ProfilePage";
 import PublicRoute from "./PublicRoute";
 import UserPage from "containers/UserPage/UserPage";
 import PropertyDetailAdmin from "containers/PropertyDetailAdminPage/PropertyDetailAdminPage";
+import EditPropertyPage from "containers/EditPropertyPage/EditPropertyPage";
 
 export const pages: Page[] = [
     { path: "/", exact: true, component: PageHome },
@@ -111,6 +112,11 @@ const Routes = () => {
                     path="/admin/nuevo-inmueble"
                     exact
                     component={NewPropertyPage}
+                />
+                <PrivateRoute
+                    path="/admin/editar-inmueble/:id"
+                    exact
+                    component={EditPropertyPage}
                 />
                 <PrivateRoute path="/admin/users" exact component={UsersPage} />
                 <PrivateRoute

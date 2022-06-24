@@ -83,8 +83,16 @@ export const propertiesSlice = createSlice({
         setPropertyByUserError: (state, action) => {
             state.loading = false;
             state.properties = action.payload;
-        }
-
+        },
+        setUpdateProperty: (state, action) => {
+            state.loading = true;
+        },
+        setUpdatePropertySuccess: (state, action) => {
+            state.loading = false;
+        },
+        setUpdatePropertyError: (state, action) => {
+            state.loading = false;
+        },
     },
 });
 
@@ -106,6 +114,9 @@ export const {
     setPropertyByUser,
     setPropertyByUserSucces,
     setPropertyByUserError,
+    setUpdateProperty,
+    setUpdatePropertySuccess,
+    setUpdatePropertyError,
 } = propertiesSlice.actions;
 
 export default propertiesSlice.reducer;

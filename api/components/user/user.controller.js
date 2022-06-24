@@ -40,7 +40,6 @@ export const confirmUser = async (req, res) => {
     try {
         const { token } = req.params;
         const [userToConfirm] = await findUserByToken(token);
-        console.log(token, userToConfirm);
         if (!userToConfirm) {
             throw new Error("Token no valido");
         }
@@ -115,7 +114,6 @@ export const newPassword = async (req, res) => {
 
         const salt = await bcrypt.genSalt(10);
         updateData.password = await bcrypt.hash(updateData.password, salt);
-        console.log(updateData);
         await updateUser(updateData);
         res.json({ msg: "Contraseña actualizada con exito" });
         
@@ -126,7 +124,6 @@ export const newPassword = async (req, res) => {
 
 export const getProfile = async (req, res) => {
     try {
-        console.log("user");
         const user= req.user;
         res.json(user);
     } catch (error) {

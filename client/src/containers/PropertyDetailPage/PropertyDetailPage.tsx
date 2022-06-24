@@ -46,7 +46,7 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
     const [openFocusIndex, setOpenFocusIndex] = useState(0);
 
     const { id }: any = useParams();
-
+    console.log(property);
     useEffect(() => {
         if (id) {
             (async () => {

@@ -5,10 +5,8 @@ import PropertyList from "./PropertyList";
 
 export interface SectionGridFilterCardProps {
     className?: string;
-    properties?: any;
     setFilters?: any;
     filters?: any;
-    loading?: boolean;
     categoryProperty?: string;
 }
 

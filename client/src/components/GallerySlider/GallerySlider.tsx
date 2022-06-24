@@ -56,7 +56,7 @@ const GallerySlider: FC<GallerySliderProps> = ({
             <div className={`${UNIQUE_CLASS} relative group overflow-hidden`}>
                 <div className="glide__track" data-glide-el="track">
                     <ul className="glide__slides">
-                        {galleryImgs.length ? (
+                        {galleryImgs?.length ? (
                             galleryImgs.map((item, index) => (
                                 <li key={index} className="glide__slide">
                                     <div className={ratioClass}>
