@@ -20,9 +20,18 @@ const PropertiesPage = () => {
             </div>
         );
     return (
-        <div className="container">
-            <h1 className="text-2xl">Lista de propiedades</h1>
-            <PropertiesListAdmin />
+        <div className="nc-CommonLayoutProps bg-neutral-50 dark:bg-neutral-900">
+            <div className="container pt-4 sm:pt-8 pb-24 lg:pb-32">
+                <div className="space-y-6 sm:space-y-8">
+                    <div>
+                        <div className="flex items-center gap-2">
+                            <h1 className="text-3xl font-semibold">Lista de inmuebles</h1>
+                        </div>
+                        <p className="text-sm text-gray-600">Lista de los inmuebles creadosy sus diferentes estados</p>
+                    </div>
+                    <PropertiesListAdmin />
+                </div>
+            </div>
         </div>
     );
 };

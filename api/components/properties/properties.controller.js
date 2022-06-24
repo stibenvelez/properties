@@ -7,6 +7,7 @@ import {
     getPropertiesByUserIdService,
     getPropertyByIdByUserIdService,
     updatePropertyService,
+    deletePropertyService,
 } from "./properties.services.js";
 
 export const getAllProperties = async (req, res) => {
@@ -46,18 +47,6 @@ export const addNewProperty = async (req, res) => {
     }
 };
 
-export const updateProperty = async (req, res) => {
-    try {
-        await updatePropertyService(req, res);
-        res.json("Propiedad actualizada");
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ msg: "error al editar la propiedad" });
-    }
-};
-
-export const deletProperty = async (req, res) => {};
-
 export const importProperties = async (req, res) => {
     try {
         const result = await importPopertiesCSVService(req.file);
@@ -96,5 +85,25 @@ export const getPropertyByIdByUserId = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.json(400).json({ msg: "eror al obtener la propiedad" });
+    }
+};
+
+export const updateProperty = async (req, res) => {
+    try {
+        await updatePropertyService(req, res);
+        res.json("Propiedad actualizada");
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ msg: "error al editar la propiedad" });
+    }
+};
+
+export const deleteProperty = async (req, res) => {
+    try {
+        await deletePropertyService(req, res);
+        res.json("Propiedad eliminada");
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ msg: "error al eliminar la propiedad" });
     }
 };

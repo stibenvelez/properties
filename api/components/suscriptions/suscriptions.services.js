@@ -17,13 +17,12 @@ export const inserSuscriptionService = async (email) => {
         });
 
         const mailOptions = {
-            from: '<foster.fahey72@ethereal.email>', // sender address
+            from: "<foster.fahey72@ethereal.email>", // sender address
             to: `"${email}"`, // list of receivers
             subject: "Bienvendio", // Subject line
             text: templateEmailSuscription(), // plain text body
             html: templateEmailSuscription(), // html body
         };
-
 
         // send mail with defined transport object
         let info = await transporter.sendMail(mailOptions);

@@ -93,6 +93,15 @@ export const propertiesSlice = createSlice({
         setUpdatePropertyError: (state, action) => {
             state.loading = false;
         },
+        setDeleteProperty: (state, action) => {
+            state.loading = true;
+        },
+        setDeletePropertySuccess: (state, action) => {
+            state.loading = false;
+        },
+        setDeletePropertyError: (state, action) => {
+            state.loading = false;
+        }
     },
 });
 
@@ -117,6 +126,9 @@ export const {
     setUpdateProperty,
     setUpdatePropertySuccess,
     setUpdatePropertyError,
+    setDeleteProperty,
+    setDeletePropertySuccess,
+    setDeletePropertyError,
 } = propertiesSlice.actions;
 
 export default propertiesSlice.reducer;

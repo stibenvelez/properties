@@ -720,19 +720,27 @@ const FormNewProperty = () => {
                         </div>
                     </div>
                     <div>
-                        <Label>Publicar inmuble</Label>
-                        <Checkbox
-                            className="mt-1.5"
-                            type="checkbox"
-                            name="published"
-                            defaultChecked={newProperty.published}
+                        <Label id="stateId">
+                            {newProperty.published
+                                ? "Publicado"
+                                : "Publicar inmuble"}
+                        </Label>
+
+                        <Select
+                            className="lg:w-1/5"
+                            value={newProperty.stateId}
+                            name="stateId"
                             onChange={(e) =>
                                 handleOnChange({
                                     name: e.target.name,
-                                    value: e.target.checked,
+                                    value: e.target.value,
                                 })
                             }
-                        />
+                        >
+                            <option value="0">Sin publicar</option>
+                            <option value="1">Publicado</option>
+                            <option value="2">Desactivado</option>
+                        </Select>
                     </div>
                     <div>
                         <h3>Hubicación</h3>

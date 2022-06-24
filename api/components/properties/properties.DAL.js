@@ -67,11 +67,12 @@ export const allProperties = async ({
         };
 
         const sql = `
-        SELECT p.*, c.city
+        SELECT p.*, c.city, sp.state
         FROM Properties AS p
         LEFT JOIN PropertyTypes AS pt ON pt.propertyTypeId = p.propertyTypeId
         LEFT JOIN Offer AS o ON p.offerId = o.offerId
         INNER JOIN Cities AS c ON c.cityId = p.cityId
+        INNER JOIN StatesProperty AS sp ON sp.stateId = p.stateId
         WHERE
         ${filterByRangePrices()}
         ${filterByPropertyType()}
@@ -89,11 +90,12 @@ export const allProperties = async ({
 export const propertyById = async (id) => {
     try {
         const sql = `
-        SELECT p.*, pt.propertyType, o.offer, c.city
+        SELECT p.*, pt.propertyType, o.offer, c.city, sp.state
         FROM Properties AS p
         LEFT JOIN PropertyTypes AS pt ON pt.propertyTypeId = p.propertyTypeId
         LEFT JOIN Offer AS o ON p.offerId = o.offerId
         INNER JOIN Cities AS c ON c.cod = p.cityId
+        INNER JOIN StatesProperty AS sp ON sp.stateId = p.stateId
         WHERE p.idProperty = ${id}          
         `;
         const [property] = await connection.query(sql);
@@ -106,18 +108,18 @@ export const propertyById = async (id) => {
 export const allPropertiesByUserId = async ({ idUser, role }) => {
     try {
         const sql = `
-        SELECT p.*, pt.propertyType, o.offer, c.city
+        SELECT p.*, pt.propertyType, o.offer, c.city, sp.state
 
         FROM Properties AS p
 
         INNER JOIN Cities AS c ON p.cityId = c.cityId
         INNER JOIN PropertyTypes AS pt ON p.propertyTypeId = pt.propertyTypeId 
         INNER JOIN Offer AS o ON p.offerId = o.offerId
-
+        INNER JOIN StatesProperty AS sp ON sp.stateId = p.stateId
         ${role !== "admin" ? `WHERE p.createdBy = ${idUser}` : ""}
         `;
         const [properties] = await connection.query(sql);
-        console.log(properties);
+
         return await connection.query(sql);
     } catch (error) {
         throw error;
@@ -125,19 +127,27 @@ export const allPropertiesByUserId = async ({ idUser, role }) => {
 };
 
 export const propertyByIdByUserId = async (id, user) => {
+    const filterByCreatedBy = () => {
+        if (user.role !== "admin") {
+            return `AND p.createdBy = '${user.userId}'`;
+        }
+        return "";
+    };
+
     try {
         const sql = `
-        SELECT p.*, pt.propertyType, o.offer, c.city, d.idDepartament, d.departament
+        SELECT p.*, pt.propertyType, o.offer, c.city, d.idDepartament, d.departament, sp.state
         FROM Properties AS p
         LEFT JOIN PropertyTypes AS pt ON pt.propertyTypeId = p.propertyTypeId
         LEFT JOIN Offer AS o ON p.offerId = o.offerId
         LEFT JOIN Cities AS c ON c.cityId = p.cityId
         LEFT JOIN Departaments AS d ON d.idDepartament = c.idDepartament
-        WHERE p.idProperty = ${id} 
-        ${`
-        ${user.role !== "admin" ? `AND p.createdBy = ${user.userId}` : ""}`}
-    
+        INNER JOIN StatesProperty AS sp ON sp.stateId = p.stateId
+        
+        WHERE p.idProperty = '${id}'
+        ${filterByCreatedBy()}
         `;
+
         const [rows] = await connection.query(sql);
         return rows;
     } catch (error) {
@@ -315,7 +325,6 @@ export const columnsPorperties = async () => {
 
 export const uploadProperty = async (property) => {
     try {
-        console.log("editando", property);
         const sql = `
         UPDATE Properties SET
             reference = ?,
@@ -327,8 +336,8 @@ export const uploadProperty = async (property) => {
             contactName = ?,
             email = ?,
             phone = ?,
+            cellPhone = ?,
             antiquityYears = ?,
-            published = ?,
             lastAdminprice = ?,
             neighborhood = ?,
             propertyTypeId = ?,
@@ -351,7 +360,8 @@ export const uploadProperty = async (property) => {
             image3 = ?,
             image4 = ?,
             image5 = ?,
-            image6 = ?
+            image6 = ?,
+            stateId = ?
         WHERE idProperty = ?
         `;
         return await connection.query(sql, [
@@ -364,8 +374,8 @@ export const uploadProperty = async (property) => {
             property.contactName,
             property.email,
             property.phone,
+            property.cellPhone,
             property.antiquityYears,
-            property.published,
             property.lastAdminprice,
             property.neighborhood,
             property.propertyTypeId,
@@ -389,10 +399,27 @@ export const uploadProperty = async (property) => {
             property.image4,
             property.image5,
             property.image6,
+            property.stateId,
             property.idProperty,
         ]);
     } catch (error) {
         console.log(error);
+        throw error;
+    }
+};
+
+export const deleteProperty = async (property) => {
+    try {
+        const sql = `
+        UPDATE Properties SET
+            stateId = ?
+        WHERE idProperty = ?
+        `;
+        return await connection.query(sql, [
+            property.stateId,
+            property.idProperty,
+        ]);
+    } catch (error) {
         throw error;
     }
 };

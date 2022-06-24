@@ -1,6 +1,7 @@
+import BadgeSatateProperty from 'components/BadgeStateProperty/BadgeSatateProperty';
 import FormEditProperty from 'components/FormEditProperty/FormEditProperty';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getPropertyByIdByUserId } from 'store/slice/properties/propertiesActions';
 
@@ -13,13 +14,21 @@ const EditPropertyPage = () => {
           dispatch(getPropertyByIdByUserId(id));
       })()
     }, [])
-    
+
+    const { stateId, state } = useSelector(
+        ({ properties }) => properties.property
+    );
     
     const renderSection1 = () => {
         return (
             <div className="space-y-6 sm:space-y-8">
                 <div>
-                    <h2 className="text-3xl font-semibold">Editar inmueble</h2>
+                    <div className="flex items-center gap-2">
+                        <h2 className="text-3xl font-semibold">
+                            Editar inmueble
+                        </h2>
+                        <BadgeSatateProperty stateId={stateId} state={state} />
+                    </div>
                     <p>Edite aqui el inmueble</p>
                 </div>
                 <FormEditProperty />

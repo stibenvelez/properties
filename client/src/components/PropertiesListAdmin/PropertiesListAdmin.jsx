@@ -3,19 +3,53 @@ import {
     TrashIcon,
     ViewBoardsIcon,
 } from "@heroicons/react/solid";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { deletePropertyAction } from "store/slice/properties/propertiesActions";
+import Swal from "sweetalert2";
+
+const STATE_PROPERTY = {
+    0: "sin publicar",
+    1: "publicado",
+    2: "desactivado",
+    3: "suspendido",
+};
 
 const OFFER_MAP = {
     rent: "Arriendo",
     sell: "Venta",
 };
 
+const ESTATE_ITEMS = {
+    0: "bg-yellow-50",
+    1: "",
+    2: "bg-red-50 text-red-700",
+};
+
 const PropertiesListAdmin = () => {
+    const dispatch = useDispatch();
     const properties = useSelector(
         ({ properties }) => properties.properties?.results
     );
-    console.log(properties);
+    
+    const handleDeleteProperty = (id) => {
+        Swal.fire({
+            title: "¿Deseas eliminar este inmueble?",
+            text: "Una vez este eliminado no podrás verlo en la web",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#5046e5",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, eliminarlo",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.value) {
+                dispatch(deletePropertyAction(id));
+
+            }
+        });
+        console.log('elimienando',id);
+    }
 
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -38,6 +72,9 @@ const PropertiesListAdmin = () => {
                             tipo de oferta
                         </th>
                         <th scope="col" className="px-6 py-3">
+                            Estado
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                             Acciones
                         </th>
                     </tr>
@@ -47,7 +84,7 @@ const PropertiesListAdmin = () => {
                         properties.map((property, index) => (
                             <tr
                                 key={index}
-                                className="border-b border-gray-200 dark:border-gray-600"
+                                className={`border-b  dark:border-gray-600 border-gray-200 ${ESTATE_ITEMS[property.stateId] || ""}`}
                             >
                                 <td className="px-6 py-4 whitespace-no-wrap">
                                     {property.reference}
@@ -64,6 +101,9 @@ const PropertiesListAdmin = () => {
 
                                 <td className="px-6 py-4 whitespace-no-wrap">
                                     {OFFER_MAP[property.offer]}
+                                </td>
+                                <td className="px-6 py-4 whitespace-no-wrap">
+                                    {STATE_PROPERTY[property.stateId] || null}
                                 </td>
                                 <td className="px-6 py-4 whitespace-no-wrap">
                                     <div className="flex gap-1 ">
@@ -83,14 +123,16 @@ const PropertiesListAdmin = () => {
                                                 <PencilAltIcon className="w-4 h-4" />
                                             </Link>
                                         </button>
-                                        <button className=" hover:bg-red-500 py-1 px-2 rounded hover:text-white text-gray-500 transition duration-200 ease-in-out">
-                                            <Link
-                                                to={`/admin/property/${property.idProperty}`}
-                                                className="text-xs"
-                                            >
-                                                <TrashIcon className="w-4 h-4" />
-                                            </Link>
-                                        </button>
+                                        {property.stateId !== 2 && <button
+                                            onClick={() =>
+                                                handleDeleteProperty(
+                                                    property.idProperty
+                                                )
+                                            }
+                                            className=" hover:bg-red-500 py-1 px-2 text-xs rounded hover:text-white text-gray-500 transition duration-200 ease-in-out"
+                                        >
+                                            <TrashIcon className="w-4 h-4" />
+                                        </button>}
                                     </div>
                                 </td>
                             </tr>

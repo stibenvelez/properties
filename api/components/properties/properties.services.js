@@ -1,6 +1,7 @@
 import {
     allProperties,
     allPropertiesByUserId,
+    deleteProperty,
     importPorperties,
     insertProperty,
     propertyById,
@@ -153,7 +154,6 @@ export const getPropertyByIdByUserIdService = async (req, res) => {
     const id = req.params.id;
     const user = req.user;
 
-
     try {
         const [property] = await propertyByIdByUserId(id, user);
 
@@ -201,16 +201,18 @@ export const updatePropertyService = async (req, res) => {
             .status(401)
             .json({ msg: "No tienes permisos para editar este inmueble" });
     }
-    
+
     const filesNames = files.map((file) => file.originalname);
     if (typeof body.images === "string") {
-        body.images = [body.images]
+        body.images = [body.images];
     }
 
-    let images = []
-    if (body.images) {
+    let images = [];
+    if (typeof body.images !== "undefined") {
         images = body.images.concat(filesNames);
-    }   
+    } else {
+        images = filesNames;
+    }
 
     IMAGES_ALLOWED.map((image, index) => {
         if (images[index] !== undefined) {
@@ -218,13 +220,12 @@ export const updatePropertyService = async (req, res) => {
         } else {
             body[image] = null;
         }
-    })
-    
+    });
+
     const uploadData = {
         ...body,
         idProperty: id,
     };
-
     await uploadProperty(uploadData);
 
     try {
@@ -317,6 +318,36 @@ export const importPopertiesCSVService = async (file) => {
         await validateRows(dataCSV);
         const properties = await getProperties(dataCSV);
         await importPorperties(properties);
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const deletePropertyService = async (req, res) => {
+    const { id } = req.params;
+    const user = req.user;
+
+    try {
+        const [property] = await propertyByIdByUserId(id, user);
+        if (!property) {
+            return res.status(404).json({
+                msg: "Propiedad no encontrada",
+            });
+        }
+
+        if (user.idUser !== property.createdBy && user.role !== "admin") {
+            res.status(403).json({
+                msg: "No tienes permisos necesarios para acceder a este sitio",
+            });
+            return;
+        }
+
+        const disablePropertyData = {
+            idProperty: id,
+            stateId: 2,
+        };
+
+        await deleteProperty(disablePropertyData);
     } catch (error) {
         throw error;
     }

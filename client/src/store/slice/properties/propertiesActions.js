@@ -3,6 +3,9 @@ import {
     setCreateProperty,
     setCreatePropertyError,
     setCreatePropertySuccess,
+    setDeleteProperty,
+    setDeletePropertyError,
+    setDeletePropertySuccess,
     setFilters,
     setProperties,
     setPropertiesError,
@@ -275,6 +278,41 @@ export const updatePropertyAction = (property) => async (dispatch) => {
             text: error.response.data.msg,
         });
         dispatch(setUpdatePropertyError());
+        console.log(error);
+    }
+}
+
+export const deletePropertyAction = (idProperty) => async (dispatch) => {
+    dispatch(setDeleteProperty());
+    try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            console.log("no hay token");
+            return 
+        }
+
+        let headers = {
+            Accept: "application/json",
+            "content-type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+        };
+
+        await clientAxios.put(`/admin/properties/delete/${idProperty}`);
+
+        Swal.fire({
+            icon: "success",
+            title: "Inmueble eliminado",
+            text: "Se ha eliminado el inmueble correctamente",
+        });
+        dispatch(setDeletePropertySuccess());
+        dispatch(fetchAllPropertiesByUser());
+    } catch (error) {
+        Swal.fire({
+            icon: "error",
+            title: "Hubo un error",
+            text: error.response.data.msg,
+        });
+        dispatch(setDeletePropertyError());
         console.log(error);
     }
 }

@@ -16,8 +16,12 @@ import { formValidate } from "./utils/FormValidate";
 import { CheckIcon, TrashIcon } from "@heroicons/react/solid";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { createPropertyAction, updatePropertyAction } from "store/slice/properties/propertiesActions";
-import { useParams } from "react-router-dom";
+import {
+    createPropertyAction,
+    updatePropertyAction,
+} from "store/slice/properties/propertiesActions";
+import { Link, useParams } from "react-router-dom";
+import { formatMoney } from "helpers/formatMoney";
 
 const FormEditProperty = () => {
     const dispatch = useDispatch();
@@ -151,12 +155,13 @@ const FormEditProperty = () => {
     };
 
     const RenderImgPreviw = (image) => {
-
         if (typeof image === "string") {
-            return <img
-                className="object-contain object-center"
-                src={`${process.env.REACT_APP_API_PUBLIC_IMG}/${image}`}
-            />;
+            return (
+                <img
+                    className="object-contain object-center"
+                    src={`${process.env.REACT_APP_API_PUBLIC_IMG}/${image}`}
+                />
+            );
         }
         if (typeof image === "object") {
             return (
@@ -228,8 +233,8 @@ const FormEditProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                value={editedProperty.offer}
-                                name="offer"
+                                value={editedProperty.offerId}
+                                name="offerId"
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -254,8 +259,8 @@ const FormEditProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                value={editedProperty.propertyType}
-                                name="propertyType"
+                                value={editedProperty.propertyTypeId}
+                                name="propertyTypeId"
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -264,7 +269,6 @@ const FormEditProperty = () => {
                                 }
                             >
                                 <option hidden value="">
-                                    {" "}
                                     Seleccione
                                 </option>
                                 <option value="1">Casa</option>
@@ -728,6 +732,7 @@ const FormEditProperty = () => {
                                 type="text"
                                 placeholder="000 000 0000"
                                 name="cellPhone"
+                                autoComplete="cel"
                                 value={editedProperty.cellPhone}
                                 onChange={(e) =>
                                     handleOnChange({
@@ -750,6 +755,7 @@ const FormEditProperty = () => {
                                 type="text"
                                 placeholder="60 0 000  0000"
                                 name="phone"
+                                autoComplete="phone"
                                 value={editedProperty.phone}
                                 onChange={(e) =>
                                     handleOnChange({
@@ -761,19 +767,27 @@ const FormEditProperty = () => {
                         </div>
                     </div>
                     <div>
-                        <Label>Publicar inmuble</Label>
-                        <Checkbox
-                            className="mt-1.5"
-                            type="checkbox"
-                            name="published"
-                            defaultChecked={editedProperty.published}
+                        <Label id="stateId">
+                            {editedProperty.published
+                                ? "Publicado"
+                                : "Publicar inmuble"}
+                        </Label>
+
+                        <Select
+                            className="lg:w-1/5"
+                            value={editedProperty.stateId}
+                            name="stateId"
                             onChange={(e) =>
                                 handleOnChange({
                                     name: e.target.name,
-                                    value: e.target.checked,
+                                    value: e.target.value,
                                 })
                             }
-                        />
+                        >
+                            <option value="0">Sin publicar</option>
+                            <option value="1">Publicado</option>
+                            <option value="2">Desactivado</option>
+                        </Select>
                     </div>
                     <div>
                         <h3>Hubicación</h3>
@@ -868,11 +882,11 @@ const FormEditProperty = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex gap-2 pt-2">
+                    <div className="flex gap-4 pt-2 items-center">
                         <ButtonPrimary type="submit">
-                            Registrar inmueble
+                            Editar inmueble
                         </ButtonPrimary>
-                        <ButtonSecondary>Cancelar</ButtonSecondary>
+                        <Link to="/admin/inmuebles">Cancelar</Link>
                     </div>
                 </div>
             </div>
