@@ -81,6 +81,7 @@ export const allProperties = async ({
         ${filterByCity()}
         ${filterByOffer()}
         ${filterByReference()}
+        AND p.stateId = 1
         `;
         return await connection.query(sql);
     } catch (error) {
@@ -117,6 +118,7 @@ export const allPropertiesByUserId = async ({ idUser, role }) => {
         INNER JOIN Offer AS o ON p.offerId = o.offerId
         INNER JOIN StatesProperty AS sp ON sp.stateId = p.stateId
         ${role !== "admin" ? `WHERE p.createdBy = ${idUser}` : ""}
+        ${role !== "admin" ? `AND p.stateId != 2` : ""}
         `;
         const [properties] = await connection.query(sql);
 
@@ -165,10 +167,10 @@ export const insertProperty = async (property) => {
             property.address,
             property.building,
             property.contactName,
-            property.email,
-            property.phone,
+            property.contactEmail,
+            property.contactPhone,
+            property.contactCellphone,
             property.antiquityYears,
-            property.published,
             property.lastAdminprice,
             property.neighborhood,
             property.propertyType,
@@ -204,10 +206,10 @@ export const insertProperty = async (property) => {
             address,
             building,
             contactName,
-            email,
-            phone,
+            contactEmail,
+            contactPhone,
+            contactCellphone,
             antiquityYears,
-            published,
             lastAdminprice, 
             neighborhood,
             propertyTypeId,
@@ -255,10 +257,10 @@ export const importPorperties = async (properties) => {
                 address,
                 building,
                 contactName,
-                email,
-                phone,
+                contactEmail,
+                contactPhone,
+                contactCellphone,
                 antiquityYears,
-                published, 
                 lastAdminprice,
                 neighborhood,
                 propertyTypeId,
@@ -334,9 +336,9 @@ export const uploadProperty = async (property) => {
             address = ?,
             building = ?,
             contactName = ?,
-            email = ?,
-            phone = ?,
-            cellPhone = ?,
+            contactEmail = ?,
+            contactPhone = ?,
+            contactCellPhone = ?,
             antiquityYears = ?,
             lastAdminprice = ?,
             neighborhood = ?,
@@ -372,9 +374,9 @@ export const uploadProperty = async (property) => {
             property.address,
             property.building,
             property.contactName,
-            property.email,
-            property.phone,
-            property.cellPhone,
+            property.contatEmail,
+            property.contatPhone,
+            property.contatCellPhone,
             property.antiquityYears,
             property.lastAdminprice,
             property.neighborhood,

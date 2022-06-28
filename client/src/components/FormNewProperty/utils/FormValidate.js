@@ -37,8 +37,8 @@ export const formValidate = async (data) => {
     if (!data.contactName && data.contactName === "") {
         errors.contactName = "El campo nombre es obligatorio";
     }
-    if (!data.cellPhone && data.cellPhone === "") {
-        errors.cellPhone = "El campo celular es obligatorio";
+    if (!data.contactCellphone && data.contactCellphone === "") {
+        errors.contactCellphone = "El campo celular es obligatorio";
     }
     if (
         (!data.latitude && data.latitude === "") ||

@@ -85,10 +85,8 @@ export const updateUser = async (user) => {
             firstName = '${user.firstName}',
             lastName = '${user.lastName}',
             email = '${user.email}',
-            idRole = '${user.role}',
+            idRole = '${user.idRole}',
             password = '${user.password}',
-            token = '${user.token}',
-            confirmed = '${user.confirmed}',
             observations = '${user.observations}',
             state = ${user.state}
         WHERE idUser = ${user.idUser}`;
@@ -96,12 +94,14 @@ export const updateUser = async (user) => {
     } catch (error) {
         throw error;
     }
-}
+};
 
 export const allUsers = async () => {
     try {
-        const sql = `SELECT * FROM Users
-        LEFT JOIN Roles ON Users.idRole = Roles.idRole`;
+        const sql = `
+        SELECT * FROM Users
+        LEFT JOIN Roles ON Users.idRole = Roles.idRole
+        `;
         const [users] = await connection.query(sql);
         return users;
     } catch (error) {

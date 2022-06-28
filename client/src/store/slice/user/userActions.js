@@ -9,6 +9,9 @@ import {
     setGetUsersError,
     setGetUsersSucces,
     setGetUserSucces,
+    setUpdateUser,
+    setUpdateUserError,
+    setUpdateUserSucces,
 } from ".";
 import Swal from "sweetalert2";
 
@@ -70,3 +73,34 @@ export const getUserAction = (id) => async (dispatch) => {
         dispatch(setGetUserError(error.response.data.msg));
     }
 }
+
+export const updateUserAction = (user) => async (dispatch) => {
+    dispatch(setUpdateUser());
+    try {
+        const token = localStorage.getItem("token");
+        let headers = {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+        };
+        const response = await clientAxios.put(`/users/${user.idUser}`, user, {
+            headers,
+        });
+        dispatch(setUpdateUserSucces(response.data));
+        Swal.fire({
+            title: "Usuario actualizado",
+            text: "El usuario se ha actualizado con exito",
+            icon: "success",
+            confirmButtonText: "Ok",
+        });
+    } catch (error) {
+        console.log(error.response.data.msg);
+        dispatch(setUpdateUserError(error.response.data.msg));
+        Swal.fire({
+            title: "Hubo un error",
+            text: error.response.data.msg,
+            icon: "error",
+            confirmButtonText: "Ok",
+        });
+    }
+}
+

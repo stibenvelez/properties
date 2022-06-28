@@ -55,7 +55,7 @@ const FormEditProperty = () => {
         }
         const limitImages = editedProperty.galleryImgs
             .concat(images)
-            .slice(0, 5);
+            .slice(0, 6);
 
         setEditedProperty({
             ...editedProperty,
@@ -74,12 +74,13 @@ const FormEditProperty = () => {
         const getCities = async () => {
             const response = await clientAxios.get("/cities");
             let filteredCities = response.data.filter(
-                (city) => city.IdDepartament === editedProperty.departament * 1
+                (city) =>
+                    city.IdDepartament === editedProperty.idDepartament * 1
             );
             setCities(filteredCities);
         };
         getCities();
-    }, [editedProperty.departament]);
+    }, [editedProperty.idDepartament]);
 
     useEffect(() => {
         (async () => {
@@ -334,8 +335,8 @@ const FormEditProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                value={editedProperty.departament}
-                                name="departament"
+                                value={editedProperty.idDepartament}
+                                name="idDepartament"
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -356,10 +357,10 @@ const FormEditProperty = () => {
                                         </option>
                                     ))}
                             </Select>
-                            {errors.departament &&
-                                editedProperty.departament === "" && (
+                            {errors.idDepartament &&
+                                editedProperty.idDepartament === "" && (
                                     <p className="py-1 text-sm text-red-500">
-                                        {errors.departament}
+                                        {errors.idDepartament}
                                     </p>
                                 )}
                         </div>
@@ -369,8 +370,8 @@ const FormEditProperty = () => {
                             </Label>
                             <Select
                                 className="mt-1.5"
-                                value={editedProperty.city}
-                                name="city"
+                                value={editedProperty.cityId}
+                                name="cityId"
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -396,9 +397,9 @@ const FormEditProperty = () => {
                                         </option>
                                     ))}
                             </Select>
-                            {errors.city && editedProperty.city === "" && (
+                            {errors.cityId && editedProperty.cityId === "" && (
                                 <p className="py-1 text-sm text-red-500">
-                                    {errors.city}
+                                    {errors.cityId}
                                 </p>
                             )}
                         </div>
@@ -767,11 +768,7 @@ const FormEditProperty = () => {
                         </div>
                     </div>
                     <div>
-                        <Label id="stateId">
-                            {editedProperty.published
-                                ? "Publicado"
-                                : "Publicar inmuble"}
-                        </Label>
+                        <Label id="stateId">Estado del inmueble</Label>
 
                         <Select
                             className="lg:w-1/5"
@@ -853,19 +850,24 @@ const FormEditProperty = () => {
                                 )}
                         </div>
                         <div className="border-gray-200 boder">
-                            <label className="block">
-                                <span className="sr-only">Choose File</span>
-                                <input
-                                    multiple
-                                    type="file"
-                                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-slate-700 file:text-white hover:file:bg-slate-600 hover:file:text-white focus:outline-none focus:shadow-outline hover:file:cursor-pointer"
-                                    aria-describedby="user_avatar_help"
-                                    id="user_avatar"
-                                    name="files"
-                                    onChange={handleImages}
-                                    ref={inputFilesRef}
-                                />
-                            </label>
+                            {editedProperty.galleryImgs &&
+                                editedProperty.galleryImgs.length < 6 && (
+                                    <label className="block">
+                                        <span className="sr-only">
+                                            Choose File
+                                        </span>
+                                        <input
+                                            multiple
+                                            type="file"
+                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-slate-700 file:text-white hover:file:bg-slate-600 hover:file:text-white focus:outline-none focus:shadow-outline hover:file:cursor-pointer"
+                                            aria-describedby="user_avatar_help"
+                                            id="user_avatar"
+                                            name="files"
+                                            onChange={handleImages}
+                                            ref={inputFilesRef}
+                                        />
+                                    </label>
+                                )}
                             <div className="py-2">
                                 {editedProperty.files &&
                                     editedProperty.files.map((file, index) => (
@@ -883,9 +885,7 @@ const FormEditProperty = () => {
                         </div>
                     </div>
                     <div className="flex gap-4 pt-2 items-center">
-                        <ButtonPrimary type="submit">
-                            Editar inmueble
-                        </ButtonPrimary>
+                        <ButtonPrimary>Editar inmueble</ButtonPrimary>
                         <Link to="/admin/inmuebles">Cancelar</Link>
                     </div>
                 </div>

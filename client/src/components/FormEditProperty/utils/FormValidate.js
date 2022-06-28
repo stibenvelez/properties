@@ -19,8 +19,8 @@ export const formValidate = async (data) => {
     if (data.price <= 0) {
         errors.price = "El valor desde ser superior a cero";
     }
-    if (!data.departament && data.departament === "") {
-        errors.departament = "El campo departamento es obligatorio";
+    if (!data.idDepartament && data.idDepartament === "") {
+        errors.idDepartament = "El campo departamento es obligatorio";
     }
     if (!data.city && data.city === "") {
         errors.city = "El campo ciudad es obligatorio";

@@ -28,13 +28,13 @@ const UserPage = () => {
                     <div className="flex gap-2 py-4">
                         <Link
                             className="text-sm px-4 py-2 text-white bg-indigo-700 rounded hover:bg-indigo-600"
-                            to="/admin/users/forget-password"
+                            to={`/admin/users/update-user/${id}`}
                         >
                             Editar cuenta
                         </Link>
                     </div>
                 </div>
-        <UserDetail/>
+                <UserDetail />
             </div>
         </div>
     );

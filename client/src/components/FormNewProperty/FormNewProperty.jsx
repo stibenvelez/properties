@@ -17,6 +17,9 @@ import { CheckIcon, TrashIcon } from "@heroicons/react/solid";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { createPropertyAction } from "store/slice/properties/propertiesActions";
+import { createPropertyAdapter } from "adapters/property.adapter";
+import Textarea from "shared/Textarea/Textarea";
+
 
 const FormNewProperty = () => {
     const dispatch = useDispatch();
@@ -41,7 +44,7 @@ const FormNewProperty = () => {
             images.push(file);
         }
 
-        const limitImages = newProperty.files.concat(images).slice(0, 5);
+        const limitImages = newProperty.files.concat(images).slice(0, 6);
 
         setNewProperty({
             ...newProperty,
@@ -56,6 +59,7 @@ const FormNewProperty = () => {
         };
         getDepartaments();
     }, []);
+    
     useMemo(() => {
         const getCities = async () => {
             const response = await clientAxios.get("/cities");
@@ -124,9 +128,8 @@ const FormNewProperty = () => {
             return;
         }
         setErrors({});
-        
-        dispatch(createPropertyAction(newProperty));
-        setNewProperty(INITIAL_STATE_NEW_PROPERTY);
+        dispatch(createPropertyAction(createPropertyAdapter(newProperty)));
+        //setNewProperty(INITIAL_STATE_NEW_PROPERTY);
     };
 
     return (
@@ -664,10 +667,10 @@ const FormNewProperty = () => {
                             <Label>Email</Label>
                             <Input
                                 className="mt-1.5"
-                                type="email"
+                                type="contactEmail"
                                 placeholder="ejemplo@correo.com"
-                                name="email"
-                                value={newProperty.email}
+                                name="contactEmail"
+                                value={newProperty.contactEmail}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -686,8 +689,8 @@ const FormNewProperty = () => {
                                 className="mt-1.5"
                                 type="text"
                                 placeholder="000 000 0000"
-                                name="cellPhone"
-                                value={newProperty.cellPhone}
+                                name="contactCellphone"
+                                value={newProperty.contactCellphone}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -695,21 +698,22 @@ const FormNewProperty = () => {
                                     })
                                 }
                             />
-                            {errors.cellPhone &&
-                                newProperty.cellPhone === "" && (
+                            {errors.contactCellphone &&
+                                newProperty.contactCellphone === "" && (
                                     <p className="py-1 text-sm text-red-500">
-                                        {errors.cellPhone}
+                                        {errors.contactCellphone}
                                     </p>
                                 )}
                         </div>
                         <div className="w-full">
-                            <Label>telefono fijo</Label>
+                            <Label htmlFor="contactPhone">telefono fijo</Label>
                             <Input
+                                id="contactPhone"
                                 className="mt-1.5"
                                 type="text"
                                 placeholder="60 0 000  0000"
-                                name="phone"
-                                value={newProperty.phone}
+                                name="contactPhone"
+                                value={newProperty.contactPhone}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -741,6 +745,21 @@ const FormNewProperty = () => {
                             <option value="1">Publicado</option>
                             <option value="2">Desactivado</option>
                         </Select>
+                    </div>
+                    <div>
+                        <Label id="description">Descripción</Label>
+                        <Textarea
+                            className="mt-1.5"
+                            name="description"
+                            value={newProperty.description}
+                            rows="4"
+                            onChange={(e) =>
+                                handleOnChange({
+                                    name: e.target.name,
+                                    value: e.target.value,
+                                })
+                            }
+                        />
                     </div>
                     <div>
                         <h3>Hubicación</h3>
@@ -803,28 +822,30 @@ const FormNewProperty = () => {
                                 ))}
                         </div>
                         <div className="border-gray-200 boder">
-                            <label className="block">
-                                <span className="sr-only">Choose File</span>
-                                <input
-                                    multiple
-                                    type="file"
-                                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-slate-700 file:text-white hover:file:bg-slate-600 hover:file:text-white focus:outline-none focus:shadow-outline hover:file:cursor-pointer"
-                                    aria-describedby="user_avatar_help"
-                                    id="user_avatar"
-                                    name="files"
-                                    onChange={handleImages}
-                                    ref={inputFilesRef}
-                                />
-                            </label>
+                            {newProperty.files && newProperty.files.length < 6 && (
+                                <label className="block">
+                                    <span className="sr-only">Choose File</span>
+                                    <input
+                                        multiple
+                                        type="file"
+                                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-slate-700 file:text-white hover:file:bg-slate-600 hover:file:text-white focus:outline-none focus:shadow-outline hover:file:cursor-pointer"
+                                        aria-describedby="user_avatar_help"
+                                        id="user_avatar"
+                                        name="files"
+                                        onChange={handleImages}
+                                        ref={inputFilesRef}
+                                    />
+                                </label>
+                            )}
                             <div className="py-2">
                                 {newProperty.files &&
                                     newProperty.files.map((file, index) => (
-                                        <div className="flex items-center">
+                                        <div
+                                            key={index}
+                                            className="flex items-center"
+                                        >
                                             <CheckIcon className="w-4 h-4 text-green-400" />
-                                            <p
-                                                key={index}
-                                                className="text-sm text-gray-500"
-                                            >
+                                            <p className="text-sm text-gray-500">
                                                 {file.name}
                                             </p>
                                         </div>

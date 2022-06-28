@@ -41,6 +41,7 @@ import PublicRoute from "./PublicRoute";
 import UserPage from "containers/UserPage/UserPage";
 import PropertyDetailAdmin from "containers/PropertyDetailAdminPage/PropertyDetailAdminPage";
 import EditPropertyPage from "containers/EditPropertyPage/EditPropertyPage";
+import UpdateUserPage from "containers/UpdateUserPage/UpdateUserPage";
 
 export const pages: Page[] = [
     { path: "/", exact: true, component: PageHome },
@@ -128,6 +129,11 @@ const Routes = () => {
                     path="/admin/users/add-user"
                     exact
                     component={AddUserPage}
+                />
+                <PrivateRoute
+                    path="/admin/users/update-user/:id"
+                    exact
+                    component={UpdateUserPage}
                 />
                 <PrivateRoute
                     path="/admin/users/forget-password"

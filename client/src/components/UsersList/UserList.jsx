@@ -1,3 +1,4 @@
+import { PencilAltIcon, TrashIcon } from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -7,7 +8,6 @@ const UserList = () => {
         return (
             <div className="relative py-2 px-3 bg-red-200 text-sm text-red-800 rounded shadow">
                 {message}
-
             </div>
         );
     }
@@ -48,6 +48,7 @@ const UserList = () => {
                                     state,
                                     role,
                                     idUser,
+                                    confirmed,
                                 },
                                 index
                             ) => (
@@ -70,26 +71,50 @@ const UserList = () => {
                                     <td
                                         className={` px-6 py-4 whitespace-no-wrap`}
                                     >
-                                        <span
-                                            className={`${
-                                                state
-                                                    ? "bg-green-200 text-green-700"
-                                                    : "bg-red-300 text-red-800"
-                                            } py-0.5 px-2 rounded-lg text-xs`}
-                                        >
-                                            {state ? "Activo" : "Inactivo"}
-                                        </span>
+                                        <div className="flex flex-wrap gap-1">
+                                            <div
+                                                className={`${
+                                                    state
+                                                        ? "bg-green-200 text-green-700"
+                                                        : "bg-red-300 text-red-800"
+                                                } py-0.5 px-2 rounded-lg text-xs`}
+                                            >
+                                                {state ? "Activo" : "Inactivo"}
+                                            </div>
+                                            {!confirmed && (
+                                                <div
+                                                    className={`${
+                                                        state
+                                                            ? "bg-green-200 text-green-700"
+                                                            : "bg-red-300 text-red-800"
+                                                    } py-0.5 px-2 rounded-lg text-xs`}
+                                                >
+                                                    Sin confirmar
+                                                </div>
+                                            )}
+                                        </div>
                                     </td>
 
                                     <td className="px-6 py-4 whitespace-no-wrap">
-                                        <div className="flex gap-4">
-                                            <button className="bg-gray-500 py-1 px-2 rounded-md">
+                                        <div className="flex gap-2">
+                                            <button className="bg-gray-500 py-1 px-2 rounded-md hover:bg-gray-400 transition duration-200 ease-in-out">
                                                 <Link
                                                     to={`users/get-user/${idUser}`}
                                                     className="text-xs text-white"
                                                 >
                                                     Ver
                                                 </Link>
+                                            </button>
+                                            <button className="bg-gray-500 py-1 px-2 rounded-md hover:bg-indigo-500 transition duration-200 ease-in-out">
+                                                <Link
+                                                    to={`users/update-user/${idUser}`}
+                                                    className="text-xs text-white "
+                                                >
+                                                    <PencilAltIcon className="h-4 w-4" />
+                                                </Link>
+                                            </button>
+                                            <button className="bg-gray-500 py-1 px-2 rounded-md hover:bg-red-500 transition duration-200 ease-in-out text-xs text-white ">
+                                                <TrashIcon className="h-4 w-4" />
                                             </button>
                                         </div>
                                     </td>

@@ -2,13 +2,17 @@ import SpinnerButton from "components/SpinnerButton/SpinnerButton";
 import { useSelector } from "react-redux";
 
 const UserDetail = () => {
-    const { firstName, lastName, email, role, state } = useSelector(
+    const { firstName, lastName, email, role, state, confirmed } = useSelector(
         ({ users }) => users.user
     );
     const { loading } = useSelector(({ users }) => users);
 
     if (loading) {
-        return <div className="w-full py-8  flex justify-center items-center"><SpinnerButton/></div>;
+        return (
+            <div className="w-full py-8  flex justify-center items-center">
+                <SpinnerButton />
+            </div>
+        );
     }
     return (
         <div>
@@ -24,6 +28,17 @@ const UserDetail = () => {
                 >
                     {state ? "Activo" : "Inactivo"}
                 </span>
+                {!confirmed && (
+                    <div
+                        className={`${
+                            state
+                                ? "bg-green-200 text-green-700"
+                                : "bg-red-300 text-red-800"
+                        } py-[0.5] px-2 rounded-xl text-xs `}
+                    >
+                        Sin confirmar
+                    </div>
+                )}
             </div>
             <div className="flex items-baseline gap-2">
                 <label className="text-gray-500">Email:</label>

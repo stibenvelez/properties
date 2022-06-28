@@ -27,8 +27,6 @@ export const authSlice = createSlice({
         },
         setAuthError: (state, action) => {
             state.loading = false;
-            state.error = true;
-            state.msg = action.payload;
         },
         setLogin: (state) => {
             state.loading = true;

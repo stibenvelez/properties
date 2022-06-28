@@ -9,13 +9,16 @@ import {
     getProfile,
     getUsers,
     getUserById,
+    updateUserById,
 } from "./user.controller.js";
 import checkAuth from "../../middlewares/checkAuth.js";
 const router = express.Router();
 
 router.get("/", checkAuth, getUsers);
+router.put("/:id", checkAuth, updateUserById);
 router.get("/profile", checkAuth, getProfile )
 router.get("/getuser/:id", checkAuth, getUserById);
+
 router.post("/", createUser);
 router.post("/login", auth);
 router.post("/confirm/:token", confirmUser);

@@ -32,7 +32,7 @@ export const authAction = () => async (dispatch) => {
         dispatch(setAuthSuccess(data));
     } catch (error) {
         console.log(error.response.data.msg);
-        dispatch(setAuthError(error.response.data.msg));
+        dispatch(setAuthError());
     }
 };
 

@@ -1,11 +1,12 @@
 import SpinnerButton from "components/SpinnerButton/SpinnerButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Card from "shared/Card";
 import Input from "shared/Input/Input";
 import Select from "shared/Select/Select";
-import { createUserAction } from "store/slice/user/userActions";
+import { updateUserAction } from "store/slice/user/userActions";
+
 
 const USER_INITIAL_STATE = {
     firstName: "",
@@ -13,30 +14,28 @@ const USER_INITIAL_STATE = {
     email: "",
     password: "",
     passwordConfirm: "",
+    idRole: "",
 };
 
-const FormCreateUser = () => {
+const FormUpdateUser = () => {
     const dispatch = useDispatch();
-    const [user, setUser] = useState(USER_INITIAL_STATE);
+    const [updatedUser, setUpdatedUser] = useState(USER_INITIAL_STATE);
     const [errors, setErrors] = useState({});
 
-    const { loading } = useSelector(({ users }) => users);
+    const { loading, user } = useSelector(({ users }) => users);
     const { role } = useSelector(({ auth }) => auth.user);
+
+    useEffect(() => {
+        setUpdatedUser(user);
+    }, [user]);
+    
 
     const validateForm = () => {
         let errors = {};
-        if (user.firstName === "") errors.firstname = "El nombre es requerido";
-        if (user.lastName === "") errors.lastname = "El apellido es requerido";
-        if (user.email === "") errors.email = "El email es requerido";
-        if (user.password === "")
-            errors.password = "La contraseña es requerida";
-        if (user.passwordConfirm === "")
-            errors.passwordConfirm =
-                "La confirmación de la contraseña es requerida";
-        if (user.password !== user.passwordConfirm)
-            errors.passwordConfirm = "Las contraseñas no coinciden";
-        if (user.rol !== user.rol) errors.rol = "El rol es requerido";
-
+        if (updatedUser.firstName === "") errors.firstname = "El nombre es requerido";
+        if (updatedUser.lastName === "") errors.lastname = "El apellido es requerido";
+        if (updatedUser.email === "") errors.email = "El email es requerido";
+        if (updatedUser.idRole === "") errors.idRole = "El rol es requerido";
         if (Object.keys(errors).length > 0) {
             setErrors(errors);
             return true;
@@ -46,8 +45,8 @@ const FormCreateUser = () => {
     };
 
     const handleChange = (e) => {
-        setUser({
-            ...user,
+        setUpdatedUser({
+            ...updatedUser,
             [e.target.name]: e.target.value,
         });
     };
@@ -56,8 +55,9 @@ const FormCreateUser = () => {
         e.preventDefault();
         const Errors = validateForm();
         if (Errors) return false;
-        dispatch(createUserAction(user));
-        //setUser(USER_INITIAL_STATE);
+
+        dispatch(updateUserAction(updatedUser));
+        //setUpdatedUser(USER_INITIAL_STATE);
     };
 
     if (role !== "admin") {
@@ -81,10 +81,10 @@ const FormCreateUser = () => {
                             placeholder="Ingrese un primer nombre"
                             className="mt-1"
                             name="firstName"
-                            value={user.firstName}
+                            value={updatedUser.firstName}
                             onChange={handleChange}
                         />
-                        {errors.firstName && user.firstName === "" && (
+                        {errors.firstName && updatedUser.firstName === "" && (
                             <p className="text-sm text-red-500">
                                 {errors.firstname}
                             </p>
@@ -99,10 +99,10 @@ const FormCreateUser = () => {
                             placeholder="Ingrese un apellido"
                             className="mt-1"
                             name="lastName"
-                            value={user.lastName}
+                            value={updatedUser.lastName}
                             onChange={handleChange}
                         />
-                        {errors.lastName && user.lastName === "" && (
+                        {errors.lastName && updatedUser.lastName === "" && (
                             <p className="text-sm text-red-500">
                                 {errors.lastName}
                             </p>
@@ -116,14 +116,15 @@ const FormCreateUser = () => {
                     <Input
                         type="email"
                         placeholder="example@example.com"
-                        className="mt-1"
+                        className="mt-1 bg-gray-200"
                         name="email"
                         autoComplete="email"
-                        value={user.email}
+                        value={updatedUser.email}
                         onChange={handleChange}
                         required
+                        disabled="true"
                     />
-                    {errors.email && user.email === "" && (
+                    {errors.email && updatedUser.email === "" && (
                         <p className="text-sm text-red-500"> {errors.email}</p>
                     )}
                 </label>
@@ -132,8 +133,8 @@ const FormCreateUser = () => {
                         Rol
                     </span>
                     <Select
-                        name="role"
-                        value={user.role}
+                        name="idRole"
+                        value={updatedUser.idRole}
                         onChange={handleChange}
                     >
                         <option value="">Seleccione</option>
@@ -141,56 +142,21 @@ const FormCreateUser = () => {
                         <option value="2">Encargado</option>
                         <option value="3">Asesor</option>
                     </Select>
-                    {errors.role && user.role === "" && (
-                        <p className="text-sm text-red-500"> {errors.role}</p>
-                    )}
-                </label>
-                <label className="block">
-                    <span className="flex items-center justify-between text-neutral-800 dark:text-neutral-200">
-                        contraseña
-                    </span>
-                    <Input
-                        type="password"
-                        className="mt-1"
-                        name="password"
-                        value={user.password}
-                        onChange={handleChange}
-                    />
-                    {errors.password && user.password === "" && (
-                        <p className="text-sm text-red-500">
-                            {errors.password}
-                        </p>
-                    )}
-                </label>
-                <label className="block">
-                    <span className="flex items-center justify-between text-neutral-800 dark:text-neutral-200">
-                        confirmar contraseña
-                    </span>
-                    <Input
-                        type="password"
-                        className="mt-1"
-                        name="passwordConfirm"
-                        value={user.passwordConfirm}
-                        onChange={handleChange}
-                    />
-                    {errors.passwordConfirm && user.passwordConfirm === "" && (
-                        <p className="text-sm text-red-500">
-                            {errors.passwordConfirm}
-                        </p>
+                    {errors.idRole && updatedUser.idRole === "" && (
+                        <p className="text-sm text-red-500"> {errors.idRole}</p>
                     )}
                 </label>
                 <ButtonPrimary className="flex gap-2" type="submit">
                     {loading ? (
                         <>
-                            <SpinnerButton /> Agregando
+                            <SpinnerButton /> Editando
                         </>
                     ) : (
-                        "Agregar usuario"
+                        "Editar usuario"
                     )}
                 </ButtonPrimary>
             </form>
         </Card>
     );
 };
-
-export default FormCreateUser;
+export default FormUpdateUser;

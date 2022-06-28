@@ -163,3 +163,23 @@ export const getUserById = async (req, res) => {
         res.status(500).json({ msg: error.message });
     }
 };
+
+export const updateUserById = async (req, res) => {
+    const user = req.user;
+    const body = req.body;
+
+    if (user.role !== "admin") {
+        res.status(403).json({
+            msg: "No tienes permisos necesarios para acceder a este sitio",
+        });
+        return;
+    }
+    try {
+        const users = await updateUser(body);
+        res.json(users);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: error.message });
+    }
+    
+}

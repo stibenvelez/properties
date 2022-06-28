@@ -9,10 +9,8 @@ import { deletePropertyAction } from "store/slice/properties/propertiesActions";
 import Swal from "sweetalert2";
 
 const STATE_PROPERTY = {
-    0: "sin publicar",
-    1: "publicado",
-    2: "desactivado",
-    3: "suspendido",
+    1: "bg-green-100 text-sm",
+
 };
 
 const OFFER_MAP = {
@@ -84,7 +82,9 @@ const PropertiesListAdmin = () => {
                         properties.map((property, index) => (
                             <tr
                                 key={index}
-                                className={`border-b  dark:border-gray-600 border-gray-200 ${ESTATE_ITEMS[property.stateId] || ""}`}
+                                className={`border-b  dark:border-gray-600 border-gray-200 ${
+                                    ESTATE_ITEMS[property.stateId] || ""
+                                }`}
                             >
                                 <td className="px-6 py-4 whitespace-no-wrap">
                                     {property.reference}
@@ -103,7 +103,13 @@ const PropertiesListAdmin = () => {
                                     {OFFER_MAP[property.offer]}
                                 </td>
                                 <td className="px-6 py-4 whitespace-no-wrap">
-                                    {STATE_PROPERTY[property.stateId] || null}
+                                    <div
+                                        className={`${
+                                            STATE_PROPERTY[property.stateId]
+                                        } py-0.5 rounded-xl px-2 text-sm`}
+                                    >
+                                        {property.state}
+                                    </div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-no-wrap">
                                     <div className="flex gap-1 ">
@@ -123,16 +129,18 @@ const PropertiesListAdmin = () => {
                                                 <PencilAltIcon className="w-4 h-4" />
                                             </Link>
                                         </button>
-                                        {property.stateId !== 2 && <button
-                                            onClick={() =>
-                                                handleDeleteProperty(
-                                                    property.idProperty
-                                                )
-                                            }
-                                            className=" hover:bg-red-500 py-1 px-2 text-xs rounded hover:text-white text-gray-500 transition duration-200 ease-in-out"
-                                        >
-                                            <TrashIcon className="w-4 h-4" />
-                                        </button>}
+                                        {property.stateId !== 2 && (
+                                            <button
+                                                onClick={() =>
+                                                    handleDeleteProperty(
+                                                        property.idProperty
+                                                    )
+                                                }
+                                                className=" hover:bg-red-500 py-1 px-2 text-xs rounded hover:text-white text-gray-500 transition duration-200 ease-in-out"
+                                            >
+                                                <TrashIcon className="w-4 h-4" />
+                                            </button>
+                                        )}
                                     </div>
                                 </td>
                             </tr>
