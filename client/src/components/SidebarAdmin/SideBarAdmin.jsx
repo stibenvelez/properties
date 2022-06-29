@@ -9,6 +9,7 @@ const Sidebar = () => {
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
+    
 
     return (
         <div className="    bg-slate-800">
@@ -40,6 +41,7 @@ const Sidebar = () => {
                     >
                         <XIcon onClick={showSidebar} />
                     </Link>
+                   
                     {SidebarData.map((item, index) => {
                         return (
                             <SubMenu

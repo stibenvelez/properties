@@ -19,10 +19,12 @@ import { useDispatch } from "react-redux";
 import { createPropertyAction } from "store/slice/properties/propertiesActions";
 import { createPropertyAdapter } from "adapters/property.adapter";
 import Textarea from "shared/Textarea/Textarea";
+import { useHistory } from "react-router-dom";
 
 
 const FormNewProperty = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [newProperty, setNewProperty] = useState(INITIAL_STATE_NEW_PROPERTY);
     const [errors, setErrors] = useState({});
     const [departaments, setDepartaments] = useState([]);
@@ -129,7 +131,7 @@ const FormNewProperty = () => {
         }
         setErrors({});
         dispatch(createPropertyAction(createPropertyAdapter(newProperty)));
-        //setNewProperty(INITIAL_STATE_NEW_PROPERTY);
+        setNewProperty(INITIAL_STATE_NEW_PROPERTY);
     };
 
     return (
@@ -857,7 +859,9 @@ const FormNewProperty = () => {
                         <ButtonPrimary type="submit">
                             Registrar inmueble
                         </ButtonPrimary>
-                        <ButtonSecondary>Cancelar</ButtonSecondary>
+                        <ButtonSecondary onClick={() => history.goBack()} type="button">
+                            Cancelar
+                        </ButtonSecondary>
                     </div>
                 </div>
             </div>

@@ -15,7 +15,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     }
     
     return (
-        <div className="relative flex w-full overflow-hidden bg-gray-50 ">
+        <div className="relative flex w-full overflow-hidden bg-gray-50 dark:bg-slate-800 ">
             <SidebarAdmin />
 
             <div className="w-full h-full overflow-y-auto">

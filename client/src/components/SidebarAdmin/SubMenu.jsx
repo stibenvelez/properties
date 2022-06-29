@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
 
-const SubMenu = ({ item }) => {
+const SubMenu = ({ item, showSidebar }) => {
     const [subnav, setSubnav] = useState(false);
     const showSubnav = () => setSubnav(!subnav);
     const { role } = useSelector(({ auth }) => auth.user); 
@@ -40,6 +40,7 @@ const SubMenu = ({ item }) => {
                             className="flex items-center p-5 pl-5 text-white bg-slate-900 hover:bg-slate-600"
                             to={item.path}
                             key={index}
+                            onClick={showSidebar}
                         >
                             {item.icon} <span>{item.title}</span>
                         </Link> 

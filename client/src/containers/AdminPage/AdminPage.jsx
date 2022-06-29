@@ -8,7 +8,7 @@ const AdminPage = () => {
             <Helmet>
                 <title>Admin</title>
             </Helmet>
-            <div className="container lg:p-4">
+            <div className="container lg:p-4 ">
                 <div className="flex flex-col">
                     <div className="mb-4">
                         <h2 className="mb-4 text-xl font-medium text-gray-800 dark:dark:text-gray-50">
@@ -16,7 +16,8 @@ const AdminPage = () => {
                         </h2>
                         <div className="mb-4">
                             <p className="text-sm text-gray-700 dark:text-white">
-                                Importe las propiedades por mediod e un archivo en formato csv.
+                                Importe las propiedades por mediod e un archivo
+                                en formato csv.
                                 <br />
                                 Algunas consideraciones: <br />
                                 <strong>1.</strong> La columna de referencia,
@@ -27,9 +28,10 @@ const AdminPage = () => {
                                 propiedad se importan a parte, permite maximo 6
                                 imagenes para mostrar. Puede activar la cantidad
                                 que requiera con el numero uno en cad auna de
-                                las columnas de imagenes.<br />
-                                Puede descargar la
-                                plantilla en el siguinete link:{" "}
+                                las columnas de imagenes.
+                                <br />
+                                Puede descargar la plantilla en el siguinete
+                                link:{" "}
                             </p>
                             <a
                                 className="font-semibold text-indigo-700 hover:text-indigo-400 dark:text-indigo-400 dark:hover:text-indigo-300"
