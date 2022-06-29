@@ -24,10 +24,11 @@ const UsersPage = () => {
             </Helmet>
 
             <div className="container py-4 space-y-4 lg:py-4 lg:space-y-8">
-                <div className="py-4">
-                    <h1 className="text-2xl text-gray-800">
-                        Lista de usuarios
+                <div className="pb-4">
+                    <h1 className="text-2xl font-bold">
+                        Información del perfil
                     </h1>
+                    <p>Información detallada de tu cuenta</p>
                 </div>
                 <Link
                     to="users/add-user"

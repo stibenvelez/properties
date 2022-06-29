@@ -3,6 +3,7 @@ import SpinnerButton from "components/SpinnerButton/SpinnerButton";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { fetchAllPropertiesByUser } from "store/slice/properties/propertiesActions";
 
 const PropertiesPage = () => {
@@ -23,11 +24,24 @@ const PropertiesPage = () => {
         <div className="nc-CommonLayoutProps bg-neutral-50 dark:bg-neutral-900">
             <div className="container pt-4 sm:pt-8 pb-24 lg:pb-32">
                 <div className="space-y-6 sm:space-y-8">
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <h1 className="text-3xl font-semibold">Lista de inmuebles</h1>
+                    <div className="space-y-2">
+                        <div>
+                            <h1 className="text-3xl font-semibold">
+                                Lista de inmuebles
+                            </h1>
+                            <p className="text-sm text-gray-600">
+                                Lista de los inmuebles creadosy sus diferentes
+                                estados
+                            </p>
                         </div>
-                        <p className="text-sm text-gray-600">Lista de los inmuebles creadosy sus diferentes estados</p>
+                        <div>
+                            <Link
+                                to="/admin/nuevo-inmueble"
+                                className="bg-indigo-600 py-1 px-2 hover:bg-indigo-400 text-white rounded-md"
+                            >
+                                Registrar inmueble
+                            </Link>
+                        </div>
                     </div>
                     <PropertiesListAdmin />
                 </div>

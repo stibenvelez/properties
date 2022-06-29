@@ -785,6 +785,7 @@ const FormNewProperty = () => {
                                     }}
                                 >
                                     <LocationMarker
+                                        draggable={true}
                                         lat={newProperty.latitude}
                                         lng={newProperty.longitude}
                                     />
@@ -858,7 +859,10 @@ const FormNewProperty = () => {
                         <ButtonPrimary type="submit">
                             Registrar inmueble
                         </ButtonPrimary>
-                        <ButtonSecondary onClick={() => history.goBack()} type="button">
+                        <ButtonSecondary
+                            onClick={() => history.goBack()}
+                            type="button"
+                        >
                             Cancelar
                         </ButtonSecondary>
                     </div>
