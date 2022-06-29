@@ -1,10 +1,7 @@
 import React, { FC, useState } from "react";
 import NcImage from "shared/NcImage/NcImage";
 import { TaxonomyType } from "data/types";
-import { Link } from "react-router-dom";
-import convertNumbThousand from "utils/convertNumbThousand";
-import { useHistory } from "react-router-dom";
-import ModalCategory from "../SectionSliderNewCategories/ModalCategory";
+
 
 export interface CardCategory3Props {
     className?: string;

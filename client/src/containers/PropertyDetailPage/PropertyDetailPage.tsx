@@ -19,6 +19,7 @@ import {
     ExclamationCircleIcon,
     PhoneIcon,
 } from "@heroicons/react/solid";
+import ModalContactMe from "./ModalContactMe";
 
 export interface ListingStayDetailPageProps {
     className?: string;
@@ -52,6 +53,7 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
     const [property, setProperty] = useState<any>({});
     const [isOpen, setIsOpen] = useState(false);
     const [openFocusIndex, setOpenFocusIndex] = useState(0);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const { id }: any = useParams();
     useEffect(() => {
@@ -301,8 +303,13 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                 </div>
 
                 {/* SUBMIT */}
-                <ButtonPrimary>Quiero que me contacten</ButtonPrimary>
-
+                <ButtonPrimary onClick={() => setModalIsOpen(true)}>
+                    Quiero que me contacten
+                </ButtonPrimary>
+                <ModalContactMe
+                    isOpen={modalIsOpen}
+                    setIsOpen={setModalIsOpen}
+                />
                 {/* MAP */}
                 <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3">
                     <div className="overflow-hidden rounded-xl">
