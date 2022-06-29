@@ -1,31 +1,20 @@
-import { useCallback, useEffect, useMemo, useState, useRef } from "react";
-import ButtonSecondary from "shared/Button/ButtonSecondary";
+import { useMemo, useState } from "react";
 import Label from "components/Label/Label";
 import Input from "shared/Input/Input";
 import Select from "shared/Select/Select";
-import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Checkbox from "shared/Checkbox/Checkbox";
-import {
-    INITIAL_STATE_NEW_PROPERTY,
-    TEST_INITIAL_STATE_NEW_PROPERTY,
-} from "./utils";
 import clientAxios from "config/axios";
 import GoogleMapReact from "google-map-react";
 import LocationMarker from "components/AnyReactComponent/LocationMarker";
-import { formValidate } from "./utils/FormValidate";
-import { CheckIcon, TrashIcon } from "@heroicons/react/solid";
-import Swal from "sweetalert2";
-import { useDispatch, useSelector } from "react-redux";
-import { createPropertyAction } from "store/slice/properties/propertiesActions";
-import { Link, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import SpinnerButton from "components/SpinnerButton/SpinnerButton";
 
 const FormviewProperty = () => {
-    const history = useHistory();
     const { property, loading } = useSelector(({ properties }) => properties);
     const [errors, setErrors] = useState({});
     const [departaments, setDepartaments] = useState([]);
     const [cities, setCities] = useState([]);
-    const inputFilesRef = useRef();
+
 
     useMemo(() => {
         const getDepartaments = async () => {
@@ -41,6 +30,14 @@ const FormviewProperty = () => {
         };
         getCities();
     }, [property.departament]);
+
+    if (loading || departaments.length === 0 || cities.length === 0) {
+        return (
+            <div className="flex justify-center py-4">
+                <SpinnerButton />
+            </div>
+        );
+    }
 
     return (
         <form encType="multipart/form-data">

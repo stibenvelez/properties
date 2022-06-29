@@ -25,13 +25,15 @@ const PropertyDetailAdminPage = () => {
                     </h2>
                     <p>Este es el detalle del inmueble</p>
                 </div>
-                <button
-                    onClick={() => history.goBack()}
-                    className="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-400"
-                >
-                    Volver
-                </button>
-                {!loading && <FormviewProperty />}
+                <div>
+                    <button
+                        onClick={() => history.goBack()}
+                        className="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-400"
+                    >
+                        Volver
+                    </button>
+                </div>
+                <FormviewProperty />
             </div>
         );
     };

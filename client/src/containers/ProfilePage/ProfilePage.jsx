@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import Button from "shared/Button/Button";
 
 const ProfilePage = () => {
-    const { firstName, lastName, email, role, state } = useSelector(
+    const { idUser, firstName, lastName, email, role, state } = useSelector(
         ({ auth }) => auth.user
     );
+
     return (
         <div className="nc-CommonLayoutProps bg-neutral-50 dark:bg-neutral-900">
             <div className="container pt-4 sm:pt-8 pb-24 lg:pb-32">
@@ -25,7 +26,7 @@ const ProfilePage = () => {
                         </Link>
                         <Link
                             className="text-sm px-4 py-2 text-white bg-indigo-700 rounded hover:bg-indigo-600"
-                            to="/admin/users/forget-password"
+                            to={`/admin/users/update-user/${idUser}`}
                         >
                             Editar cuenta
                         </Link>
