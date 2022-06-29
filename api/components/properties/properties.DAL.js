@@ -154,6 +154,7 @@ export const propertyByIdByUserId = async (id, user) => {
         `;
 
         const [rows] = await connection.query(sql);
+        console.log(rows);
         return rows;
     } catch (error) {
         throw error;

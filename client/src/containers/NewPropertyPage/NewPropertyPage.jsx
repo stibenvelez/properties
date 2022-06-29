@@ -13,7 +13,6 @@ const NewPropertyPage = () => {
                     </h2>
                     <p>Registre aqui un nuevo inmueble</p>
                 </div>
-
                 <FormNewProperty />
             </div>
         );

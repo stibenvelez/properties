@@ -21,14 +21,12 @@ import {
     updatePropertyAction,
 } from "store/slice/properties/propertiesActions";
 import { Link, useParams } from "react-router-dom";
-import { formatMoney } from "helpers/formatMoney";
 
 const FormEditProperty = () => {
     const dispatch = useDispatch();
     const property = useSelector(({ properties }) => properties.property);
 
     const [editedProperty, setEditedProperty] = useState({});
-    const [pruebaProperty, setPruebaProperty] = useState();
     const [errors, setErrors] = useState({});
     const [departaments, setDepartaments] = useState([]);
     const [cities, setCities] = useState([]);
@@ -91,10 +89,7 @@ const FormEditProperty = () => {
                 const res = await clientAxios.get(
                     `properties?reference=${editedProperty.reference}`
                 );
-                console.log(
-                    editedProperty.reference,
-                    res.data.results[0].reference
-                );
+
                 if (
                     res.data.results.length > 0 &&
                     property.reference !== res.data.results[0].reference
@@ -208,11 +203,10 @@ const FormEditProperty = () => {
                             </Label>
                             <Input
                                 className="mt-1.5"
-                                defaultValue={property.title}
                                 value={editedProperty.title}
                                 name="title"
                                 onChange={(e) =>
-                                    setPruebaProperty({
+                                    handleOnChange({
                                         name: e.target.name,
                                         value: e.target.value,
                                     })
@@ -711,8 +705,8 @@ const FormEditProperty = () => {
                                 className="mt-1.5"
                                 type="email"
                                 placeholder="ejemplo@correo.com"
-                                name="email"
-                                value={editedProperty.email}
+                                name="contactEmail"
+                                value={editedProperty.contactEmail}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -731,9 +725,9 @@ const FormEditProperty = () => {
                                 className="mt-1.5"
                                 type="text"
                                 placeholder="000 000 0000"
-                                name="cellPhone"
-                                autoComplete="cel"
-                                value={editedProperty.cellPhone}
+                                name="contactCellphone"
+                                autoComplete="cellPhone"
+                                value={editedProperty.contactCellphone}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
@@ -741,10 +735,10 @@ const FormEditProperty = () => {
                                     })
                                 }
                             />
-                            {errors.cellPhone &&
-                                editedProperty.cellPhone === "" && (
+                            {errors.contactCellphone &&
+                                editedProperty.contactCellphone === "" && (
                                     <p className="py-1 text-sm text-red-500">
-                                        {errors.cellPhone}
+                                        {errors.contactCellPhone}
                                     </p>
                                 )}
                         </div>
@@ -754,9 +748,9 @@ const FormEditProperty = () => {
                                 className="mt-1.5"
                                 type="text"
                                 placeholder="60 0 000  0000"
-                                name="phone"
+                                name="contactPhone"
                                 autoComplete="phone"
-                                value={editedProperty.phone}
+                                value={editedProperty.contactPhone}
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
