@@ -1,8 +1,11 @@
 import { PencilAltIcon, TrashIcon } from "@heroicons/react/solid";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { deleteUserAction } from "store/slice/user/userActions";
+import Swal from "sweetalert2";
 
 const UserList = () => {
+    const dispatch = useDispatch();
     const { users, error, message } = useSelector(({ users }) => users);
     if (error) {
         return (
@@ -11,7 +14,22 @@ const UserList = () => {
             </div>
         );
     }
-
+const handleDeleteUser = (id) => {
+    Swal.fire({
+        title: "¿Deseas eliminar este usuario?",
+        text: "Una vez este eliminado no podrás acceder a él",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#5046e5",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminarlo",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.value) {
+            dispatch(deleteUserAction(id));
+        }
+    });
+};
     return (
         <div className="overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -83,11 +101,7 @@ const UserList = () => {
                                             </div>
                                             {!confirmed && (
                                                 <div
-                                                    className={`${
-                                                        state
-                                                            ? "bg-green-200 text-green-700"
-                                                            : "bg-red-300 text-red-800"
-                                                    } py-0.5 px-2 rounded-lg text-xs`}
+                                                    className={` bg-red-300 text-red-800 py-0.5 px-2 rounded-lg text-xs`}
                                                 >
                                                     Sin confirmar
                                                 </div>
@@ -97,14 +111,13 @@ const UserList = () => {
 
                                     <td className="px-6 py-4 whitespace-no-wrap">
                                         <div className="flex gap-2">
-                                            <button className="bg-gray-500 py-1 px-2 rounded-md hover:bg-gray-400 transition duration-200 ease-in-out">
-                                                <Link
-                                                    to={`users/get-user/${idUser}`}
-                                                    className="text-xs text-white"
-                                                >
-                                                    Ver
-                                                </Link>
-                                            </button>
+                                            <Link
+                                                to={`users/get-user/${idUser}`}
+                                                className="text-xs text-white bg-gray-500 py-1 px-2 rounded-md hover:bg-gray-400 transition duration-200 ease-in-out"
+                                            >
+                                                Ver
+                                            </Link>
+
                                             <button className="bg-gray-500 py-1 px-2 rounded-md hover:bg-indigo-500 transition duration-200 ease-in-out">
                                                 <Link
                                                     to={`users/update-user/${idUser}`}
@@ -113,7 +126,12 @@ const UserList = () => {
                                                     <PencilAltIcon className="h-4 w-4" />
                                                 </Link>
                                             </button>
-                                            <button className="bg-gray-500 py-1 px-2 rounded-md hover:bg-red-500 transition duration-200 ease-in-out text-xs text-white ">
+                                            <button
+                                                onClick={() =>
+                                                    handleDeleteUser(idUser)
+                                                }
+                                                className="bg-gray-500 py-1 px-2 rounded-md hover:bg-red-500 transition duration-200 ease-in-out text-xs text-white "
+                                            >
                                                 <TrashIcon className="h-4 w-4" />
                                             </button>
                                         </div>

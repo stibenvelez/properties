@@ -7,6 +7,7 @@ import {
 import {
     authService,
     createUserService,
+    deleteUserByIdService,
     forgetPassswordService,
     getUserByIdService,
     getUsersService,
@@ -182,4 +183,22 @@ export const updateUserById = async (req, res) => {
         res.status(500).json({ msg: error.message });
     }
     
+}
+
+export const deleteUserById = async (req, res) => {
+    const user = req.user;
+    const {id} = req.params
+    if (user.role !== "admin") {
+        res.status(403).json({
+            msg: "No tienes permisos necesarios para acceder a este sitio",
+        });
+        return;
+    }
+    try {
+        const users = await deleteUserByIdService(id);
+        res.json(users);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: error.message });
+    }
 }

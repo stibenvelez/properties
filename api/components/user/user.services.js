@@ -1,6 +1,7 @@
 import { emailCreateUser, emailForgetPassword } from "../../helpers/emails.js";
 import {
     allUsers,
+    deleteUser,
     findUserByEmail,
     findUserById,
     inserUser,
@@ -117,3 +118,15 @@ export const getUserByIdService = async (id) => {
         throw error;
     }
 };
+
+export const deleteUserByIdService = async (id) => {
+    const [user] = await findUserById(id);
+    user.state = 0;
+    try {
+        await deleteUser(user);
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+    
+}

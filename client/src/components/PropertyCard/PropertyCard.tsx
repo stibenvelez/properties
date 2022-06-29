@@ -23,7 +23,6 @@ const PropertyCard: FC<StayCardProps> = ({
         address,
         title,
         bedrooms,
-        like,
         saleOff,
         isAds,
         price,
@@ -34,7 +33,8 @@ const PropertyCard: FC<StayCardProps> = ({
     }: any = property;
 
     const renderSliderGallery = () => {
-        
+        const like = localStorage.getItem(idProperty) ? true : false;
+       
         return (
             <div className="relative w-full">
                 <GallerySlider
@@ -46,6 +46,7 @@ const PropertyCard: FC<StayCardProps> = ({
                 <BtnLikeIcon
                     isLiked={like}
                     className="absolute right-3 top-3 z-[1]"
+                    idProperty={idProperty}
                 />
                 {saleOff ? (
                     <SaleOffBadge className="absolute left-3 top-3" />

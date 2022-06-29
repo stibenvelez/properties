@@ -10,12 +10,16 @@ import {
     getUsers,
     getUserById,
     updateUserById,
+    deleteUserById,
 } from "./user.controller.js";
 import checkAuth from "../../middlewares/checkAuth.js";
 const router = express.Router();
 
 router.get("/", checkAuth, getUsers);
+router.put("/delete/:id", checkAuth, deleteUserById);
 router.put("/:id", checkAuth, updateUserById);
+
+
 router.get("/profile", checkAuth, getProfile )
 router.get("/getuser/:id", checkAuth, getUserById);
 

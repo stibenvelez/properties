@@ -95,14 +95,26 @@ export const updateUser = async (user) => {
         throw error;
     }
 };
+export const deleteUser = async (user) => {
+    try {
+        const sql = `UPDATE Users SET
+            state = ${user.state}
+        WHERE idUser = ${user.idUser}`;
+        return await connection.query(sql);
+    } catch (error) {
+        throw error;
+    }
+};
 
 export const allUsers = async () => {
     try {
         const sql = `
-        SELECT * FROM Users
-        LEFT JOIN Roles ON Users.idRole = Roles.idRole
+        SELECT u.*, r.role FROM Users AS u
+        INNER JOIN Roles AS r ON u.idRole = r.idRole
+        WHERE u.state = '1' 
         `;
         const [users] = await connection.query(sql);
+        console.log(users);
         return users;
     } catch (error) {
         throw error;

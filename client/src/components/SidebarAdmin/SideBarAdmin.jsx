@@ -11,7 +11,7 @@ const Sidebar = () => {
     const showSidebar = () => setSidebar(!sidebar);
 
     return (
-        <div className="">
+        <div className="    bg-slate-800">
             {!sidebar && (
                 <button
                     className="fixed z-50 flex items-center justify-center w-12 h-12 rounded-r-md bg-slate-800 hover:bg-slate-700 top-3 button-3 left-0  sm:hidden shadow-sm"
@@ -23,7 +23,7 @@ const Sidebar = () => {
                 </button>
             )}
             <nav
-                className={`bg-slate-800 h-screen rounded-r-2xl sm:w-56 w-full overflow-y-auto flex justify-center transition-all duration-300 sm:relative sm:left-0 fixed ease-in-out ${
+                className={`bg-slate-800 h-screen sm:w-56 w-full overflow-y-auto flex justify-center transition-all duration-300 sm:relative sm:left-0 fixed ease-in-out ${
                     sidebar ? "left-0" : "-left-full "
                 }`}
             >
