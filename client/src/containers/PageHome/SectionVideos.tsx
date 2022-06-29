@@ -27,9 +27,10 @@ const SectionVideos: FC<SectionVideosProps> = ({
 
     useEffect(() => {
         (async () => {
-            const { data } = await clientAxios("/config/home/videos");
-            setVideosList(data);
-            console.log(data);
+            try {
+                const response = await clientAxios("/config/home/videos");
+                setVideosList(response.data);
+            } catch (error) {console.log('----->',error);}
         })();
     }, []);
 

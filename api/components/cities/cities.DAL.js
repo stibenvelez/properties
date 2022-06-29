@@ -19,6 +19,13 @@ export const allCityes = async () => {
 
 export const allCityesWhitProperties = async (query) => {
     try {
+        const filterByOffer = () => {
+            if (query.offer) {
+                return `AND c.offer = '${query.offer}'`;
+            }
+            return '';
+        }
+
         const sql = `
         SELECT c.*,
         d.departament,
@@ -31,7 +38,7 @@ export const allCityesWhitProperties = async (query) => {
         LEFT JOIN Departaments AS d ON d.idDepartament = c.IdDepartament
         INNER JOIN Properties AS p ON p.cityId = c.cityId
         INNER JOIN Offer AS o ON o.offerId = p.offerId
-        WHERE o.offer = '${query.offer}'
+         ${filterByOffer()}
         GROUP BY c.cityId
         ORDER BY COUNT(c.cityId) DESC
         `;
