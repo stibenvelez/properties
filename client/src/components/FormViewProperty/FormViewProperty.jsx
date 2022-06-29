@@ -17,10 +17,10 @@ import { CheckIcon, TrashIcon } from "@heroicons/react/solid";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { createPropertyAction } from "store/slice/properties/propertiesActions";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const FormviewProperty = () => {
-
+    const history = useHistory();
     const { property, loading } = useSelector(({ properties }) => properties);
     const [errors, setErrors] = useState({});
     const [departaments, setDepartaments] = useState([]);
@@ -45,6 +45,7 @@ const FormviewProperty = () => {
     return (
         <form encType="multipart/form-data">
             <div className="flex flex-col md:flex-row">
+
                 <div className="flex-grow w-full mt-10 space-y-6 md:mt-0 md:pl-16">
                     <h3>Información del inmueble</h3>
                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -508,11 +509,6 @@ const FormviewProperty = () => {
                                     </div>
                                 ))}
                         </div>
-                    </div>
-                    <div className="flex gap-2 pt-2">
-                        <button type="button">
-                            <Link to="/admin/inmuebles">Volver</Link>
-                        </button>
                     </div>
                 </div>
             </div>

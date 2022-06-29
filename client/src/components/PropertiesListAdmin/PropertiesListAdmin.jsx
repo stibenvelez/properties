@@ -51,7 +51,7 @@ const PropertiesListAdmin = () => {
     return (
         <div className="overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-slate-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" className="px-6 py-3">
                             referencia
@@ -81,15 +81,25 @@ const PropertiesListAdmin = () => {
                         properties.map((property, index) => (
                             <tr
                                 key={index}
-                                className={`border-b  dark:border-gray-600 border-gray-200 ${
+                                className={`border-b  dark:border-gray-600 border-gray-200 hover:bg-gray-50 ${
                                     ESTATE_ITEMS[property.stateId] || ""
                                 }`}
                             >
                                 <td className="px-6 py-4 whitespace-no-wrap">
-                                    {property.reference}
+                                    <Link
+                                        to={`/admin/property/${property.idProperty}`}
+                                        className="hover:text-indigo-500"
+                                    >
+                                        {property.reference}
+                                    </Link>
                                 </td>
                                 <td className="px-6 py-4 whitespace-no-wrap">
-                                    {property.title}
+                                    <Link
+                                        to={`/admin/property/${property.idProperty}`}
+                                        className="hover:text-indigo-500"
+                                    >
+                                        {property.title}
+                                    </Link>
                                 </td>
                                 <td className="px-6 py-4 whitespace-no-wrap">
                                     {property.city}

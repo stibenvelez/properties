@@ -122,9 +122,8 @@ export const allPropertiesByUserId = async ({ idUser, role }) => {
         INNER JOIN StatesProperty AS sp ON sp.stateId = p.stateId
         ${role !== "admin" ? `WHERE p.createdBy = ${idUser}` : ""}
         ${role !== "admin" ? `AND p.stateId != 2` : ""}
+        ORDER BY p.createdAt DESC
         `;
-        const [properties] = await connection.query(sql);
-
         return await connection.query(sql);
     } catch (error) {
         throw error;

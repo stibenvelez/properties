@@ -1,3 +1,4 @@
+import { HomeIcon } from "@heroicons/react/solid";
 import PropertiesListAdmin from "components/PropertiesListAdmin/PropertiesListAdmin";
 import SpinnerButton from "components/SpinnerButton/SpinnerButton";
 import { useEffect } from "react";
@@ -34,12 +35,12 @@ const PropertiesPage = () => {
                                 estados
                             </p>
                         </div>
-                        <div>
+                        <div className="flex">
                             <Link
                                 to="/admin/nuevo-inmueble"
-                                className="bg-indigo-600 py-1 px-2 hover:bg-indigo-400 text-white rounded-md"
+                                className="bg-indigo-600 py-1 px-2 hover:bg-indigo-500 text-white rounded-md flex gap-1 "
                             >
-                                Registrar inmueble
+                                <HomeIcon className="h-5 w-5"/> Registrar inmueble
                             </Link>
                         </div>
                     </div>

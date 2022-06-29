@@ -1,10 +1,11 @@
 import FormviewProperty from 'components/FormViewProperty/FormViewProperty';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { getPropertyByIdByUserId } from 'store/slice/properties/propertiesActions';
 
 const PropertyDetailAdminPage = () => {
+    const history = useHistory();
     const { id } = useParams();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -17,14 +18,20 @@ const PropertyDetailAdminPage = () => {
     
     const renderSection1 = () => {
         return (
-            <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-4 sm:space-y-4">
                 <div>
                     <h2 className="text-3xl font-semibold">
                         Informacion del inmueble
                     </h2>
                     <p>Este es el detalle del inmueble</p>
                 </div>
-               {!loading && <FormviewProperty />}
+                <button
+                    onClick={() => history.goBack()}
+                    className="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-400"
+                >
+                    Volver
+                </button>
+                {!loading && <FormviewProperty />}
             </div>
         );
     };
