@@ -7,6 +7,7 @@ import suscriptionsRoutes from "../components/suscriptions/routes.js";
 import propertyRoutesAdmin from "../components/properties/routes.admin.js";
 import departamentsRoutes from "../components/departaments/routes.js";
 import configRoutes from "../components/config/routes.js";
+import contactRoutes from "../components/contact/routes.js";
 
 
 routes.use(express.static("public"));
@@ -17,5 +18,6 @@ routes.use("/suscriptions", suscriptionsRoutes);
 routes.use("/admin/properties", propertyRoutesAdmin);
 routes.use("/departaments", departamentsRoutes);
 routes.use("/config", configRoutes);
+routes.use("/contact", contactRoutes);
 
 export default routes;
