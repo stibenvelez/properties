@@ -434,7 +434,7 @@ export const minMaxPrice = async ({ category }) => {
 
     const filterByOffer = () => {
         if (category) {
-            return `offer = '${category}'`;
+            return `WHERE o.offer = '${category}'`;
         }
         return "";
     };
@@ -443,7 +443,7 @@ export const minMaxPrice = async ({ category }) => {
         const sql = `
         SELECT MIN(price) as minPrice, MAX(price) as maxPrice FROM Properties AS p
         LEFT JOIN Offer AS o ON p.offerId = o.offerId
-        WHERE ${filterByOffer()}
+         ${filterByOffer()}
 
         `;
         const [rows] = await connection.query(sql);
