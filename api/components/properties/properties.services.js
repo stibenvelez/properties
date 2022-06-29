@@ -4,6 +4,7 @@ import {
     deleteProperty,
     importPorperties,
     insertProperty,
+    minMaxPrice,
     propertyById,
     propertyByIdByUserId,
     uploadProperty,
@@ -70,6 +71,7 @@ const IMAGES_ALLOWED = [
 
 export const getAllPropertiesService = async (query) => {
     const [rows] = await allProperties(query);
+    const [minMax]= await minMaxPrice(query);
     const addGalleryImgs = rows.map((property) => {
         let galleryImgs = [];
 
@@ -95,11 +97,11 @@ export const getAllPropertiesService = async (query) => {
             ...property,
             galleryImgs,
         };
-    });
-
+    });  
     const dataPropeties = {
         results: addGalleryImgs,
         count: rows.length,
+        ...minMax,
     };
 
     return dataPropeties;

@@ -38,6 +38,10 @@ const TabFilters = () => {
     const openModalMoreFilterMobile = () => setisOpenMoreFilterMobile(true);
     //
     const filters = useSelector(({ properties }: any) => properties.filters);
+    const { maxPrice } = useSelector(
+        ({ properties }: any) => properties.properties
+    );
+
     const cities = useSelector(({ cities }: any) => cities.cities);
 
     const handleChange = (item: any) => {
@@ -417,7 +421,6 @@ const TabFilters = () => {
                                     filters?.rangePrices[1]
                                 )}`}{" "}
                             </span>
-                            {renderXClear()}
                         </Popover.Button>
                         <Transition
                             as={Fragment}
@@ -438,7 +441,7 @@ const TabFilters = () => {
                                             <Range
                                                 className="text-red-400"
                                                 min={0}
-                                                max={1000000000}
+                                                max={maxPrice}
                                                 defaultValue={[
                                                     filters?.rangePrices[0],
                                                     filters?.rangePrices[1],
@@ -450,7 +453,7 @@ const TabFilters = () => {
                                                         value,
                                                     });
                                                 }}
-                                                step={10000000}
+                                                step={maxPrice / 100}
                                             />
                                         </div>
 
@@ -839,7 +842,7 @@ const TabFilters = () => {
     return (
         <div>
             <div className="flex lg:space-x-4">
-                <div className="hidden space-x-4 lg:flex">
+                <div className="hidden space-x-4 lg:flex lg:flex-wrap gap-y-2 lg:items-center">
                     {RenderSelectCity()}
                     {RenderInputneighborhood()}
                     {renderTabsTypeProperty()}
@@ -851,10 +854,10 @@ const TabFilters = () => {
                             dispatch(clearFilter());
                             closeModalMoreFilterMobile();
                         }}
-                        className="text-sm text-gray-500"
+                        className="text-sm text-gray-500 hover:outline-indigo-500 hover:outline outline-none hover:text-indigo-500"
                         sizeClass="px-4 py-1 sm:px-5"
                     >
-                        Limpiar filtros
+                        <span>Limpiar filtros</span>
                     </ButtonThird>
                 </div>
                 {renderTabMoreFilterMobile()}

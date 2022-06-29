@@ -10,8 +10,9 @@ export const getAllCityes = async (req, res) => {
     }
 }
 export const getAllCityesWhitProperties = async (req, res) => {
+
         try {
-            const result = await getAllCityesWhitPropertiesService();
+            const result = await getAllCityesWhitPropertiesService(req.query);
             res.json(result)
         } catch (error) {
             res.status(400).json({msg: 'error obteneindo las ciudades'})

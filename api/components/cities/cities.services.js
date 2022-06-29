@@ -9,9 +9,9 @@ export const getAllCityesService = async () => {
         throw error
     }
 }
-export const getAllCityesWhitPropertiesService = async () => {
+export const getAllCityesWhitPropertiesService = async (query) => {
     try {
-        const [result] = await allCityesWhitProperties();
+        const [result] = await allCityesWhitProperties(query);
         return result;
     } catch (error) {
         throw error

@@ -4,10 +4,13 @@ import { FC, useEffect } from "react";
 import SectionGridFilterCard from "./SectionGridFilterCard";
 import { Helmet } from "react-helmet";
 import { useSearchParams } from "hooks/useSearchParams";
-import {fetchAllProperties} from '../../store/slice/properties/propertiesActions'
+import { fetchAllProperties } from "../../store/slice/properties/propertiesActions";
 import { useDispatch, useSelector } from "react-redux";
 import useDebounce from "hooks/useDebounce";
-import { fetchAllCitiesAction, fetchAllCitieswhitPropetiesAction } from "store/slice/cities/citiesActions";
+import {
+    fetchAllCitiesAction,
+    fetchAllCitieswhitPropetiesAction,
+} from "store/slice/cities/citiesActions";
 import { useLocation } from "react-router-dom";
 
 export interface ListingStayPageProps {
@@ -16,30 +19,28 @@ export interface ListingStayPageProps {
 
 const SalesPropertiesPage: FC<ListingStayPageProps> = ({ className = "" }) => {
     const location = useLocation();
-    const dispatch:any = useDispatch();
-    const properties:any = useSelector(({properties}:any)=>properties.properties);
-    const loading:any = useSelector(({ properties }: any) => properties.loading);
-    const filters: any = useSelector(({ properties }: any) => properties.filters);
+    const dispatch: any = useDispatch();
+    const filters: any = useSelector(
+        ({ properties }: any) => properties.filters
+    );
     const debouncedFilters = useDebounce<string>(filters, 500);
-    
-    const CATEGORY:any = {
+
+    const CATEGORY: any = {
         arriendo: "rent",
         venta: "sell",
-    }
-    
-    let category = location.pathname.split("/")[1]
+    };
+
+    let category = location.pathname.split("/")[1];
     const categoryProperty: any = CATEGORY[category];
-    
+
     useEffect(() => {
         dispatch(fetchAllProperties(debouncedFilters, categoryProperty));
     }, [debouncedFilters]);
-     
+
     useEffect(() => {
-        (() => dispatch(fetchAllCitieswhitPropetiesAction()))();
-     }, []);
-      
-   
-     
+        (() => dispatch(fetchAllCitieswhitPropetiesAction(categoryProperty)))();
+    }, []);
+
     return (
         <div
             className={`nc-ListingStayPage relative overflow-hidden ${className}`}

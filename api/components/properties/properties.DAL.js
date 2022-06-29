@@ -85,7 +85,7 @@ export const allProperties = async ({
         ${filterByNeighborhood()}
         AND p.stateId = 1
         `;
-       
+
         return await connection.query(sql);
     } catch (error) {
         throw error;
@@ -425,6 +425,29 @@ export const deleteProperty = async (property) => {
             property.stateId,
             property.idProperty,
         ]);
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const minMaxPrice = async ({ category }) => {
+
+    const filterByOffer = () => {
+        if (category) {
+            return `offer = '${category}'`;
+        }
+        return "";
+    };
+
+    try {
+        const sql = `
+        SELECT MIN(price) as minPrice, MAX(price) as maxPrice FROM Properties AS p
+        LEFT JOIN Offer AS o ON p.offerId = o.offerId
+        WHERE ${filterByOffer()}
+
+        `;
+        const [rows] = await connection.query(sql);
+        return rows
     } catch (error) {
         throw error;
     }

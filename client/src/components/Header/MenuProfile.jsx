@@ -51,7 +51,7 @@ export default function MenuProfile() {
                                 </NavLink>
                             )}
                         </Menu.Item>
-                        <Menu.Item>
+                        {/* <Menu.Item>
                             {({ active }) => (
                                 <a
                                     href="#"
@@ -65,7 +65,7 @@ export default function MenuProfile() {
                                     Support
                                 </a>
                             )}
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item>
                             {({ active }) => (
                                 <button
