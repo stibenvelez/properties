@@ -353,13 +353,13 @@ const TabFilters = () => {
                                         />
                                     </div>
                                     <div className="flex items-center justify-between p-5 bg-neutral-50 dark:bg-neutral-900 dark:border-t dark:border-neutral-800">
-                                        <ButtonThird
+                                        {/*  <ButtonThird
                                             onClick={close}
                                             sizeClass="px-4 py-2 sm:px-5"
                                         >
                                             Clear
                                         </ButtonThird>
-                                        {/* <ButtonPrimary
+                                        <ButtonPrimary
                                             sizeClass="px-4 py-2 sm:px-5"
                                             onClick={() => {
                                                 handleFilter();

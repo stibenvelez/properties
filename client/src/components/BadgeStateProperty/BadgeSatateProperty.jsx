@@ -8,7 +8,6 @@ const STATE_STYLE = {
 }
 
 const BadgeSatateProperty = ({ stateId, state }) => {
-    console.log("state", state);
     return (
         <span
             className={`${

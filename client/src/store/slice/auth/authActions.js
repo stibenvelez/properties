@@ -50,7 +50,6 @@ export const loginAction = (user) => async (dispatch) => {
 export const forgetPasswordAction = (email) => async (dispatch) => {
     try {
         const result = clientAxios.post("/users/forget-password", { email });
-        console.log(result);
     } catch (error) {
         console.log(error);
     }

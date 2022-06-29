@@ -43,7 +43,6 @@ export const fetchAllProperties =
                 }`,
                 { headers, params: filters }
             );
-            console.log(response.data);
             dispatch(setPropertiesSucces(response.data));
         } catch (error) {
             console.log(error);

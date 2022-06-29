@@ -118,7 +118,6 @@ const FormNewProperty = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("enviando");
         const result = await formValidate(newProperty);
         if (Object.keys(result).length > 0) {
             setErrors(result);

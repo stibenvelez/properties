@@ -51,7 +51,6 @@ export const getAllUsersAction = () => async (dispatch) => {
             Authorization: `Bearer ${token}`,
         };
         const response = await clientAxios.get("/users", { headers });
-        console.log(response);
         dispatch(setGetUsersSucces(response.data));
     } catch (error) {
         console.log(error.response.data.msg);

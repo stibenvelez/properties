@@ -46,7 +46,6 @@ const PropertiesListAdmin = () => {
 
             }
         });
-        console.log('elimienando',id);
     }
 
     return (
