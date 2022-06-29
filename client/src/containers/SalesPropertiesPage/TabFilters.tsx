@@ -13,6 +13,7 @@ import { setFilters } from "store/slice/properties";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { clearFilter } from "store/slice/properties/propertiesActions";
 import { arrayBuffer } from "stream/consumers";
+import Input from "shared/Input/Input";
 
 // DEMO DATA
 const typeOfProperties = [
@@ -187,6 +188,25 @@ const TabFilters = () => {
         );
     };
 
+        const RenderInputneighborhood = () => {
+            return (
+                <div className="">
+                    <input
+                        placeholder="Indique un barrio"
+                        className="flex items-center justify-center px-4 py-2 text-sm bg-transparent border rounded-full border-neutral-300 dark:border-neutral-700 focus:outline-none"
+                        name="neighborhood"
+                        value={filters.neighborhood}
+                        onChange={({ target }) =>
+                            handleChange({
+                                name: target.name,
+                                value: target.value,
+                            })
+                        }
+                    />
+                </div>
+            );
+        };
+
     const renderTabsTypeProperty = () => {
         return (
             <div className="">
@@ -353,13 +373,13 @@ const TabFilters = () => {
                                         />
                                     </div>
                                     <div className="flex items-center justify-between p-5 bg-neutral-50 dark:bg-neutral-900 dark:border-t dark:border-neutral-800">
-                                        {/*  <ButtonThird
+                                        <ButtonThird
                                             onClick={close}
                                             sizeClass="px-4 py-2 sm:px-5"
                                         >
                                             Clear
                                         </ButtonThird>
-                                        <ButtonPrimary
+                                        {/* <ButtonPrimary
                                             sizeClass="px-4 py-2 sm:px-5"
                                             onClick={() => {
                                                 handleFilter();
@@ -800,6 +820,7 @@ const TabFilters = () => {
             <div className="flex lg:space-x-4">
                 <div className="hidden space-x-4 lg:flex">
                     {RenderSelectCity()}
+                    {RenderInputneighborhood()}
                     {renderTabsTypeProperty()}
                     {renderTabsPriceRage()}
                     {renderTabsRoomAndBeds()}

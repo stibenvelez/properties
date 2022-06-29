@@ -11,12 +11,6 @@ export const allProperties = async ({
     neighborhood,
 }) => {
     try {
-        const neighborhood = () => {
-            if (neighborhood) {
-                return `AND p.neighborhood LIKE '%${neighborhood}%'`;
-            }
-            return "";
-        };
         const filterByRangePrices = () => {
             if (rangePrices && rangePrices[0] == 0 && rangePrices[1] == 0) {
                 return `p.price >0`;
@@ -61,7 +55,14 @@ export const allProperties = async ({
         };
         const filterByReference = () => {
             if (reference && reference !== "") {
-                return `AND reference = '${reference}'`;
+                return `AND p.reference = '${reference}'`;
+            }
+            return "";
+        };
+
+        const filterByNeighborhood = () => {
+            if (neighborhood && neighborhood !== "") {
+                return `AND p.neighborhood LIKE '%${neighborhood}%'`;
             }
             return "";
         };
@@ -81,8 +82,10 @@ export const allProperties = async ({
         ${filterByCity()}
         ${filterByOffer()}
         ${filterByReference()}
+        ${filterByNeighborhood()}
         AND p.stateId = 1
         `;
+        console.log(sql);
         return await connection.query(sql);
     } catch (error) {
         throw error;

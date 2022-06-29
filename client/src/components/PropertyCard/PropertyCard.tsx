@@ -33,7 +33,7 @@ const PropertyCard: FC<StayCardProps> = ({
     }: any = property;
 
     const renderSliderGallery = () => {
-        const like = localStorage.getItem(idProperty) ? true : false;
+        const like = !!localStorage.getItem(idProperty);
        
         return (
             <div className="relative w-full">
