@@ -11,6 +11,14 @@ import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import { useParams } from "react-router-dom";
 import clientAxios from "config/axios";
 import formatMoney from "utils/formatMoney";
+import Badge from "shared/Badge/Badge";
+import LikeSaveBtns from "./LikeSaveBtns";
+import {
+    AtSymbolIcon,
+    DeviceMobileIcon,
+    ExclamationCircleIcon,
+    PhoneIcon,
+} from "@heroicons/react/solid";
 
 export interface ListingStayDetailPageProps {
     className?: string;
@@ -65,20 +73,10 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
     const renderSection1 = () => {
         return (
             <div className="listingSection__wrap !space-y-6">
-                {/* 1 */}
-                {/* <div className="flex items-center justify-between">
-                    <Badge name="Wooden house" />
-                    <LikeSaveBtns />
-                </div> */}
-
-                {/* 2 */}
                 <h2 className="text-2xl font-semibold sm:text-3xl lg:text-4xl">
                     {property.title}
                 </h2>
-
-                {/* 3 */}
                 <div className="flex items-center space-x-4">
-                    <StartRating />
                     <span>·</span>
                     <span>
                         <i className="las la-map-marker-alt"></i>
@@ -163,7 +161,7 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                 <h2 className="text-2xl font-semibold">Descripción</h2>
                 <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
                 <div className="text-neutral-6000 dark:text-neutral-300">
-                    <span>{property.description}</span>
+                    sdfgdfgdfg <span>{property.description}</span>
                 </div>
             </div>
         );
@@ -190,49 +188,35 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                         </a>
                     </div>
                 </div>
-
-                {/* info */}
-                <div className="block text-neutral-500 dark:text-neutral-400 space-y-2.5">
-                    <div className="flex items-center space-x-3">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="w-6 h-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={1.5}
-                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                            />
-                        </svg>
-                        <span>{property.phone}</span>
-                    </div>
-                </div>
-                {/* email */}
-                {property.email && (
-                    <div className="block text-neutral-500 dark:text-neutral-400 space-y-2.5">
-                        <div className="flex items-center space-x-3">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="w-6 h-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                                />
-                            </svg>
-                            <span>{property.email}</span>
+                <div className="flex items-center space-x-4 flex-wrap gap-y-2">
+                    {/* info */}
+                    {property.contactCellphone && (
+                        <div className="text-neutral-500 dark:text-neutral-400 space-y-2.5">
+                            <div className="flex items-center space-x-2">
+                                <DeviceMobileIcon className="w-6 h-6" />
+                                <span>{property.contactCellphone}</span>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                    {/* email */}
+                    {property.contactEmail && (
+                        <div className="text-neutral-500 dark:text-neutral-400 space-y-2.5">
+                            <div className="flex items-center space-x-2">
+                                <AtSymbolIcon className="w-6 h-6" />
+                                <span>{property.contactEmail}</span>
+                            </div>
+                        </div>
+                    )}
+                    {/* email */}
+                    {property.contactPhone && (
+                        <div className="text-neutral-500 dark:text-neutral-400 space-y-2.5">
+                            <div className="flex items-center space-x-2">
+                                <PhoneIcon className="w-6 h-6" />
+                                <span>{property.contactPhone}</span>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
         );
     };
@@ -450,10 +434,9 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                 {/* CONTENT */}
                 <div className="w-full space-y-8 lg:w-3/5 xl:w-2/3 lg:space-y-10 lg:pr-10">
                     {renderSection1()}
-                    {property.desciption && renderSection2()}
+                    {property.description && renderSection2()}
                     {renderSection5()}
                     {renderSection6()}
-            
                 </div>
 
                 {/* SIDEBAR */}
