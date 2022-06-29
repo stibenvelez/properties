@@ -1,7 +1,6 @@
 import connection from "../../config/db.js";
 
 export const insertContactMe = async (contact) => {
-    console.log(contact);
     try {
         const sql = `
             INSERT INTO Contactme (
@@ -11,9 +10,11 @@ export const insertContactMe = async (contact) => {
                 message,
                 observations,
                 contactedBy,
+                idProperty,
                 state
             )
             VALUES (
+                ?,
                 ?,
                 ?,
                 ?,
@@ -31,6 +32,7 @@ export const insertContactMe = async (contact) => {
             contact.message,
             contact.observations,
             contact.contactedBy,
+            contact.idProperty,
             contact.state,
         ];
         const [result] = await connection.query(sql, values);

@@ -309,6 +309,7 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                 <ModalContactMe
                     isOpen={modalIsOpen}
                     setIsOpen={setModalIsOpen}
+                    property={property}
                 />
                 {/* MAP */}
                 <div className="aspect-w-5 aspect-h-5 sm:aspect-h-3">

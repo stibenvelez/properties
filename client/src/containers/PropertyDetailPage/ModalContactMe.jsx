@@ -6,7 +6,7 @@ import NcImage from "shared/NcImage/NcImage";
 import HIW3img from "../../images/HIW2-2.png";
 import FormContactMe from "./FormContactMe";
 
-const ModalContactMe = ({ isOpen, setIsOpen }) => {
+const ModalContactMe = ({ isOpen, setIsOpen, property }) => {
     const history = useHistory();
 
     return (
@@ -28,10 +28,14 @@ const ModalContactMe = ({ isOpen, setIsOpen }) => {
                                 ¿Estas interesado en este inmueble?
                             </Dialog.Title>
                             <p className="text-center">
-                                Llena los siguientes datos y un asesor se pondra en contacto contigo cuanto antes.
+                                Llena los siguientes datos y un asesor se pondra
+                                en contacto contigo cuanto antes.
                             </p>
                             <div className="flex justify-center">
-                                <FormContactMe />
+                                <FormContactMe
+                                    property={property}
+                                    setIsOpen={setIsOpen}
+                                />
                             </div>
                         </div>
                     </Dialog.Panel>
