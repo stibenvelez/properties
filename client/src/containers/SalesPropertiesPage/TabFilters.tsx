@@ -188,24 +188,24 @@ const TabFilters = () => {
         );
     };
 
-        const RenderInputneighborhood = () => {
-            return (
-                <div className="">
-                    <input
-                        placeholder="Indique un barrio"
-                        className="flex items-center justify-center px-4 py-2 text-sm bg-transparent border rounded-full border-neutral-300 dark:border-neutral-700 focus:outline-none"
-                        name="neighborhood"
-                        value={filters.neighborhood}
-                        onChange={({ target }) =>
-                            handleChange({
-                                name: target.name,
-                                value: target.value,
-                            })
-                        }
-                    />
-                </div>
-            );
-        };
+    const RenderInputneighborhood = () => {
+        return (
+            <div className="">
+                <input
+                    placeholder="Indique un barrio"
+                    className="flex items-center justify-center px-4 py-2 text-sm bg-transparent border rounded-full border-neutral-300 dark:border-neutral-700 focus:outline-none"
+                    name="neighborhood"
+                    value={filters.neighborhood}
+                    onChange={({ target }) =>
+                        handleChange({
+                            name: target.name,
+                            value: target.value,
+                        })
+                    }
+                />
+            </div>
+        );
+    };
 
     const renderTabsTypeProperty = () => {
         return (
@@ -638,7 +638,15 @@ const TabFilters = () => {
                                             />
                                         </span>
                                     </div>
+                                    <div className="py-7">
+                                        <h3 className="text-xl font-medium">
+                                            Barrio
+                                        </h3>
 
+                                        <div className="relative flex flex-col px-5 py-6 space-y-5">
+                                            {RenderInputneighborhood()}
+                                        </div>
+                                    </div>
                                     <div className="flex-grow overflow-y-auto">
                                         <div className="px-10 divide-y divide-neutral-200 dark:divide-neutral-800">
                                             {/* ---- */}

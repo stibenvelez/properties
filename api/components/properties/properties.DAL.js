@@ -85,7 +85,7 @@ export const allProperties = async ({
         ${filterByNeighborhood()}
         AND p.stateId = 1
         `;
-        console.log(sql);
+       
         return await connection.query(sql);
     } catch (error) {
         throw error;

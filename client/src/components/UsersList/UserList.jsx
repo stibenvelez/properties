@@ -48,7 +48,7 @@ const handleDeleteUser = (id) => {
                             tipo de inmueble
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            tipo de oferta
+                            Estado
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Acciones
