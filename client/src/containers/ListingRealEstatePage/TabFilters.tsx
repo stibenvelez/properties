@@ -504,18 +504,18 @@ const TabFilters = () => {
   };
 
   return (
-    <div className="flex lg:space-x-4">
-      <div className="hidden lg:flex space-x-4">
-        {renderTabsTypeOfPlace()}
-        {renderTabsRoomAndBeds()}
-        {renderTabsPriceRage()}
-        {renderTabOnSale()}
+      <div className="flex lg:space-x-4">
+          <div className="hidden  lg:flex space-x-4">            
+              {renderTabsTypeOfPlace()}
+              {renderTabsRoomAndBeds()}
+              {renderTabsPriceRage()}
+              {renderTabOnSale()}
+          </div>
+          <div className="flex lg:hidden space-x-4">
+              {renderTabMobileFilter()}
+              {renderTabOnSale()}
+          </div>
       </div>
-      <div className="flex lg:hidden space-x-4">
-        {renderTabMobileFilter()}
-        {renderTabOnSale()}
-      </div>
-    </div>
   );
 };
 

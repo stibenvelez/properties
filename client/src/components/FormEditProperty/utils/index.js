@@ -6,9 +6,9 @@ export const INITIAL_STATE_NEW_PROPERTY = {
     address: "",
     building: "",
     contactName: "",
-    email: "",
-    phone: "",
-    cellPhone: "",
+    contactEmail: "",
+    contactPhone: "",
+    contactCellphone: "",
     antiquityYears: "",
     published: false,
     lastAdminprice: 0,
@@ -30,7 +30,7 @@ export const INITIAL_STATE_NEW_PROPERTY = {
     city: "",
     saleOff: 0,
     files: [],
-    galleryImgs:[]
+    galleryImgs: [],
 };
 
 export const TEST_INITIAL_STATE_NEW_PROPERTY = {

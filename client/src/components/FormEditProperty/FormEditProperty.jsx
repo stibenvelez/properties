@@ -145,6 +145,7 @@ const FormEditProperty = () => {
             return;
         }
         setErrors({});
+        console.log('enviando', editedProperty);
         dispatch(updatePropertyAction(editedProperty));
         //setEditedProperty(INITIAL_STATE_NEW_PROPERTY);
     };
@@ -754,7 +755,7 @@ const FormEditProperty = () => {
                                 onChange={(e) =>
                                     handleOnChange({
                                         name: e.target.name,
-                                        value: e.target.value,
+                                        value: e.target.value,  
                                     })
                                 }
                             />

@@ -91,6 +91,7 @@ export const getPropertyByIdByUserId = async (req, res) => {
 export const updateProperty = async (req, res) => {
     try {
         await updatePropertyService(req, res);
+        
         res.json("Propiedad actualizada");
     } catch (error) {
         console.log(error);

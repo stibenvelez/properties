@@ -213,15 +213,10 @@ export const createPropertyAction = (property) => async (dispatch) => {
 
 
 export const updatePropertyAction = (property) => async (dispatch) => {
+
+
     dispatch(setUpdateProperty());
-    const IMAGES_ALLOWED = [
-    "image1",
-    "image2",
-    "image3",
-    "image4",
-    "image5",
-    "image6",
-];
+
     try {
         console.log('llegua', property);
         let data = new FormData();
@@ -257,7 +252,7 @@ export const updatePropertyAction = (property) => async (dispatch) => {
             Authorization: `Bearer ${token}`,
         };
 
-        const result = await clientAxios.put(
+        await clientAxios.put(
             `/admin/properties/${property.idProperty}`,
             data,
             { headers }
@@ -279,6 +274,7 @@ export const updatePropertyAction = (property) => async (dispatch) => {
         dispatch(setUpdatePropertyError());
         console.log(error);
     }
+    
 }
 
 export const deletePropertyAction = (idProperty) => async (dispatch) => {

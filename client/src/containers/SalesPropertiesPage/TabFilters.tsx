@@ -638,17 +638,29 @@ const TabFilters = () => {
                                             />
                                         </span>
                                     </div>
-                                    <div className="py-7">
-                                        <h3 className="text-xl font-medium">
-                                            Barrio
-                                        </h3>
 
-                                        <div className="relative flex flex-col px-5 py-6 space-y-5">
-                                            {RenderInputneighborhood()}
-                                        </div>
-                                    </div>
                                     <div className="flex-grow overflow-y-auto">
                                         <div className="px-10 divide-y divide-neutral-200 dark:divide-neutral-800">
+                                            {/* ---- */}
+                                            <div className="py-7">
+                                                <h3 className="text-xl font-medium">
+                                                    Ciudad
+                                                </h3>
+
+                                                <div className="relative flex flex-col px-5 py-6 space-y-5">
+                                                    {RenderSelectCity()}
+                                                </div>
+                                            </div>
+                                            {/* ---- */}
+                                            <div className="py-7">
+                                                <h3 className="text-xl font-medium">
+                                                    Barrio
+                                                </h3>
+
+                                                <div className="relative flex flex-col px-5 py-6 space-y-5">
+                                                    {RenderInputneighborhood()}
+                                                </div>
+                                            </div>
                                             {/* ---- */}
                                             <div className="py-7">
                                                 <h3 className="text-xl font-medium">
@@ -658,6 +670,7 @@ const TabFilters = () => {
                                                     {RenderSelectCity()}
                                                 </div>
                                             </div>
+
                                             {/* ---- */}
                                             <div className="py-7">
                                                 <h3 className="text-xl font-medium">

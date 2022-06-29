@@ -162,6 +162,7 @@ export const propertyByIdByUserId = async (id, user) => {
 };
 
 export const insertProperty = async (property) => {
+    console.log(property);
     try {
         const values = [
             property.reference,
@@ -378,9 +379,9 @@ export const uploadProperty = async (property) => {
             property.address,
             property.building,
             property.contactName,
-            property.contatEmail,
-            property.contatPhone,
-            property.contatCellPhone,
+            property.contactEmail,
+            property.contactPhone,
+            property.contactCellphone,
             property.antiquityYears,
             property.lastAdminprice,
             property.neighborhood,

@@ -226,6 +226,7 @@ export const updatePropertyService = async (req, res) => {
         ...body,
         idProperty: id,
     };
+
     await uploadProperty(uploadData);
 
     try {
