@@ -59,8 +59,9 @@ export const allToContact = async () => {
 export const ToContactById = async id => {
     try {
         const sql = `
-            SELECT *
-            FROM Contactme
+            SELECT c.*, sc.state
+            FROM Contactme AS c
+            INNER JOIN StatesContact AS sc ON c.stateId = sc.stateId
             WHERE id = ${id}
             `;
         const [result] = await connection.query(sql);

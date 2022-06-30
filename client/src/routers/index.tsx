@@ -44,6 +44,7 @@ import EditPropertyPage from "containers/EditPropertyPage/EditPropertyPage";
 import UpdateUserPage from "containers/UpdateUserPage/UpdateUserPage";
 import ToContactListPage from "containers/ToContactListPage/ToContactListPage";
 import ToContactPage from "containers/ToContactPage/ToContactPage";
+import UpdateToContactPage from "containers/UpdateToContactPage/UpdateToContactPage";
 
 export const pages: Page[] = [
     { path: "/", exact: true, component: PageHome },
@@ -171,6 +172,11 @@ const Routes = () => {
                     path="/admin/to-contact/:id"
                     exact
                     component={ToContactPage}
+                />
+                <PrivateRoute
+                    path="/admin/update-to-contact/:id"
+                    exact
+                    component={UpdateToContactPage}
                 />
                 <Route component={Page404} />
             </Switch>

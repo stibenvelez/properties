@@ -40,8 +40,8 @@ const ContactmeDetail = () => {
                             <Input
                                 className="mt-1.5"
                                 name="firstName"
-                                defaultValue={toContact.firstName}
-                                readOnly
+                                value={toContact.firstName}
+
                                 //defaultValue={property.reference}
                             />
                             {/* {errors.reference && (
@@ -57,9 +57,9 @@ const ContactmeDetail = () => {
                             </Label>
                             <Input
                                 className="mt-1.5"
-                                defaultValue={toContact.lastName}
+                                value={toContact.lastName}
                                 name="lastName"
-                                readOnly
+                                //defaultValue={property.reference}
                             />
                             {/* {errors.reference && (
                   <p className="py-1 text-sm text-red-500">
@@ -76,9 +76,8 @@ const ContactmeDetail = () => {
                             <Input
                                 className="mt-1.5"
                                 type="email"
-                                defaultValue={toContact.email}
+                                value={toContact.email}
                                 name="email"
-                                readOnly
                                 //defaultValue={property.reference}
                             />
                             {/* {errors.reference && (
@@ -95,9 +94,8 @@ const ContactmeDetail = () => {
                             </Label>
                             <Textarea
                                 className="mt-1.5"
-                                defaultValue={toContact.message}
+                                value={toContact.message}
                                 name="message"
-                                readOnly
                                 //defaultValue={property.reference}
                             />
                             {/* {errors.reference && (
@@ -118,9 +116,8 @@ const ContactmeDetail = () => {
                         </Label>
                         <Input
                             className="mt-1.5"
-                            defaultValue={toContact.state}
+                            value={toContact.state}
                             name="state"
-                            readOnly
                             //defaultValue={property.reference}
                         />
                         {/* {errors.reference && (
@@ -155,11 +152,8 @@ const ContactmeDetail = () => {
                         <Label>Observaciones</Label>
                         <Textarea
                             className="mt-1.5"
-                            defaultValue={
-                                toContact.observations || "sin información"
-                            }
+                            value={toContact.observations || "sin información"}
                             name="observation"
-                            readOnly
                             //defaultValue={property.reference}
                         />
                         {/* {errors.reference && (

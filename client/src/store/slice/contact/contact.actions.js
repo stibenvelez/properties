@@ -50,6 +50,6 @@ export const getToContactAction = (id) => async (dispatch) => {
         dispatch(setGetToContactSuccess(response.data));
     } catch (error) {
         console.log(error);
-        dispatch(setGetToContactError());
+        dispatch(setGetToContactError(error.response.data.msg));
     }
 }

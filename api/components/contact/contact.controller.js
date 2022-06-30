@@ -24,7 +24,7 @@ export const getAllToContact = async (req, res) => {
 
 export const getToContactById = async (req, res) => {
     try {
-        const result = await getToContactByIdServices(req.params.id);
+        const result = await getToContactByIdServices(req, res);
         res.json(result);
     } catch (error) {
         console.log(error);

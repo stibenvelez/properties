@@ -5,6 +5,8 @@ const initialState = {
     isContactSent: false,
     toContact: {},
     toContactList: [],
+    msg: "",
+    error: false,
 };
 
 export const contactSlice = createSlice({
@@ -38,13 +40,17 @@ export const contactSlice = createSlice({
         },
         setGetToContact: (state) => {
             state.loading = true;
+            state.error = false;
         },
         setGetToContactSuccess: (state, action) => {
             state.loading = false;
             state.toContact = action.payload;
+            state.error = false;
         },
-        setGetToContactError: (state) => {
+        setGetToContactError: (state, action) => {
             state.loading = false;
+            state.error = true;
+            state.msg = action.payload;
         },
     },
 });
