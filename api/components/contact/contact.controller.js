@@ -1,4 +1,4 @@
-import { contactMeServices, getToContactServices } from "./contact.services.js";
+import { contactMeServices, getToContactByIdServices, getToContactListServices } from "./contact.services.js";
 
 
 export const contactMe = async (req, res) => {
@@ -14,7 +14,17 @@ export const contactMe = async (req, res) => {
 
 export const getAllToContact = async (req, res) => {
     try {
-        const result = await getToContactServices();
+        const result = await getToContactListServices();
+        res.json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({msg: 'error obteneindo la configuración'})
+    }
+}
+
+export const getToContactById = async (req, res) => {
+    try {
+        const result = await getToContactByIdServices(req.params.id);
         res.json(result);
     } catch (error) {
         console.log(error);

@@ -1,18 +1,17 @@
-import ContactmeDetail from "components/ContactmeDetail/ContactmeDetail";
+import ToContactList from "components/ToContactList/ToContactList";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
-import { getToContactAction } from "store/slice/contact/contact.actions";
+import { useHistory } from "react-router-dom";
+import { getAllToContactAction } from "store/slice/contact/contact.actions";
 
-const ToContactPage = () => {
+const ToContactListPage = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const params = useParams();
 
     useEffect(() => {
         (() => {
-            dispatch(getToContactAction(params.id));
+            dispatch(getAllToContactAction());
         })();
     }, []);
 
@@ -22,15 +21,15 @@ const ToContactPage = () => {
             data-nc-id="PageAbout"
         >
             <Helmet>
-                <title>Detalle de contacto</title>
+                <title>Lista a contactar</title>
             </Helmet>
             <div className="container py-4 space-y-4 lg:py-4 lg:space-y-8">
                 <div className="py-4">
                     <div>
                         <h2 className="text-3xl font-semibold">
-                            Detalle de contacto
+                            Lista a contactar
                         </h2>
-                        <p>Informacion detallada del prospecto</p>
+                        <p>Lista de prospectos pendientes por contactar</p>
                     </div>
                 </div>
                 <button
@@ -39,10 +38,10 @@ const ToContactPage = () => {
                 >
                     Volver
                 </button>
-                <ContactmeDetail />
+                <ToContactList />
             </div>
         </div>
     );
 };
 
-export default ToContactPage;
+export default ToContactListPage;

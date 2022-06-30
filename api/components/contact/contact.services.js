@@ -1,4 +1,4 @@
-import {  allToContact, insertContactMe } from "./contact.DAL.js";
+import {  allToContact, insertContactMe, ToContactById } from "./contact.DAL.js";
 
 export const contactMeServices = async (contact) => {
     try {
@@ -9,9 +9,18 @@ export const contactMeServices = async (contact) => {
     }
 };
 
-export const getToContactServices = async () => {
+export const getToContactListServices = async () => {
     try {
         return await allToContact();
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getToContactByIdServices = async id => {
+    try {
+        const [contact] = await ToContactById(id)
+        return contact;
     } catch (error) {
         throw error;
     }

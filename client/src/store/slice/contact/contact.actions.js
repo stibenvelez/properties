@@ -7,6 +7,9 @@ import {
     setContactMeSucces,
     setGetToContact,
     setGetToContactError,
+    setGetToContactList,
+    setGetToContactListError,
+    setGetToContactListSuccess,
     setGetToContactSuccess,
 } from ".";
 
@@ -30,12 +33,23 @@ export const contactMeAction = (contact) => async (dispatch) => {
 };
 
 export const getAllToContactAction = () => async (dispatch) => {
-    dispatch(setGetToContact());
+    dispatch(setGetToContactList());
     try {
         const response = await clientAxios.get(`/contact/to-contact`);
+        dispatch(setGetToContactListSuccess(response.data));
+    } catch (error) {
+        console.log(error);
+        dispatch(setGetToContactListError());
+    }
+};
+
+export const getToContactAction = (id) => async (dispatch) => {
+    dispatch(setGetToContact());
+    try {
+        const response = await clientAxios.get(`/contact/to-contact/${id}`);
         dispatch(setGetToContactSuccess(response.data));
     } catch (error) {
         console.log(error);
         dispatch(setGetToContactError());
     }
-};
+}

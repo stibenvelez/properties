@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     loading: false,
     isContactSent: false,
+    toContact: {},
+    toContactList: [],
 };
 
 export const contactSlice = createSlice({
@@ -24,17 +26,26 @@ export const contactSlice = createSlice({
         resetIsSent: (state) => {
             state.isContactSent = false;
         },
+        setGetToContactList: (state) => {
+            state.loading = true;
+        },
+        setGetToContactListSuccess: (state, action) => {
+            state.loading = false;
+            state.toContactList = action.payload;
+        },
+        setGetToContactListError: (state) => {
+            state.loading = false;
+        },
         setGetToContact: (state) => {
             state.loading = true;
         },
         setGetToContactSuccess: (state, action) => {
             state.loading = false;
-            state.toContactList = action.payload;
+            state.toContact = action.payload;
         },
         setGetToContactError: (state) => {
             state.loading = false;
-        }
-
+        },
     },
 });
 
@@ -46,6 +57,9 @@ export const {
     setGetToContact,
     setGetToContactSuccess,
     setGetToContactError,
+    setGetToContactList,
+    setGetToContactListSuccess,
+    setGetToContactListError,
     
 } = contactSlice.actions;
 

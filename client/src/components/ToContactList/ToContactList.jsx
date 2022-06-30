@@ -11,16 +11,10 @@ const ToContactList = () => {
       return (
           <div className="overflow-x-auto shadow-md sm:rounded-lg">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                  <thead className="text-xs text-gray-700 uppercase bg-slate-50 dark:bg-gray-700 dark:text-gray-400">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
                           <th scope="col" className="px-6 py-3">
-                              Primer Nombre
-                          </th>
-                          <th scope="col" className="px-6 py-3">
-                              Segundo Nombre
-                          </th>
-                          <th scope="col" className="px-6 py-3">
-                              Email
+                              Nombre
                           </th>
                           <th scope="col" className="px-6 py-3">
                               Mensaje
@@ -44,25 +38,20 @@ const ToContactList = () => {
                                   className={`border-b  dark:border-gray-600 border-gray-200 hover:bg-gray-50 ${toContact.firstName}`}
                               >
                                   <td className="px-6 py-4 whitespace-no-wrap">
-                                      <Link
-                                          to={`/admin/property/${toContact.id}`}
-                                          className="hover:text-indigo-500"
-                                      >
-                                          {toContact.firstName}
-                                      </Link>
+                                      <div>
+                                          <Link
+                                              to={`/admin/property/${toContact.id}`}
+                                              className="hover:text-indigo-500 text-lg"
+                                          >
+                                              {toContact.firstName}{" "}
+                                              {toContact.lastName}
+                                          </Link>
+                                      </div>
+                                      <p className="text-sm">
+                                          {toContact.email}
+                                      </p>
                                   </td>
-                                  <td className="px-6 py-4 whitespace-no-wrap">
-                                      <Link
-                                          to={`/admin/property/${toContact.id}`}
-                                          className="hover:text-indigo-500"
-                                      >
-                                          {toContact.lastName}
-                                      </Link>
-                                  </td>
-                                  <td className="px-6 py-4 whitespace-no-wrap">
-                                      {toContact.email}
-                                  </td>
-                                  <td className="px-6 py-4 whitespace-no-wrap">
+                                  <td className="px-6 py-4 whitespace-no-wrap truncate">
                                       {toContact.message}
                                   </td>
 
@@ -77,7 +66,7 @@ const ToContactList = () => {
                                       <div className="flex gap-1 ">
                                           <button className=" hover:bg-gray-500 py-1 px-2 rounded hover:text-white text-gray-500 transition duration-200 ease-in-out">
                                               <Link
-                                                  to={`#`}
+                                                  to={`to-contact/${toContact.id}`}
                                                   className="text-xs "
                                               >
                                                   Ver

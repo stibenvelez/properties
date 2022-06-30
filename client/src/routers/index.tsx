@@ -42,6 +42,7 @@ import UserPage from "containers/UserPage/UserPage";
 import PropertyDetailAdmin from "containers/PropertyDetailAdminPage/PropertyDetailAdminPage";
 import EditPropertyPage from "containers/EditPropertyPage/EditPropertyPage";
 import UpdateUserPage from "containers/UpdateUserPage/UpdateUserPage";
+import ToContactListPage from "containers/ToContactListPage/ToContactListPage";
 import ToContactPage from "containers/ToContactPage/ToContactPage";
 
 export const pages: Page[] = [
@@ -163,6 +164,11 @@ const Routes = () => {
                 />
                 <PrivateRoute
                     path="/admin/to-contact"
+                    exact
+                    component={ToContactListPage}
+                />
+                <PrivateRoute
+                    path="/admin/to-contact/:id"
                     exact
                     component={ToContactPage}
                 />

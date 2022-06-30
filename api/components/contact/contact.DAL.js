@@ -55,3 +55,17 @@ export const allToContact = async () => {
         throw error;
     }
 }
+
+export const ToContactById = async id => {
+    try {
+        const sql = `
+            SELECT *
+            FROM Contactme
+            WHERE id = ${id}
+            `;
+        const [result] = await connection.query(sql);
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
