@@ -21,7 +21,7 @@ export const allCityesWhitProperties = async (query) => {
     try {
         const filterByOffer = () => {
             if (query.offer) {
-                return `AND c.offer = '${query.offer}'`;
+                return `AND offer = '${query.offer}'`;
             }
             return '';
         }

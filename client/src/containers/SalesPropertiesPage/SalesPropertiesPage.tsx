@@ -31,6 +31,7 @@ const SalesPropertiesPage: FC<ListingStayPageProps> = ({ className = "" }) => {
     };
 
     let category = location.pathname.split("/")[1];
+
     const categoryProperty: any = CATEGORY[category];
 
     useEffect(() => {
@@ -38,7 +39,8 @@ const SalesPropertiesPage: FC<ListingStayPageProps> = ({ className = "" }) => {
     }, [debouncedFilters]);
 
     useEffect(() => {
-        (() => dispatch(fetchAllCitieswhitPropetiesAction(categoryProperty)))();
+        (() =>
+            dispatch(fetchAllCitieswhitPropetiesAction(CATEGORY[category])))();
     }, []);
 
     return (

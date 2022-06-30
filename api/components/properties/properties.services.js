@@ -144,16 +144,17 @@ export const getPropertyByReferenceService = async (req, res) => {
     const { reference } = req.params;
     try {
         const [property] = await propertyByReference(reference);
-        console.log(property);
-        delete property.createdAt;
-        delete property.updateAt;
-        delete property.createBy;
-        delete property.image1;
-        delete property.image2;
-        delete property.image3;
-        delete property.image4;
-        delete property.image5;
-        delete property.image6;
+        if (property) {
+            delete property.createdAt;
+            delete property.updateAt;
+            delete property.createBy;
+            delete property.image1;
+            delete property.image2;
+            delete property.image3;
+            delete property.image4;
+            delete property.image5;
+            delete property.image6;
+        }
         return property;
     } catch (error) {
         throw error;
