@@ -23,8 +23,8 @@ const COLUMNS_REQUIRED = [
     "contactName",
     "contactEmail",
     "contactPhone",
+    "contactCellphone",
     "antiquityYears",
-    "published",
     "lastAdminprice",
     "neighborhood",
     "propertyTypeId",
@@ -40,15 +40,15 @@ const COLUMNS_REQUIRED = [
     "remodelation",
     "latitude",
     "longitude",
-    "city",
-    "contact",
+    "saleOff",
+    "cityId",
+    "stateId",
     "image1",
     "image2",
     "image3",
     "image4",
     "image5",
     "image6",
-    "saleOff",
 ];
 
 const FIELDS_REQUIRED = [
@@ -56,7 +56,7 @@ const FIELDS_REQUIRED = [
     "description",
     "price",
     "address",
-    "city",
+    "cityId",
     "propertyTypeId",
     "offerId",
 ];
@@ -258,6 +258,7 @@ export const updatePropertyService = async (req, res) => {
     } catch (error) {
         throw error;
     }
+    
     
 };
 

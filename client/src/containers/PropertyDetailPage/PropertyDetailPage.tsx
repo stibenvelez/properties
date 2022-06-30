@@ -163,7 +163,7 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                 <h2 className="text-2xl font-semibold">Descripción</h2>
                 <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
                 <div className="text-neutral-6000 dark:text-neutral-300">
-                    sdfgdfgdfg <span>{property.description}</span>
+                    <span>{property.description}</span>
                 </div>
             </div>
         );

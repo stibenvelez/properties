@@ -124,7 +124,7 @@ export const uploadPropertiescsvAction = (file) => async (dispatch) => {
 
     try {
         const res = await clientAxios.post(
-            "/properties/upload/properties",
+            "/admin/properties/upload/properties",
             file
         );
         Swal.fire(

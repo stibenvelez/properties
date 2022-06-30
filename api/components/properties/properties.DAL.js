@@ -265,6 +265,7 @@ export const insertProperty = async (property) => {
 };
 
 export const importPorperties = async (properties) => {
+    console.log(properties);
     try {
         await connection.query("START TRANSACTION");
         const sql = `
@@ -295,8 +296,8 @@ export const importPorperties = async (properties) => {
                 remodelation,
                 latitude,
                 longitude,
-                city,
-                contact, 
+                cityId,
+                stateId,
                 image1,
                 image2, 
                 image3,
@@ -311,6 +312,7 @@ export const importPorperties = async (properties) => {
         const result = await connection.query(`COMMIT`);
         return result;
     } catch (error) {
+
         await connection.query("ROLLBACK");
 
         if (error.code === "ER_BAD_FIELD_ERROR") {
@@ -321,8 +323,9 @@ export const importPorperties = async (properties) => {
         }
 
         if (error.code === "ER_DUP_ENTRY") {
+            
             throw {
-                msg: "Error con el archivo",
+                msg: "Datos duplicados",
                 text: "El archivo contiene referencias duplicadas",
             };
         }
