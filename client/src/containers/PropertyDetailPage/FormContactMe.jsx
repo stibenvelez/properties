@@ -48,13 +48,19 @@ const FormContactMe = ({ property, setIsOpen }) => {
     }, [isContactSent]);
 
     return (
-        <div className="p-2">
+        <div className="lg:p-2 w-full p-2">
             <form onSubmit={handleSubmit}>
                 <div className="space-y-4">
                     <di className="grid lg:grid-cols-2 gap-2 ">
                         <div className="w-full">
-                            <label htmlFor="firtName">Primer Nombre</label>
+                            <label
+                                className="dark:text-white"
+                                htmlFor="firtName"
+                            >
+                                Primer Nombre
+                            </label>
                             <Input
+                            className="dark:text-white"
                                 name="firstName"
                                 id="firstName"
                                 type="text"
@@ -69,8 +75,14 @@ const FormContactMe = ({ property, setIsOpen }) => {
                             )}
                         </div>
                         <div className="w-full">
-                            <label htmlFor="lastName">Primer apellido</label>
+                            <label
+                                className="dark:text-white"
+                                htmlFor="lastName"
+                            >
+                                Primer apellido
+                            </label>
                             <Input
+                            className="dark:text-white"
                                 name="lastName"
                                 id="lastName"
                                 type="text"
@@ -87,8 +99,11 @@ const FormContactMe = ({ property, setIsOpen }) => {
                     </di>
                     <di className="flex gap-2">
                         <div className="w-full">
-                            <label htmlFor="email">Email</label>
+                            <label className="dark:text-white" htmlFor="email">
+                                Email
+                            </label>
                             <Input
+                            className="dark:text-white"
                                 type={"email"}
                                 name="email"
                                 id="email"
@@ -104,8 +119,11 @@ const FormContactMe = ({ property, setIsOpen }) => {
                         </div>
                     </di>
                     <div>
-                        <label htmlFor="message">Mensaje</label>
+                        <label className="dark:text-white" htmlFor="message">
+                            Mensaje
+                        </label>
                         <Textarea
+                            className="dark:text-white"
                             name="message"
                             id="message"
                             placeholder={`Saludos, estoy interesado en el apartamento con referencia ${property.reference}. Quiero recibir más información, ¡gracias!`}
@@ -113,7 +131,7 @@ const FormContactMe = ({ property, setIsOpen }) => {
                             onChange={handleChange}
                         />
                     </div>
-                    <div className="py-2 flex justify-center items-center gap-2">
+                    <div className="flex justify-center items-center gap-2">
                         <ButtonPrimary>
                             {loading ? (
                                 <div className="flex gap-2 items-center">
