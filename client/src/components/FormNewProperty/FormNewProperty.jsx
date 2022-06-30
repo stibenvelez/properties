@@ -21,7 +21,6 @@ import { createPropertyAdapter } from "adapters/property.adapter";
 import Textarea from "shared/Textarea/Textarea";
 import { useHistory } from "react-router-dom";
 
-
 const FormNewProperty = () => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -61,7 +60,7 @@ const FormNewProperty = () => {
         };
         getDepartaments();
     }, []);
-    
+
     useMemo(() => {
         const getCities = async () => {
             const response = await clientAxios.get("/cities");
@@ -80,9 +79,10 @@ const FormNewProperty = () => {
                     return false;
                 }
                 const res = await clientAxios.get(
-                    `properties?reference=${newProperty.reference}`
+                    `admin/properties/reference/${newProperty.reference}`
                 );
-                if (res.data.results.length > 0) {
+
+                if (Object.keys(res.data).length > 0) {
                     setErrors({
                         ...errors,
                         reference: "La referencia ya existe",
@@ -95,7 +95,10 @@ const FormNewProperty = () => {
                     reference: "",
                 });
             } catch (error) {
-                console.log(error);
+                setErrors({
+                    ...errors,
+                    reference: "",
+                });
             }
         })();
     }, [newProperty.reference]);

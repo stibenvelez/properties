@@ -1,3 +1,4 @@
+import { createUserAdapter } from "adapters/user.adapter";
 import SpinnerButton from "components/SpinnerButton/SpinnerButton";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -5,59 +6,34 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Card from "shared/Card";
 import Input from "shared/Input/Input";
 import Select from "shared/Select/Select";
-import { createUserAction } from "store/slice/user/userActions";
-
-const USER_INITIAL_STATE = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    passwordConfirm: "",
-};
+import { createUserAction, readUserAction } from "store/slice/user/userActions";
+import { validateForm } from "./utils/formValidation"
 
 const FormCreateUser = () => {
     const dispatch = useDispatch();
-    const [user, setUser] = useState(USER_INITIAL_STATE);
     const [errors, setErrors] = useState({});
 
-    const { loading } = useSelector(({ users }) => users);
+    const { loading, newUser } = useSelector(({ users }) => users);
     const { role } = useSelector(({ auth }) => auth.user);
 
-    const validateForm = () => {
-        let errors = {};
-        if (user.firstName === "") errors.firstname = "El nombre es requerido";
-        if (user.lastName === "") errors.lastname = "El apellido es requerido";
-        if (user.email === "") errors.email = "El email es requerido";
-        if (user.password === "")
-            errors.password = "La contraseña es requerida";
-        if (user.passwordConfirm === "")
-            errors.passwordConfirm =
-                "La confirmación de la contraseña es requerida";
-        if (user.password !== user.passwordConfirm)
-            errors.passwordConfirm = "Las contraseñas no coinciden";
-        if (user.rol !== user.rol) errors.rol = "El rol es requerido";
-
-        if (Object.keys(errors).length > 0) {
-            setErrors(errors);
-            return true;
-        }
-        setErrors(errors);
-        return false;
-    };
-
     const handleChange = (e) => {
-        setUser({
-            ...user,
-            [e.target.name]: e.target.value,
-        });
+        dispatch(
+            readUserAction({
+                ...newUser,
+                [e.target.name]: e.target.value,
+            })
+        );
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const Errors = validateForm();
-        if (Errors) return false;
-        dispatch(createUserAction(user));
-        //setUser(USER_INITIAL_STATE);
+        const Errors = await validateForm(newUser);
+        console.log(Errors);
+        if (Object.keys(Errors).length > 0) {
+            setErrors(Errors);
+            return
+        }
+        dispatch(createUserAction(createUserAdapter(newUser)));
     };
 
     if (role !== "admin") {
@@ -81,12 +57,12 @@ const FormCreateUser = () => {
                             placeholder="Ingrese un primer nombre"
                             className="mt-1"
                             name="firstName"
-                            value={user.firstName}
+                            value={newUser.firstName}
                             onChange={handleChange}
                         />
-                        {errors.firstName && user.firstName === "" && (
+                        {errors.firstName && (
                             <p className="text-sm text-red-500">
-                                {errors.firstname}
+                                {errors.firstName}
                             </p>
                         )}
                     </label>
@@ -99,10 +75,10 @@ const FormCreateUser = () => {
                             placeholder="Ingrese un apellido"
                             className="mt-1"
                             name="lastName"
-                            value={user.lastName}
+                            value={newUser.lastName}
                             onChange={handleChange}
                         />
-                        {errors.lastName && user.lastName === "" && (
+                        {errors.lastName && newUser.lastName === "" && (
                             <p className="text-sm text-red-500">
                                 {errors.lastName}
                             </p>
@@ -119,11 +95,11 @@ const FormCreateUser = () => {
                         className="mt-1"
                         name="email"
                         autoComplete="email"
-                        value={user.email}
+                        value={newUser.email}
                         onChange={handleChange}
                         required
                     />
-                    {errors.email && user.email === "" && (
+                    {errors.email && newUser.email === "" && (
                         <p className="text-sm text-red-500"> {errors.email}</p>
                     )}
                 </label>
@@ -133,7 +109,7 @@ const FormCreateUser = () => {
                     </span>
                     <Select
                         name="role"
-                        value={user.role}
+                        value={newUser.role}
                         onChange={handleChange}
                     >
                         <option value="">Seleccione</option>
@@ -141,7 +117,7 @@ const FormCreateUser = () => {
                         <option value="2">Encargado</option>
                         <option value="3">Asesor</option>
                     </Select>
-                    {errors.role && user.role === "" && (
+                    {errors.role && newUser.role === "" && (
                         <p className="text-sm text-red-500"> {errors.role}</p>
                     )}
                 </label>
@@ -153,10 +129,10 @@ const FormCreateUser = () => {
                         type="password"
                         className="mt-1"
                         name="password"
-                        value={user.password}
+                        value={newUser.password}
                         onChange={handleChange}
                     />
-                    {errors.password && user.password === "" && (
+                    {errors.password && newUser.password === "" && (
                         <p className="text-sm text-red-500">
                             {errors.password}
                         </p>
@@ -170,14 +146,15 @@ const FormCreateUser = () => {
                         type="password"
                         className="mt-1"
                         name="passwordConfirm"
-                        value={user.passwordConfirm}
+                        value={newUser.passwordConfirm}
                         onChange={handleChange}
                     />
-                    {errors.passwordConfirm && user.passwordConfirm === "" && (
-                        <p className="text-sm text-red-500">
-                            {errors.passwordConfirm}
-                        </p>
-                    )}
+                    {errors.passwordConfirm &&
+                        newUser.passwordConfirm !== newUser.password && (
+                            <p className="text-sm text-red-500">
+                                {errors.passwordConfirm}
+                            </p>
+                        )}
                 </label>
                 <ButtonPrimary className="flex gap-2" type="submit">
                     {loading ? (

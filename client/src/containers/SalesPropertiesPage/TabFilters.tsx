@@ -441,7 +441,7 @@ const TabFilters = () => {
                                             <Range
                                                 className="text-red-400"
                                                 min={0}
-                                                max={maxPrice}
+                                                max={maxPrice || 1000000000}
                                                 defaultValue={[
                                                     filters?.rangePrices[0],
                                                     filters?.rangePrices[1],
@@ -453,7 +453,7 @@ const TabFilters = () => {
                                                         value,
                                                     });
                                                 }}
-                                                step={maxPrice / 100}
+                                                step={maxPrice / 100 || 1000}
                                             />
                                         </div>
 
@@ -697,7 +697,7 @@ const TabFilters = () => {
                                                         <Range
                                                             className="text-red-400"
                                                             min={0}
-                                                            max={1000000000}
+                                                            max={maxPrice || 1000000000}
                                                             defaultValue={[
                                                                 filters
                                                                     ?.rangePrices[0],
@@ -713,7 +713,7 @@ const TabFilters = () => {
                                                                     value,
                                                                 });
                                                             }}
-                                                            step={10000000}
+                                                            step={maxPrice / 100 || 1000}
                                                         />
                                                     </div>
 

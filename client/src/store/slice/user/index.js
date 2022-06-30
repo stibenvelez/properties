@@ -5,6 +5,14 @@ const initialState = {
     user: {},
     error: false,
     loading: false,
+    newUser: {
+        firstName: "",
+        lastName: "",
+        role: "",
+        email: "",
+        password: "",
+        passwordConfirm: "",
+    },
 };
 
 export const userSlice = createSlice({
@@ -16,6 +24,7 @@ export const userSlice = createSlice({
         },
         setCreateUserSucces: (state, action) => {
             state.loading = false;
+                        state.newUser = initialState.newUser;
         },
         setCreateUserError: (state) => {
             state.loading = false;
@@ -30,7 +39,7 @@ export const userSlice = createSlice({
         setGetUsersError: (state, action) => {
             state.loading = false;
             state.message = action.payload;
-            state.error = true
+            state.error = true;
         },
         setGetUser: (state) => {
             state.loading = true;
@@ -43,7 +52,7 @@ export const userSlice = createSlice({
         setGetUserError: (state, action) => {
             state.loading = false;
             state.message = action.payload;
-            state.error = true
+            state.error = true;
         },
         setUpdateUser: (state) => {
             state.loading = true;
@@ -54,7 +63,7 @@ export const userSlice = createSlice({
         setUpdateUserError: (state, action) => {
             state.loading = false;
             state.message = action.payload;
-            state.error = true
+            state.error = true;
         },
         setDeleteUser: (state) => {
             state.loading = true;
@@ -65,9 +74,11 @@ export const userSlice = createSlice({
         setDeleteUserError: (state, action) => {
             state.loading = false;
             state.message = action.payload;
-            state.error = true
-        }
-
+            state.error = true;
+        },
+        setReadUser: (state, action) => {
+            state.newUser = action.payload;
+        },
     },
 });
 
@@ -87,6 +98,7 @@ export const {
     setDeleteUser,
     setDeleteUserSucces,
     setDeleteUserError,
+    setReadUser,
 } = userSlice.actions;
 
 export default userSlice.reducer;

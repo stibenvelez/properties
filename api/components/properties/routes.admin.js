@@ -11,11 +11,12 @@ import {
     importImagesProperties,
     importProperties,
     deleteProperty,
+    getPropertyByReference,
 } from "./properties.controller.js";
 const router = express.Router();
 
 router.get("/", checkAuth, getPropertiesByUser);
-
+router.get("/reference/:reference", checkAuth, getPropertyByReference);
 router.post("/", checkAuth, uploadImagesProperty, addNewProperty);
 router
     .route("/:id")

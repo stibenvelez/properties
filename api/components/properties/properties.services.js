@@ -7,6 +7,7 @@ import {
     minMaxPrice,
     propertyById,
     propertyByIdByUserId,
+    propertyByReference,
     uploadProperty,
 } from "./properties.DAL.js";
 import csvtojson from "csvtojson";
@@ -71,7 +72,7 @@ const IMAGES_ALLOWED = [
 
 export const getAllPropertiesService = async (query) => {
     const [rows] = await allProperties(query);
-    const [minMax]= await minMaxPrice(query);
+    const [minMax] = await minMaxPrice(query);
     const addGalleryImgs = rows.map((property) => {
         let galleryImgs = [];
 
@@ -97,7 +98,7 @@ export const getAllPropertiesService = async (query) => {
             ...property,
             galleryImgs,
         };
-    });  
+    });
     const dataPropeties = {
         results: addGalleryImgs,
         count: rows.length,
@@ -133,6 +134,26 @@ export const getPropertyByIdService = async (id) => {
             lastName: user.lastName,
             email: user.email,
         };
+        return property;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getPropertyByReferenceService = async (req, res) => {
+    const { reference } = req.params;
+    try {
+        const [property] = await propertyByReference(reference);
+        console.log(property);
+        delete property.createdAt;
+        delete property.updateAt;
+        delete property.createBy;
+        delete property.image1;
+        delete property.image2;
+        delete property.image3;
+        delete property.image4;
+        delete property.image5;
+        delete property.image6;
         return property;
     } catch (error) {
         throw error;
@@ -185,9 +206,10 @@ export const getPropertyByIdByUserIdService = async (req, res) => {
 export const updatePropertyService = async (req, res) => {
     const { id } = req.params;
     const [property] = await propertyById(id);
+    console.log(property);
     const files = req.files;
     const body = req.body;
-
+    
     if (!property) {
         return res.status(404).json({
             status: "error",
@@ -235,6 +257,7 @@ export const updatePropertyService = async (req, res) => {
     } catch (error) {
         throw error;
     }
+    
 };
 
 export const addNewPropertyService = async (body, files, user) => {

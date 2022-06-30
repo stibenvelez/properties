@@ -98,11 +98,12 @@ export const propertyById = async (id) => {
         FROM Properties AS p
         LEFT JOIN PropertyTypes AS pt ON pt.propertyTypeId = p.propertyTypeId
         LEFT JOIN Offer AS o ON p.offerId = o.offerId
-        INNER JOIN Cities AS c ON c.cod = p.cityId
-        INNER JOIN StatesProperty AS sp ON sp.stateId = p.stateId
+        LEFT JOIN Cities AS c ON c.cod = p.cityId
+        LEFT JOIN StatesProperty AS sp ON sp.stateId = p.stateId
         WHERE p.idProperty = ${id}          
         `;
         const [property] = await connection.query(sql);
+        console.log('dal',property);
         return property;
     } catch (error) {
         throw error;
@@ -154,6 +155,20 @@ export const propertyByIdByUserId = async (id, user) => {
 
         const [rows] = await connection.query(sql);
         console.log(rows);
+        return rows;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const propertyByReference = async (reference) => {
+    try {
+        const sql = `
+        SELECT p.reference, p.stateId
+        FROM Properties AS p
+        WHERE p.reference = '${reference}'
+        `;
+        const [rows] = await connection.query(sql);
         return rows;
     } catch (error) {
         throw error;
@@ -431,7 +446,6 @@ export const deleteProperty = async (property) => {
 };
 
 export const minMaxPrice = async ({ category }) => {
-
     const filterByOffer = () => {
         if (category) {
             return `WHERE o.offer = '${category}'`;
@@ -447,7 +461,7 @@ export const minMaxPrice = async ({ category }) => {
 
         `;
         const [rows] = await connection.query(sql);
-        return rows
+        return rows;
     } catch (error) {
         throw error;
     }

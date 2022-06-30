@@ -12,6 +12,7 @@ import {
     setGetUsersError,
     setGetUsersSucces,
     setGetUserSucces,
+    setReadUser,
     setUpdateUser,
     setUpdateUserError,
     setUpdateUserSucces,
@@ -136,4 +137,8 @@ export const deleteUserAction = (id) => async (dispatch) => {
             confirmButtonText: "Ok",
         });
     }
+}
+
+export const readUserAction = (user) => async (dispatch) => {
+    dispatch(setReadUser(user));
 }

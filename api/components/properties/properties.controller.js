@@ -8,6 +8,7 @@ import {
     getPropertyByIdByUserIdService,
     updatePropertyService,
     deletePropertyService,
+    getPropertyByReferenceService,
 } from "./properties.services.js";
 
 export const getAllProperties = async (req, res) => {
@@ -90,8 +91,7 @@ export const getPropertyByIdByUserId = async (req, res) => {
 
 export const updateProperty = async (req, res) => {
     try {
-        await updatePropertyService(req, res);
-        
+        await updatePropertyService(req, res);        
         res.json("Propiedad actualizada");
     } catch (error) {
         console.log(error);
@@ -106,5 +106,14 @@ export const deleteProperty = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(400).json({ msg: "error al eliminar la propiedad" });
+    }
+};
+export const getPropertyByReference = async (req, res) => {
+    try {
+        const property = await getPropertyByReferenceService(req, res);
+        res.json(property);
+    } catch (error) {
+        console.log(error);
+        res.json({});
     }
 };
