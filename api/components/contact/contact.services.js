@@ -1,4 +1,4 @@
-import {  insertContactMe } from "./contact.DAL.js";
+import {  allToContact, insertContactMe } from "./contact.DAL.js";
 
 export const contactMeServices = async (contact) => {
     try {
@@ -8,3 +8,11 @@ export const contactMeServices = async (contact) => {
         throw error;
     }
 };
+
+export const getToContactServices = async () => {
+    try {
+        return await allToContact();
+    } catch (error) {
+        throw error;
+    }
+}

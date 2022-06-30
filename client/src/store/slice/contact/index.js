@@ -23,7 +23,18 @@ export const contactSlice = createSlice({
         },
         resetIsSent: (state) => {
             state.isContactSent = false;
+        },
+        setGetToContact: (state) => {
+            state.loading = true;
+        },
+        setGetToContactSuccess: (state, action) => {
+            state.loading = false;
+            state.toContactList = action.payload;
+        },
+        setGetToContactError: (state) => {
+            state.loading = false;
         }
+
     },
 });
 
@@ -31,7 +42,11 @@ export const {
     setContactMe,
     setContactMeSucces,
     setContactMeError,
-    resetIsSent
+    resetIsSent,
+    setGetToContact,
+    setGetToContactSuccess,
+    setGetToContactError,
+    
 } = contactSlice.actions;
 
 export default contactSlice.reducer;

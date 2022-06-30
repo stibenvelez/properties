@@ -41,3 +41,17 @@ export const insertContactMe = async (contact) => {
         throw error;
     }
 };
+
+export const allToContact = async () => {
+    try {
+        const sql = `
+            SELECT *
+            FROM Contactme
+            ORDER BY id DESC
+            `;
+        const [result] = await connection.query(sql);
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}

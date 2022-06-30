@@ -22,6 +22,22 @@ export const SidebarData = [
         ],
     },
     {
+        title: "Contactos",
+        path: "#",
+        icon: null,
+        iconClosed: null,
+        iconOpened: null,
+
+        subNav: [
+            {
+                title: "Contactame",
+                path: "/admin/to-contact",
+                icon: null,
+                cName: "sub-nav",
+            },
+        ],
+    },
+    {
         title: "Config",
         path: "#",
         icon: null,
@@ -35,6 +51,6 @@ export const SidebarData = [
                 icon: null,
                 onlyAdmin: true,
             },
-        ]
+        ],
     },
 ];
