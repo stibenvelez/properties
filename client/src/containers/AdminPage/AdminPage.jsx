@@ -16,7 +16,7 @@ const AdminPage = () => {
                         </h2>
                         <div className="mb-4">
                             <p className="text-sm text-gray-700 dark:text-white">
-                                Importe las propiedades por mediod e un archivo
+                                Importe las propiedades por medio de un archivo
                                 en formato csv.
                                 <br />
                                 Algunas consideraciones: <br />
@@ -24,13 +24,18 @@ const AdminPage = () => {
                                 título, descripción, precio y ciudad son
                                 obligatorias.
                                 <br />
-                                <strong>2.</strong> Las imagenes para cada
-                                propiedad se importan a parte, permite maximo 6
-                                imagenes para mostrar. Puede activar la cantidad
-                                que requiera con el numero uno en cad auna de
-                                las columnas de imagenes.
+                                <strong>2.</strong> Las imágenes para cada
+                                propiedad se importan aparte, permite máximo 6
+                                imágenes para mostrar. Indique el nombre de cada
+                                archivo incluyendo el formato. por ejemplo{" "}
+                                <strong>
+                                    Apartamento-medellin-imagen1.jpg
+                                </strong>
+                                . De esta forma en cada columna. Recuerde que
+                                las imágenes que vaya a importar después deben
+                                coincidir
                                 <br />
-                                Puede descargar la plantilla en el siguinete
+                                Puede descargar la plantilla en el siguiente
                                 link:{" "}
                             </p>
                             <a
@@ -50,14 +55,9 @@ const AdminPage = () => {
                             <p className="text-sm text-gray-700 dark:text-gray-50">
                                 Una vez las propiedades estén en la base de
                                 datos, puede importar las imagenes en formato{" "}
-                                <strong>jpg</strong> para cada una de estas. Las
-                                imagenes se relacionan mediante la referencia de
-                                la propiedad seguido de la palabra imagen y el
-                                numero de la imagen. <br /> Ejemplo: Para
-                                importar las imagenes a la propiedad con
-                                referencia R00001, las imagenes tendrian como
-                                nombre el siguiente: R00001-imagen1.jpg,
-                                R00001-imagen2.jpg, R00001-imagen3.jpg.
+                                <strong>jpg</strong> Las imágenes deben tener el
+                                mismo nombre con el que se registro en la base
+                                de datos.
                                 <br />
                                 Recuerde, solo se admite formato jpg.
                             </p>

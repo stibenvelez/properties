@@ -19,7 +19,10 @@ const FormUploadCSV = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            if (!file) {
+            if (
+                !file ||
+                file.type !== "text/csv" 
+            ) {
                 Swal.fire({
                     title: "Seleccione un archivo",
                     text: "Debe seleccionar un archivo formato .csv",
@@ -29,7 +32,6 @@ const FormUploadCSV = () => {
             }
             const data = new FormData();
             data.append("file", file);
-
             dispatch(uploadPropertiescsvAction(data));
         } catch (error) {
             console.log(error);
@@ -69,10 +71,14 @@ const FormUploadCSV = () => {
                                 response.errors.map((error) => (
                                     <div className="flex flex-col gap-2 p-2 ">
                                         <div className="flex gap-2">
-                                            <label className="font-bold">
-                                                Referencia:
-                                            </label>
-                                            <p>{error?.reference}</p>
+                                            {error?.reference && (
+                                                <>
+                                                    <label className="font-bold">
+                                                        Referencia:
+                                                    </label>
+                                                    <p>{error?.reference}</p>
+                                                </>
+                                            )}
                                         </div>
                                         <div className="flex gap-2">
                                             <label className="font-bold">
