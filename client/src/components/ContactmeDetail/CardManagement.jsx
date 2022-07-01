@@ -1,10 +1,44 @@
-import React from 'react'
-import Card from 'shared/Card';
+import { PhoneMissedCallIcon, XCircleIcon, XIcon } from '@heroicons/react/outline';
+import { CheckCircleIcon, MinusCircleIcon } from '@heroicons/react/solid';
+import { formatDate, formatDateTime } from 'helpers/formatDate';
 
-const CardManagement = ({management}) => {
+const STATES_CARD = {
+    "Sin contactar": {
+        style: "bg-yellow-200",
+        icon: <MinusCircleIcon />,
+    },
+    "Contactado": {
+        style: "bg-green-200",
+        icon: <CheckCircleIcon />,
+    },
+    "No responde": {
+        style: "bg-red-200",
+        icon: <PhoneMissedCallIcon />,
+    },
+    "Descartado": {
+        style: "bg-gray-200",
+        icon: <XCircleIcon />,
+
+    }
+};
+        
+
+const CardManagement = ({ management }) => {
+    console.log(management);
     return (
-        <div className={`bg-green-100 roun shadow py-2 px-3`}>
-            <p>{management.observations}</p>
+        <div
+            className={`bg-green-100 roun shadow py-2 px-3 min-h-[40px] flex gap-2 items-center ${
+                STATES_CARD[management.state].style
+            }`}
+        >
+            <div className="h-6 w-6">{STATES_CARD[management.state].icon}</div>
+            <div>
+                <p className="text-sm font-bold">{management.state}</p>
+                <p className="text-sm">{management.observations}</p>
+                <p className="text-xs">
+                    {formatDateTime (management.updatedAt)}
+                </p>
+            </div>
         </div>
     );
 };

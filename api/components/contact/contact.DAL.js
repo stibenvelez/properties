@@ -74,12 +74,43 @@ export const ToContactById = async id => {
 export const allContactManagement = async id => {
     try {
         const sql = `
-            SELECT *
+            SELECT cm.*, sc.state
             FROM ContactManagement AS cm
+            INNER JOIN StatesContact AS sc ON cm.idStateContact  = sc.stateId
             WHERE cm.contactMeId  = ${id}
-
+            ORDER BY createdAt ASC
             `;
         const [result] = await connection.query(sql);
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const insertContactManagement = async (contactManagement) => {
+    try {
+        const sql = `
+            INSERT INTO ContactManagement (
+                idStateContact,
+                observations,
+                managedBy,
+                contactMeId
+            )
+            VALUES (
+                ?,
+                ?,
+                ?,
+                ?
+            )
+
+                `;
+        const values = [
+            contactManagement.state,
+            contactManagement.observations,
+            contactManagement.managedBy,
+            contactManagement.id,
+        ];
+        const [result] = await connection.query(sql, values);
         return result;
     } catch (error) {
         throw error;

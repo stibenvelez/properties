@@ -5,6 +5,9 @@ import {
     setContactMe,
     setContactMeError,
     setContactMeSucces,
+    setCreateContactManagement,
+    setCreateContactManagementError,
+    setCreateContactManagementSuccess,
     setGetToContact,
     setGetToContactError,
     setGetToContactList,
@@ -52,4 +55,33 @@ export const getToContactAction = (id) => async (dispatch) => {
         console.log(error);
         dispatch(setGetToContactError(error.response.data.msg));
     }
-}
+};
+
+export const createContactManagementAction = (contact) => async (dispatch) => {
+    dispatch(setCreateContactManagement());
+    try {
+        const token = localStorage.getItem("token");
+        let headers = {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+        };
+
+        const response = await clientAxios.post(
+            `/contact/contact-management`,
+            contact,
+            {
+                headers,
+            }
+        );
+        dispatch(setCreateContactManagementSuccess(response.data));
+        Swal.fire({
+            title: "¡Registro exitoso!",
+            text: "Los datos se han registrado con exito",
+            icon: "success",
+        });
+        dispatch(getToContactAction(contact.id));
+    } catch (error) {
+        console.log(error);
+        dispatch(setCreateContactManagementError(error.response.data.msg));
+    }
+};

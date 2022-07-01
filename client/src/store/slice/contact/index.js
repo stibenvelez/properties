@@ -52,6 +52,17 @@ export const contactSlice = createSlice({
             state.error = true;
             state.msg = action.payload;
         },
+        setCreateContactManagement: (state) => {
+            state.loadingCreateContactManagement = true;
+        },
+        setCreateContactManagementSuccess: (state, action) => {
+            state.loadingCreateContactManagement = false;
+        },
+        setCreateContactManagementError: (state, action) => {
+            state.loadingCreateContactManagement = false;
+        }
+
+
     },
 });
 
@@ -66,6 +77,9 @@ export const {
     setGetToContactList,
     setGetToContactListSuccess,
     setGetToContactListError,
+    setCreateContactManagement,
+    setCreateContactManagementSuccess,
+    setCreateContactManagementError,
     
 } = contactSlice.actions;
 

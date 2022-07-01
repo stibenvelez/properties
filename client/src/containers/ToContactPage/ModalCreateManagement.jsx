@@ -23,7 +23,7 @@ const ModalCreateManagement = ({ isOpen, setIsOpen }) => {
                     {/* The actual dialog panel  */}
                     <Dialog.Panel className="mx-auto w-full md:w-[700px] rounded bg-white">
                         <div className="p-8">
-                            <FormUpdateContact />
+                            <FormUpdateContact setIsOpen={setIsOpen} />
                         </div>
                     </Dialog.Panel>
                 </div>

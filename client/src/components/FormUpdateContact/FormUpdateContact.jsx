@@ -1,27 +1,44 @@
 import Label from "components/Label/Label";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Input from "shared/Input/Input";
 import Select from "shared/Select/Select";
 import Textarea from "shared/Textarea/Textarea";
+import { createContactManagementAction } from "store/slice/contact/contact.actions";
+import { validateFormManagement } from "./utils/FormValidation";
 
-const FormUpdateContact = () => {
+const INITIAL_STATE_MANAGEMENT = {
+    observations: "",
+    state: "",
+    id: "",
+};
+
+const FormUpdateContact = ({setIsOpen}) => {
     const { id } = useParams();
-    const [management, setManagement] = useState({});
+    const dispatch = useDispatch();
+    const [management, setManagement] = useState(INITIAL_STATE_MANAGEMENT);
+    const [errors, setErrors] = useState({});
     const { toContact, loading, error, msg } = useSelector(
         ({ contact }) => contact
     );
 
     const handleChange = (e) => {
         setManagement({ ...management, [e.target.name]: e.target.value });
-    }
+    };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("registrando gestion", id);
-    }
-
+        management.id = id;
+        const errors = await validateFormManagement(management);
+        if (Object.keys(errors).length > 0) {
+            setErrors(errors);
+            return
+        }
+        setErrors({});
+        dispatch(createContactManagementAction(management));
+        setIsOpen(false);
+    };
 
     return (
         <div className="">
@@ -35,25 +52,24 @@ const FormUpdateContact = () => {
                         className="mt-1.5"
                         value={management.state}
                         name="state"
-                        
                         onChange={handleChange}
                     >
                         <option value="">Seleccione</option>
-                        <option value="1">Contactado</option>
-                        <option value="2">No Contactado</option>
+                        <option value="1">Sin contactar</option>
+                        <option value="2">Contactado</option>
                         <option value="3">No responde</option>
                         <option value="4">Descartado</option>
                     </Select>
+                    {errors.state && management.state === "" && (
+                        <p className="text-red-500 text-xs">{errors.state}</p>
+                    )}
                 </div>
                 <div className="w-full">
                     <Label>Observaciones</Label>
                     <Textarea
                         className="mt-1.5 w-full"
-                        value={
-                            management.observations 
-                        }
-                        name="observation"
-                        
+                        value={management.observations}
+                        name="observations"
                         onChange={handleChange}
                     />
                 </div>
@@ -66,6 +82,7 @@ const FormUpdateContact = () => {
                         Registrar
                     </button>
                     <button
+                        onClick={() => setIsOpen(false)}
                         type="button"
                         className="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-400"
                     >
