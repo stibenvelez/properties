@@ -48,7 +48,7 @@ export const allToContact = async () => {
             SELECT *
             FROM Contactme
             INNER JOIN StatesContact AS sc ON Contactme.stateId = sc.stateId  
-            ORDER BY id DESC
+            ORDER BY  Contactme.stateId ASC, Contactme.id DESC
             `;
         const [result] = await connection.query(sql);
         return result;
@@ -64,6 +64,7 @@ export const ToContactById = async (id) => {
             FROM Contactme AS c
             INNER JOIN StatesContact AS sc ON c.stateId = sc.stateId
             WHERE id = ${id}
+
             `;
         const [result] = await connection.query(sql);
         return result;

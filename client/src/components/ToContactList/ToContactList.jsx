@@ -3,6 +3,21 @@ import { formatDate, formatDateTime } from "helpers/formatDate";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+const MAP_STATE_CONTACT = {
+    1: {
+        style: "bg-red-100",
+    },
+    2: {
+        style: "bg-green-200",
+    },
+    3: {
+        style: "bg-yellow-100",
+    },
+    4: {
+        style: "bg-gray-100",
+    },
+}
+
 const ToContactList = () => {
     const toContactList = useSelector(({ contact }) => contact.toContactList);
 
@@ -58,7 +73,15 @@ const ToContactList = () => {
                                     {formatDate(toContact.createdAt)}
                                 </td>
                                 <td className="px-6 py-4 whitespace-no-wrap">
-                                    {toContact.state}
+                                    {console.log(MAP_STATE_CONTACT[toContact.stateId].style)}
+                                    <p
+                                        className={`bg-gray-200 py-1 px-2 rounded-full text-xs text-center ${
+                                            MAP_STATE_CONTACT[toContact.stateId]
+                                                .style
+                                        }`}
+                                    >
+                                        {toContact.state}
+                                    </p>
                                 </td>
 
                                 <td className="px-6 py-4 whitespace-no-wrap">
