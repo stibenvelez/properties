@@ -19,50 +19,52 @@ const [modalIsOpen, setModalIsOpen] = useState(false);
     }, []);
 
     return (
-        <div
-            className={`nc-PageAbout overflow-hidden relative `}
-            data-nc-id="PageAbout"
-        >
-            <Helmet>
-                <title>Detalle de contacto</title>
-            </Helmet>
-            <div className="container py-4 space-y-4 lg:py-4 lg:space-y-8">
-                <div className="py-4">
-                    <div>
-                        <h2 className="text-3xl font-semibold">
-                            Detalle de contacto
-                        </h2>
-                        <p>Informacion detallada del prospecto</p>
-                    </div>
-                </div>
-                <div className="flex gap-2 items-center">
-                    <button
-                        onClick={() => history.goBack()}
-                        className="bg-gray-600 text-white py-1 px-4 rounded hover:bg-gray-500"
-                    >
-                        Volver
-                    </button>
-                    <button
-                        onClick={()=>setModalIsOpen(true)}
-                        className="bg-indigo-600 text-white py-1 px-4 rounded hover:bg-indigo-500"
-                    >
-                        Gestionar
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => {}}
-                        className=" text-gray-500 py-1 px-1 rounded hover:text-red-500"
-                    >
-                        <TrashIcon className="h-6 w-6" />
-                    </button>
-                </div>
+        <>
+            <div
+                className={`nc-PageAbout overflow-hidden relative `}
+                data-nc-id="PageAbout"
+            >
                 <ModalCreateManagement
                     isOpen={modalIsOpen}
                     setIsOpen={setModalIsOpen}
                 />
-                <ContactmeDetail />
+                <Helmet>
+                    <title>Detalle de contacto</title>
+                </Helmet>
+                <div className="container py-4 space-y-4 lg:py-4 lg:space-y-8">
+                    <div className="py-4">
+                        <div>
+                            <h2 className="text-3xl font-semibold">
+                                Detalle de contacto
+                            </h2>
+                            <p>Informacion detallada del prospecto</p>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 items-center">
+                        <button
+                            onClick={() => history.goBack()}
+                            className="bg-gray-600 text-white py-1 px-4 rounded hover:bg-gray-500"
+                        >
+                            Volver
+                        </button>
+                        <button
+                            onClick={() => setModalIsOpen(true)}
+                            className="bg-indigo-600 text-white py-1 px-4 rounded hover:bg-indigo-500"
+                        >
+                            Gestionar
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => {}}
+                            className=" text-gray-500 py-1 px-1 rounded hover:text-red-500"
+                        >
+                            <TrashIcon className="h-6 w-6" />
+                        </button>
+                    </div>
+                    <ContactmeDetail />
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

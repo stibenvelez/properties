@@ -9,7 +9,7 @@ const ModalCreateManagement = ({ isOpen, setIsOpen }) => {
     const dispatch = useDispatch();
 
     return (
-        <div >
+        <div className="">
             <Dialog
                 open={isOpen}
                 onClose={() => setIsOpen(false)}
@@ -19,10 +19,10 @@ const ModalCreateManagement = ({ isOpen, setIsOpen }) => {
                 <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
                 {/* Full-screen container to center the panel */}
-                <div className="fixed inset-0 flex items-center justify-center p-4 ">
+                <div className="fixed inset-0  flex items-center justify-center p-4 ">
                     {/* The actual dialog panel  */}
-                    <Dialog.Panel className="mx-auto  rounded bg-white">
-                        <div className="p-8 max-w-[800px] block">
+                    <Dialog.Panel className="mx-auto w-full md:w-[700px] rounded bg-white">
+                        <div className="p-8">
                             <FormUpdateContact />
                         </div>
                     </Dialog.Panel>
@@ -32,4 +32,4 @@ const ModalCreateManagement = ({ isOpen, setIsOpen }) => {
     );
 };
 
-export default ModalCreateManagement
+export default ModalCreateManagement;
