@@ -261,7 +261,7 @@ export const insertProperty = async (property) => {
     }
 };
 
-export const importPorperties = async (properties) => {
+export const importPorperties = async (properties) => {   
     try {
         await connection.query("START TRANSACTION");
         const sql = `
@@ -292,15 +292,17 @@ export const importPorperties = async (properties) => {
                 remodelation,
                 latitude,
                 longitude,
+                saleOff,
                 cityId,
                 stateId,
                 image1,
                 image2, 
                 image3,
                 image4,
-                image5,
+                image5, 
                 image6,
-                saleOff
+                createdBy
+
                 )           
         VALUES ?
         `;
@@ -330,6 +332,7 @@ export const importPorperties = async (properties) => {
             msg: "Error importanto las propiedades",
         };
     }
+    
 };
 
 export const columnsPorperties = async () => {

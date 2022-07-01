@@ -49,6 +49,7 @@ const COLUMNS_REQUIRED = [
     "image4",
     "image5",
     "image6",
+    "createdBy",
 ];
 
 const FIELDS_REQUIRED = [
@@ -59,6 +60,7 @@ const FIELDS_REQUIRED = [
     "cityId",
     "propertyTypeId",
     "offerId",
+    "createdBy",
 ];
 
 const IMAGES_ALLOWED = [
@@ -128,12 +130,13 @@ export const getPropertyByIdService = async (id) => {
 
         property.galleryImgs = galleryImgs;
         const [user] = await findUserById(property.createdBy);
-        property.createBy = {
-            idUser: user.idUser,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-        };
+        property.createBy =
+            {
+                idUser: user?.idUser,
+                firstName: user?.firstName,
+                lastName: user?.lastName,
+                email: user?.email,
+            } || null;
         return property;
     } catch (error) {
         throw error;
@@ -209,7 +212,7 @@ export const updatePropertyService = async (req, res) => {
     const [property] = await propertyById(id);
     const files = req.files;
     const body = req.body;
-    
+
     if (!property) {
         return res.status(404).json({
             status: "error",
@@ -257,8 +260,6 @@ export const updatePropertyService = async (req, res) => {
     } catch (error) {
         throw error;
     }
-    
-    
 };
 
 export const addNewPropertyService = async (body, files, user) => {
@@ -275,6 +276,7 @@ export const addNewPropertyService = async (body, files, user) => {
 };
 
 export const importPopertiesCSVService = async (file) => {
+
     const getProperties = (propertyData) => {
         const properties = propertyData
             .filter((property) => property.title)
@@ -285,10 +287,13 @@ export const importPopertiesCSVService = async (file) => {
     };
 
     const validateColumns = async (data) => {
+        if (data.length === 0) {
+            return false;
+        }
         let [columns] = data
-            .filter((property) => property.title)
-            .map((property) => Object.keys(property));
-
+        .filter((property) => property.title)
+        .map((property) => Object.keys(property));
+        
         let errors = [];
         COLUMNS_REQUIRED.forEach((column) => {
             if (!columns.includes(column)) {
@@ -305,6 +310,8 @@ export const importPopertiesCSVService = async (file) => {
                 errors,
             };
         }
+
+       
     };
 
     const validateRows = async (data) => {
@@ -339,9 +346,9 @@ export const importPopertiesCSVService = async (file) => {
     try {
         const filePath = file.path;
         await validateFormatFile(file);
-
         const dataCSV = await csvtojson().fromFile(filePath);
-        await validateColumns(dataCSV);
+        console.log(dataCSV);
+        await validateColumns(dataCSV);       
         await validateRows(dataCSV);
         const properties = await getProperties(dataCSV);
         await importPorperties(properties);

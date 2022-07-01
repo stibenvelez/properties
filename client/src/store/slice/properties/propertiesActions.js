@@ -148,7 +148,10 @@ export const uploadImagesAction = (files) => async (dispatch) => {
     dispatch(setUploadImages());
 
     try {
-        const res = await clientAxios.post("/properties/upload/images", files);
+        const res = await clientAxios.post(
+            "/admin/properties/upload/images",
+            files
+        );
         Swal.fire(
             res.data.msg,
             "Las imagenes se importaron correctamente",
