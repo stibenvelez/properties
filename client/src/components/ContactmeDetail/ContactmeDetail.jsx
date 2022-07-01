@@ -161,9 +161,17 @@ const ContactmeDetail = () => {
                 
             </Card> */}
             <div className="grid gap-2">
-                <CardManagement management={toContact.management}/>
-                <CardManagement management={toContact.management}/>
-                <CardManagement management={toContact.management}/>
+                {toContact.management && toContact.management.length > 0 ? (
+                    toContact.management.map((management, index) => (
+                        <CardManagement management={management} />
+                    ))
+                ) : (
+                    <div className="w-full">
+                        <p className="text-center text-gray-700">
+                            No hay gestiones
+                        </p>
+                    </div>
+                )}
             </div>
         </>
     );
