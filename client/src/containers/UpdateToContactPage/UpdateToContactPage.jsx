@@ -1,5 +1,6 @@
 import { TrashIcon } from "@heroicons/react/solid";
 import ContactmeDetail from "components/ContactmeDetail/ContactmeDetail";
+import FormUpdateContact from "components/FormUpdateContact/FormUpdateContact";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
@@ -49,7 +50,7 @@ const UpdateToContactPage = () => {
                         <TrashIcon className="h-6 w-6" />
                     </button>
                 </div>
-                <ContactmeDetail />
+                <FormUpdateContact/>
             </div>
         </div>
     );

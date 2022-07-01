@@ -1,16 +1,17 @@
 import { TrashIcon } from "@heroicons/react/solid";
 import ContactmeDetail from "components/ContactmeDetail/ContactmeDetail";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { getToContactAction } from "store/slice/contact/contact.actions";
+import ModalCreateManagement from "./ModalCreateManagement";
 
 const ToContactPage = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const params = useParams();
-
+const [modalIsOpen, setModalIsOpen] = useState(false);
     useEffect(() => {
         (() => {
             dispatch(getToContactAction(params.id));
@@ -41,20 +42,24 @@ const ToContactPage = () => {
                     >
                         Volver
                     </button>
-                    <Link
-                        to={`/admin/update-to-contact/${params.id}`}
+                    <button
+                        onClick={()=>setModalIsOpen(true)}
                         className="bg-indigo-600 text-white py-1 px-4 rounded hover:bg-indigo-500"
                     >
                         Gestionar
-                    </Link>
+                    </button>
                     <button
                         type="button"
-                        onClick={() => console.log("descartando contacto")}
+                        onClick={() => {}}
                         className=" text-gray-500 py-1 px-1 rounded hover:text-red-500"
                     >
                         <TrashIcon className="h-6 w-6" />
                     </button>
                 </div>
+                <ModalCreateManagement
+                    isOpen={modalIsOpen}
+                    setIsOpen={setModalIsOpen}
+                />
                 <ContactmeDetail />
             </div>
         </div>

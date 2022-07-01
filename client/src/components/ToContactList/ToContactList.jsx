@@ -1,4 +1,5 @@
 import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
+import { formatDate, formatDateTime } from 'helpers/formatDate';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -56,7 +57,7 @@ const ToContactList = () => {
                                   </td>
 
                                   <td className="px-6 py-4 whitespace-no-wrap">
-                                      {toContact.createdAt}
+                                      {formatDate(toContact.createdAt)}
                                   </td>
                                   <td className="px-6 py-4 whitespace-no-wrap">
                                       {toContact.state}
