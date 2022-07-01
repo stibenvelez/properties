@@ -36,7 +36,7 @@ const ToContactList = () => {
                         toContactList.map((toContact, index) => (
                             <tr
                                 key={index}
-                                className={`border-b  dark:border-gray-600 border-gray-200 hover:bg-gray-50 ${toContact.firstName}`}
+                                className={`border-b  dark:border-gray-600 border-gray-200 dark:hover:bg-slate-700 hover:bg-gray-50 ${toContact.firstName}`}
                             >
                                 <td className="px-6 py-4 whitespace-no-wrap">
                                     <div>
@@ -70,7 +70,6 @@ const ToContactList = () => {
                                                 rounded hover:text-white
                                                 text-gray-500 transition
                                                 duration-200 ease-in-out"
-                                            
                                         >
                                             Ver
                                         </Link>

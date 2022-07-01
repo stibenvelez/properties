@@ -2,7 +2,6 @@ import Label from "components/Label/Label";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Input from "shared/Input/Input";
 import Select from "shared/Select/Select";
 import Textarea from "shared/Textarea/Textarea";
 import { createContactManagementAction } from "store/slice/contact/contact.actions";
@@ -42,14 +41,16 @@ const FormUpdateContact = ({setIsOpen}) => {
 
     return (
         <div className="">
-            <h2 className="text-center mb-2 font-bold">Registrar Gestión</h2>
+            <h2 className="text-center mb-2 font-bold dark:text-white">
+                Registrar Gestión
+            </h2>
             <div className="grid space-y-4">
                 <div className="w-full">
                     <Label>
                         Estado <span className="text-red-500"> *</span>
                     </Label>
                     <Select
-                        className="mt-1.5"
+                        className="mt-1.5 dark:text-white"
                         value={management.state}
                         name="state"
                         onChange={handleChange}
@@ -67,7 +68,7 @@ const FormUpdateContact = ({setIsOpen}) => {
                 <div className="w-full">
                     <Label>Observaciones</Label>
                     <Textarea
-                        className="mt-1.5 w-full"
+                        className="mt-1.5 w-full dark:text-white"
                         value={management.observations}
                         name="observations"
                         onChange={handleChange}

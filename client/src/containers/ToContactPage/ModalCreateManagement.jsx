@@ -21,7 +21,7 @@ const ModalCreateManagement = ({ isOpen, setIsOpen }) => {
                 {/* Full-screen container to center the panel */}
                 <div className="fixed inset-0  flex items-center justify-center p-4 ">
                     {/* The actual dialog panel  */}
-                    <Dialog.Panel className="mx-auto w-full md:w-[700px] rounded bg-white">
+                    <Dialog.Panel className="mx-auto w-full md:w-[700px] rounded bg-white dark:bg-slate-800">
                         <div className="p-8">
                             <FormUpdateContact setIsOpen={setIsOpen} />
                         </div>

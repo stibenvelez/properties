@@ -27,7 +27,7 @@ const ContactmeDetail = () => {
 
     return (
         <>
-            <Card>
+            <Card className={`dark:bg-slate-700`}>
                 <h2 className="text-center mb-2 font-bold">
                     Datos del prospecto
                 </h2>

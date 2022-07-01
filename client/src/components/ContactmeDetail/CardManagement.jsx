@@ -27,16 +27,22 @@ const CardManagement = ({ management }) => {
     console.log(management);
     return (
         <div
-            className={`bg-green-100 roun shadow py-2 px-3 min-h-[40px] flex gap-2 items-center ${
+            className={`bg-green-100 rounded shadow py-2 px-3 min-h-[40px] flex gap-2 items-center ${
                 STATES_CARD[management.state].style
             }`}
         >
-            <div className="h-6 w-6">{STATES_CARD[management.state].icon}</div>
+            <div className="h-6 w-6 dark:text-gray-800">
+                {STATES_CARD[management.state].icon}
+            </div>
             <div>
-                <p className="text-sm font-bold">{management.state}</p>
-                <p className="text-sm">{management.observations}</p>
-                <p className="text-xs">
-                    {formatDateTime (management.updatedAt)}
+                <p className="dark:text-gray-800 text-sm font-bold">
+                    {management.state}
+                </p>
+                <p className="dark:text-gray-800 text-sm">
+                    {management.observations}
+                </p>
+                <p className="dark:text-gray-800 text-xs">
+                    {formatDateTime(management.updatedAt)}
                 </p>
             </div>
         </div>
