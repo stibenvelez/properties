@@ -47,6 +47,7 @@ export const allToContact = async () => {
         const sql = `
             SELECT *
             FROM Contactme
+            INNER JOIN StatesContact AS sc ON Contactme.stateId = sc.stateId  
             ORDER BY id DESC
             `;
         const [result] = await connection.query(sql);
@@ -54,9 +55,9 @@ export const allToContact = async () => {
     } catch (error) {
         throw error;
     }
-}
+};
 
-export const ToContactById = async id => {
+export const ToContactById = async (id) => {
     try {
         const sql = `
             SELECT c.*, sc.state
@@ -69,9 +70,9 @@ export const ToContactById = async id => {
     } catch (error) {
         throw error;
     }
-}
+};
 
-export const allContactManagement = async id => {
+export const allContactManagement = async (id) => {
     try {
         const sql = `
             SELECT cm.*, sc.state
@@ -85,10 +86,11 @@ export const allContactManagement = async id => {
     } catch (error) {
         throw error;
     }
-}
+};
 
 export const insertContactManagement = async (contactManagement) => {
     try {
+         await connection.query("START TRANSACTION");
         const sql = `
             INSERT INTO ContactManagement (
                 idStateContact,
@@ -110,9 +112,16 @@ export const insertContactManagement = async (contactManagement) => {
             contactManagement.managedBy,
             contactManagement.id,
         ];
+        const sqlContactMe = `
+            UPDATE Contactme SET stateId = ${contactManagement.state}
+            WHERE id = ${contactManagement.id}
+            `;
         const [result] = await connection.query(sql, values);
+        await connection.query(sqlContactMe);
+        await connection.query(`COMMIT`);
         return result;
     } catch (error) {
+        await connection.query("ROLLBACK");
         throw error;
     }
-}
+};
