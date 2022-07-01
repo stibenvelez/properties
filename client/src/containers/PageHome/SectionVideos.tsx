@@ -30,7 +30,7 @@ const SectionVideos: FC<SectionVideosProps> = ({
             try {
                 const response = await clientAxios("/config/home/videos");
                 setVideosList(response.data);
-            } catch (error) {console.log('----->',error);}
+            } catch (error) {console.log(error);}
         })();
     }, []);
 

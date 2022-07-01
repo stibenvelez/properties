@@ -103,7 +103,6 @@ export const propertyById = async (id) => {
         WHERE p.idProperty = ${id}          
         `;
         const [property] = await connection.query(sql);
-        console.log('dal',property);
         return property;
     } catch (error) {
         throw error;
@@ -154,7 +153,6 @@ export const propertyByIdByUserId = async (id, user) => {
         `;
 
         const [rows] = await connection.query(sql);
-        console.log(rows);
         return rows;
     } catch (error) {
         throw error;
@@ -176,7 +174,6 @@ export const propertyByReference = async (reference) => {
 };
 
 export const insertProperty = async (property) => {
-    console.log(property);
     try {
         const values = [
             property.reference,
@@ -265,7 +262,6 @@ export const insertProperty = async (property) => {
 };
 
 export const importPorperties = async (properties) => {
-    console.log(properties);
     try {
         await connection.query("START TRANSACTION");
         const sql = `

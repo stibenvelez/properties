@@ -145,7 +145,6 @@ const FormEditProperty = () => {
             return;
         }
         setErrors({});
-        console.log('enviando', editedProperty);
         dispatch(updatePropertyAction(editedProperty));
         //setEditedProperty(INITIAL_STATE_NEW_PROPERTY);
     };

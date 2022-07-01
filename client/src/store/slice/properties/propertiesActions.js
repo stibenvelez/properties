@@ -218,7 +218,6 @@ export const updatePropertyAction = (property) => async (dispatch) => {
     dispatch(setUpdateProperty());
 
     try {
-        console.log('llegua', property);
         let data = new FormData();
 
         Object.entries(property).forEach(([key, value]) => {
@@ -227,7 +226,6 @@ export const updatePropertyAction = (property) => async (dispatch) => {
 
         //process img string
         property.galleryImgs.forEach((file, index) => {
-            console.log("file", file, index);
             if (typeof file === "string") {                
                 data.append(`images`, file);
               
@@ -235,8 +233,7 @@ export const updatePropertyAction = (property) => async (dispatch) => {
             if (typeof file === "object") {
                 data.append(`files`, file);
                 return;
-            }
-            
+            }            
         });
         
         

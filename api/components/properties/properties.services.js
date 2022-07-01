@@ -207,7 +207,6 @@ export const getPropertyByIdByUserIdService = async (req, res) => {
 export const updatePropertyService = async (req, res) => {
     const { id } = req.params;
     const [property] = await propertyById(id);
-    console.log(property);
     const files = req.files;
     const body = req.body;
     
