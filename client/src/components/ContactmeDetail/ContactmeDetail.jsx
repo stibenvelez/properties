@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Card from "shared/Card";
 import Input from "shared/Input/Input";
 import Textarea from "shared/Textarea/Textarea";
+import CardManagement from "./CardManagement";
 
 const ContactmeDetail = () => {
     const { toContact, loading, error, msg } = useSelector(
@@ -109,7 +110,7 @@ const ContactmeDetail = () => {
                     </div>
                 </div>
             </Card>
-            <Card>
+            {/* <Card>
                 <h2 className="text-center mb-2 font-bold">Gestion</h2>
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                     <div className="w-full">
@@ -123,11 +124,7 @@ const ContactmeDetail = () => {
                             readOnly
                             //defaultValue={property.reference}
                         />
-                        {/* {errors.reference && (
-                  <p className="py-1 text-sm text-red-500">
-                      {errors.reference}
-                  </p>
-              )} */}
+                        
                     </div>
                     {toContact.contactedBy && (
                         <div className="w-full">
@@ -141,11 +138,7 @@ const ContactmeDetail = () => {
                                 name="state"
                                 //defaultValue={property.reference}
                             />
-                            {/* {errors.reference && (
-                  <p className="py-1 text-sm text-red-500">
-                      {errors.reference}
-                  </p>
-              )} */}
+                            
                         </div>
                     )}
                 </div>
@@ -162,14 +155,16 @@ const ContactmeDetail = () => {
                             readOnly
                             //defaultValue={property.reference}
                         />
-                        {/* {errors.reference && (
-                  <p className="py-1 text-sm text-red-500">
-                      {errors.reference}
-                  </p>
-              )} */}
+                        
                     </div>
-                </div>
-            </Card>
+    </div>
+                
+            </Card> */}
+            <div className="grid gap-2">
+                <CardManagement management={toContact.management}/>
+                <CardManagement management={toContact.management}/>
+                <CardManagement management={toContact.management}/>
+            </div>
         </>
     );
 };

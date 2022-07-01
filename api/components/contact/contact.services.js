@@ -1,4 +1,4 @@
-import { allToContact, insertContactMe, ToContactById } from "./contact.DAL.js";
+import { allContactManagement, allToContact, insertContactMe, ToContactById } from "./contact.DAL.js";
 
 export const contactMeServices = async (contact) => {
     try {
@@ -21,6 +21,9 @@ export const getToContactByIdServices = async (req, res) => {
     const id = req.params.id;
     try {
         const [contact] = await ToContactById(id);
+        const contactManagement = await allContactManagement(id);
+        contact.management = contactManagement || [];
+
         if (!contact) {
             res.status(404).json({ msg: "No se encontro el contacto" });
             return

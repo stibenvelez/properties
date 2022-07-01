@@ -70,3 +70,18 @@ export const ToContactById = async id => {
         throw error;
     }
 }
+
+export const allContactManagement = async id => {
+    try {
+        const sql = `
+            SELECT *
+            FROM ContactManagement AS cm
+            WHERE cm.contactMeId  = ${id}
+
+            `;
+        const [result] = await connection.query(sql);
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
