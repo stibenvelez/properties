@@ -6,6 +6,7 @@ import Card from "shared/Card";
 import Input from "shared/Input/Input";
 import Textarea from "shared/Textarea/Textarea";
 import CardManagement from "./CardManagement";
+import STATES_CARD from "./utils/statesCard";
 
 const ContactmeDetail = () => {
     const { toContact, loading, error, msg } = useSelector(
@@ -32,7 +33,13 @@ const ContactmeDetail = () => {
                     Datos del prospecto
                 </h2>
                 <div className="space-y-4">
-                    <div className="bg-green-100 text-green-800 py-0.1 px-4 rounded-full inline-block">{toContact.state}</div>
+                    <div
+                        className={`${
+                            STATES_CARD[toContact.state].style
+                        } py-0.1 px-4 rounded-full inline-block`}
+                    >
+                        {toContact.state}
+                    </div>
                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div className="w-full">
                             <Label>

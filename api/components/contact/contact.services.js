@@ -1,4 +1,11 @@
-import { allContactManagement, allToContact, insertContactManagement, insertContactMe, ToContactById } from "./contact.DAL.js";
+import {
+    allContactManagement,
+    allToContact,
+    discardContactById,
+    insertContactManagement,
+    insertContactMe,
+    ToContactById,
+} from "./contact.DAL.js";
 
 export const contactMeServices = async (contact) => {
     try {
@@ -22,11 +29,12 @@ export const getToContactByIdServices = async (req, res) => {
     try {
         const [contact] = await ToContactById(id);
         const contactManagement = await allContactManagement(id);
+        console.log(contactManagement);
         contact.management = contactManagement || [];
 
         if (!contact) {
             res.status(404).json({ msg: "No se encontro el contacto" });
-            return
+            return;
         }
         return contact;
     } catch (error) {
@@ -43,4 +51,22 @@ export const createContactManagementServices = async (req, res) => {
     } catch (error) {
         throw error;
     }
-}
+};
+
+export const discardContactServices = async (req, res) => {
+    const id = req.params.id;
+    const user = req.user;
+
+    try {
+
+        const dataContact = {
+            id,
+            state: 4,
+            user,
+        };
+
+        await discardContactById(dataContact);
+    } catch (error) {
+        throw error;
+    }
+};

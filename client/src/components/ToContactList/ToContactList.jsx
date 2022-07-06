@@ -4,19 +4,19 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const MAP_STATE_CONTACT = {
-    1: {
+    "1": {
         style: "bg-red-100",
     },
-    2: {
-        style: "bg-green-200",
+    "2": {
+        style: "bg-green-100",
     },
-    3: {
+    "3": {
         style: "bg-yellow-100",
     },
-    4: {
+   "4": {
         style: "bg-gray-100",
     },
-}
+};
 
 const ToContactList = () => {
     const toContactList = useSelector(({ contact }) => contact.toContactList);
@@ -73,9 +73,12 @@ const ToContactList = () => {
                                     {formatDate(toContact.createdAt)}
                                 </td>
                                 <td className="px-6 py-4 whitespace-no-wrap">
-                                    {console.log(MAP_STATE_CONTACT[toContact.stateId].style)}
+                                    {console.log(
+                                        MAP_STATE_CONTACT[toContact.stateId]
+                                            .style
+                                    )}
                                     <p
-                                        className={`bg-gray-200 py-1 px-2 rounded-full text-xs text-center ${
+                                        className={`py-1 px-2 rounded-full text-xs text-center ${
                                             MAP_STATE_CONTACT[toContact.stateId]
                                                 .style
                                         }`}
@@ -96,11 +99,11 @@ const ToContactList = () => {
                                         >
                                             Ver
                                         </Link>
-                                        <button className=" hover:bg-indigo-500 py-1 px-2 rounded hover:text-white text-gray-500 transition duration-200 ease-in-out">
+                                        {/* <button className=" hover:bg-indigo-500 py-1 px-2 rounded hover:text-white text-gray-500 transition duration-200 ease-in-out">
                                             <Link to={`#`} className="text-xs ">
                                                 <PencilAltIcon className="w-4 h-4" />
                                             </Link>
-                                        </button>
+                                        </button> */}
                                         {toContact.id !== 2 && (
                                             <button
                                                 onClick={() =>

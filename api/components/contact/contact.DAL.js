@@ -11,7 +11,7 @@ export const insertContactMe = async (contact) => {
                 observations,
                 contactedBy,
                 idProperty,
-                state
+                stateId
             )
             VALUES (
                 ?,
@@ -60,7 +60,7 @@ export const allToContact = async () => {
 export const ToContactById = async (id) => {
     try {
         const sql = `
-            SELECT c.*, sc.state
+            SELECT c.*, sc.state, 01 AS holi
             FROM Contactme AS c
             INNER JOIN StatesContact AS sc ON c.stateId = sc.stateId
             WHERE id = ${id}
@@ -76,9 +76,10 @@ export const ToContactById = async (id) => {
 export const allContactManagement = async (id) => {
     try {
         const sql = `
-            SELECT cm.*, sc.state
+            SELECT cm.*, sc.state, u.firstName, u.lastName
             FROM ContactManagement AS cm
             INNER JOIN StatesContact AS sc ON cm.idStateContact  = sc.stateId
+            INNER JOIN Users AS u ON cm.managedBy = u.idUser 
             WHERE cm.contactMeId  = ${id}
             ORDER BY createdAt ASC
             `;
@@ -91,7 +92,7 @@ export const allContactManagement = async (id) => {
 
 export const insertContactManagement = async (contactManagement) => {
     try {
-         await connection.query("START TRANSACTION");
+        await connection.query("START TRANSACTION");
         const sql = `
             INSERT INTO ContactManagement (
                 idStateContact,
@@ -121,6 +122,40 @@ export const insertContactManagement = async (contactManagement) => {
         await connection.query(sqlContactMe);
         await connection.query(`COMMIT`);
         return result;
+    } catch (error) {
+        await connection.query("ROLLBACK");
+        throw error;
+    }
+};
+
+export const discardContactById = async ({ id, state, user }) => {
+    try {
+        await connection.query("START TRANSACTION");
+        const sqlContactme = `
+            UPDATE Contactme SET
+            stateId = ${state},
+            contactedBy = ${user.idUser}
+            WHERE id = ${id}
+            `;
+        const sqlContactManagement = `
+            INSERT INTO ContactManagement (
+                idStateContact,
+                managedBy,
+                contactMeId
+            )
+            VALUES (
+                ?,
+                ?,
+                ?
+                
+            )
+
+                `;
+        const values = [state, user.idUser, id];
+        await connection.query(sqlContactme);
+        await connection.query(sqlContactManagement, values);
+        await connection.query(`COMMIT`);
+        return;
     } catch (error) {
         await connection.query("ROLLBACK");
         throw error;
