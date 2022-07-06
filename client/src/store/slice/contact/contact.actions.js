@@ -85,3 +85,28 @@ export const createContactManagementAction = (contact) => async (dispatch) => {
         dispatch(setCreateContactManagementError(error.response.data.msg));
     }
 };
+
+export const discartContactAction = (id) => async (dispatch) => {
+    try {
+        const token = localStorage.getItem("token");
+        let headers = {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+        };
+        await clientAxios.post(
+            `/contact/discard/${id}`,
+            {},
+            {
+                headers,
+            }
+        );
+        Swal.fire({
+            title: "Se descarto el contacto",
+            text: "El contacto se ha descartado con exito",
+            icon: "success",
+        });
+        dispatch(getAllToContactAction());
+    } catch (error) {
+        console.log(error);
+    }
+}

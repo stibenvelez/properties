@@ -35,7 +35,7 @@ const ContactmeDetail = () => {
                 <div className="space-y-4">
                     <div
                         className={`${
-                            STATES_CARD[toContact.state].style
+                            STATES_CARD[toContact.state]?.style
                         } py-0.1 px-4 rounded-full inline-block`}
                     >
                         {toContact.state}

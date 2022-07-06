@@ -1,7 +1,8 @@
 import { PencilAltIcon, TrashIcon } from "@heroicons/react/solid";
 import { formatDate, formatDateTime } from "helpers/formatDate";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { discartContactAction } from "store/slice/contact/contact.actions";
 
 const MAP_STATE_CONTACT = {
     "1": {
@@ -19,10 +20,11 @@ const MAP_STATE_CONTACT = {
 };
 
 const ToContactList = () => {
+    const dispatch = useDispatch();
     const toContactList = useSelector(({ contact }) => contact.toContactList);
 
     const handleDeleteProperty = (id) => {
-        console.log("eliminando", id);
+        dispatch(discartContactAction(id));
     };
     return (
         <div className="overflow-x-auto shadow-md sm:rounded-lg">
