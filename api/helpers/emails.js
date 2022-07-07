@@ -60,3 +60,29 @@ export const emailForgetPassword = async ({ email, fisrtName, lastName, token })
         `,
     });
 }
+
+export const emailContactMe = async ({ email, fisrtName }) => {
+    const transport = nodeMailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD,
+        },
+    });
+    // info email
+    const info = await transport.sendMail({
+        from: '"Properties" <properties@correo.com>',
+        to: email,
+        subject: "Properties - Mensaje de contacto",
+        text: "Has solicitado enviar un mensaje de contacto",
+        html: `
+
+            <p>Hola: ${fisrtName}, Has solicitado enviar un mensaje de contacto</p>
+            <p>Hemos recibido tu solicitud con éxito. Uno de nuestros asesores se pondrá en contacto lo más pronto posible para resolver todas tus inquietudes.</p>
+            <p>Si no hiciste la solicitud, ignora este correo</p>
+        `,
+    });
+    console.log("Preview URL: %s", nodeMailer.getTestMessageUrl(info));
+}
+    

@@ -14,15 +14,6 @@ const ContactmeDetail = () => {
         ({ contact }) => contact
     );
 
-    useEffect(() => {
-        if (error) {
-            Swal.fire({
-                title: "Error",
-                text: msg,
-                icon: "error"
-            });
-        }
-    }, [error]);
 
     if (loading)
         return (
@@ -30,6 +21,10 @@ const ContactmeDetail = () => {
                 <SpinnerButton />
             </div>
         );
+    
+    if (Object.keys(toContact).length === 0) {
+        return <div className="py-4 px-4 bg-yellow-100 text-yellow-800 text-sm rounded shadow-sm">{msg}</div>
+    }
 
     return (
         <>

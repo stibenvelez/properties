@@ -1,3 +1,4 @@
+import { emailContactMe } from "../../helpers/emails.js";
 import {
     allContactManagement,
     allToContact,
@@ -9,8 +10,14 @@ import {
 
 export const contactMeServices = async (contact) => {
     try {
-        contact.state = 1;
-        return await insertContactMe(contact);
+        contact.state = 1;       
+        await insertContactMe(contact);
+        const dataMessage = {
+            email: contact.email,
+            fisrtName: contact.firstName,
+        };
+        emailContactMe(dataMessage);
+        return;        
     } catch (error) {
         throw error;
     }
@@ -28,13 +35,14 @@ export const getToContactByIdServices = async (req, res) => {
     const id = req.params.id;
     try {
         const [contact] = await ToContactById(id);
-        const contactManagement = await allContactManagement(id);
-        contact.management = contactManagement || [];
-
         if (!contact) {
             res.status(404).json({ msg: "No se encontro el contacto" });
             return;
         }
+        const contactManagement = await allContactManagement(id);
+        contact.management = contactManagement || [] ;
+
+        
         return contact;
     } catch (error) {
         throw error;
@@ -57,7 +65,6 @@ export const discardContactServices = async (req, res) => {
     const user = req.user;
 
     try {
-
         const dataContact = {
             id,
             state: 4,
@@ -68,5 +75,4 @@ export const discardContactServices = async (req, res) => {
     } catch (error) {
         throw error;
     }
-    
-};  
+};
