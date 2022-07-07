@@ -1,7 +1,6 @@
 import {
     PencilAltIcon,
     TrashIcon,
-    ViewBoardsIcon,
 } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -29,7 +28,6 @@ const PropertiesListAdmin = () => {
     const properties = useSelector(
         ({ properties }) => properties.properties?.results
     );
-    
     const handleDeleteProperty = (id) => {
         Swal.fire({
             title: "¿Deseas eliminar este inmueble?",
@@ -87,10 +85,12 @@ const PropertiesListAdmin = () => {
                             >
                                 <td className="px-6 py-4 whitespace-no-wrap">
                                     <Link
+
                                         to={`/admin/property/${property.idProperty}`}
                                         className="hover:text-indigo-500"
                                     >
                                         {property.reference}
+
                                     </Link>
                                 </td>
                                 <td className="px-6 py-4 whitespace-no-wrap">

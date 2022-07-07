@@ -18,8 +18,8 @@ export const getAllProperties = async (req, res) => {
 
 export const getPropertyById = async (req, res) => {
     try {
-        const { id } = req.params;
-        const result = await getPropertyByIdService(id);
+        
+        const result = await getPropertyByIdService(req, res);
         res.json(result);
     } catch (error) {
         console.log(error);

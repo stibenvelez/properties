@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import LocationMarker from "components/AnyReactComponent/LocationMarker";
 import CommentListing from "components/CommentListing/CommentListing";
-import StartRating from "components/StartRating/StartRating";
 import GoogleMapReact from "google-map-react";
 import Avatar from "shared/Avatar/Avatar";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
@@ -11,15 +10,16 @@ import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import { useParams } from "react-router-dom";
 import clientAxios from "config/axios";
 import formatMoney from "utils/formatMoney";
-import Badge from "shared/Badge/Badge";
-import LikeSaveBtns from "./LikeSaveBtns";
 import {
+    ArrowRightIcon,
     AtSymbolIcon,
     DeviceMobileIcon,
-    ExclamationCircleIcon,
     PhoneIcon,
 } from "@heroicons/react/solid";
 import ModalContactMe from "./ModalContactMe";
+import Input from "shared/Input/Input";
+import ButtonCircle from "shared/Button/ButtonCircle";
+import FiveStartIconForRate from "components/FiveStartIconForRate/FiveStartIconForRate";
 
 export interface ListingStayDetailPageProps {
     className?: string;
@@ -228,16 +228,53 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
             <div className="listingSection__wrap">
                 {/* HEADING */}
                 <h2 className="text-2xl font-semibold">
-                    Comentarios (3 comentarios)
+                    Comentarios{" "}
+                    <span>({property?.comments?.length || 0} comentarios)</span>
                 </h2>
                 <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
 
                 {/* comment */}
-                <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
-                    {COMMENTS.map((data: any) => (
-                        <CommentListing data={data} className="py-8" />
-                    ))}
+                {/* Content */}
+                <div className="space-y-5">
+                    <FiveStartIconForRate
+                        iconClass="w-6 h-6"
+                        className="space-x-0.5"
+                    />
+                    <div className="relative">
+                        <Input
+                            fontClass=""
+                            sizeClass="h-16 px-4 py-3"
+                            rounded="rounded-3xl"
+                            placeholder="Share your thoughts ..."
+                        />
+                        <ButtonCircle
+                            className="absolute transform -translate-y-1/2 right-2 top-1/2"
+                            size=" w-12 h-12 "
+                        >
+                            <ArrowRightIcon className="w-5 h-5" />
+                        </ButtonCircle>
+                    </div>
                 </div>
+                <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
+                    {property.comments &&
+                        property.comments.map((data: any, index: number) => (
+                            <CommentListing
+                                key={index}
+                                data={data}
+                                className="py-8"
+                            />
+                        ))}
+                </div>
+                {/* comment */}
+                {/* <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
+                    {COMMENTS.map((data: any, index: number) => (
+                        <CommentListing
+                            key={index}
+                            data={data}
+                            className="py-8"
+                        />
+                    ))}
+                </div> */}
             </div>
         );
     };

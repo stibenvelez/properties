@@ -1,11 +1,8 @@
 import Label from "components/Label/Label";
 import SpinnerButton from "components/SpinnerButton/SpinnerButton";
-import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Card from "shared/Card";
 import Input from "shared/Input/Input";
-import Textarea from "shared/Textarea/Textarea";
-import Swal from "sweetalert2";
 import CardManagement from "./CardManagement";
 import STATES_CARD from "./utils/statesCard";
 
@@ -171,7 +168,7 @@ const ContactmeDetail = () => {
             <div className="grid gap-2">
                 {toContact.management && toContact.management.length > 0 ? (
                     toContact.management.map((management, index) => (
-                        <CardManagement management={management} />
+                        <CardManagement key={index} management={management} />
                     ))
                 ) : (
                     <div className="w-full">

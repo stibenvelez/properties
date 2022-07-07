@@ -12,6 +12,7 @@ import {
 } from "./properties.DAL.js";
 import csvtojson from "csvtojson";
 import { findUserById } from "../user/user.DAL.js";
+import { getCommentsById } from "../comments/comments.DAL.js";
 
 const COLUMNS_REQUIRED = [
     "reference",
@@ -110,9 +111,17 @@ export const getAllPropertiesService = async (query) => {
     return dataPropeties;
 };
 
-export const getPropertyByIdService = async (id) => {
+export const getPropertyByIdService = async (req, res) => {
+    const { id } = req.params;
     try {
         const [property] = await propertyById(id);
+       
+
+        if (!property) {
+            res.status(400).json({ msg: "No se encontro la propiedad" });
+            return
+        }
+
         let galleryImgs = [];
         IMAGES_ALLOWED.map((image) => {
             if (property[image]) {
@@ -121,13 +130,14 @@ export const getPropertyByIdService = async (id) => {
         });
         property.latitude = parseFloat(property.latitude);
         property.longitude = parseFloat(property.longitude);
-        delete property.image1;
-        delete property.image2;
-        delete property.image3;
-        delete property.image4;
-        delete property.image5;
-        delete property.image6;
-
+        if (property) {
+            delete property.image1;
+            delete property.image2;
+            delete property.image3;
+            delete property.image4;
+            delete property.image5;
+            delete property.image6;
+        }
         property.galleryImgs = galleryImgs;
         const [user] = await findUserById(property.createdBy);
         property.createBy =
@@ -137,6 +147,10 @@ export const getPropertyByIdService = async (id) => {
                 lastName: user?.lastName,
                 email: user?.email,
             } || null;
+        
+        
+        const comments = await getCommentsById(id);
+        property.comments = comments;
         return property;
     } catch (error) {
         throw error;
@@ -190,6 +204,7 @@ export const getPropertyByIdByUserIdService = async (req, res) => {
             });
             return;
         }
+
 
         const galleryImgs = IMAGES_ALLOWED.map((item) => {
             if (!property[item] && typeof property[item] === undefined) {

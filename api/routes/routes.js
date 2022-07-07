@@ -8,6 +8,7 @@ import propertyRoutesAdmin from "../components/properties/routes.admin.js";
 import departamentsRoutes from "../components/departaments/routes.js";
 import configRoutes from "../components/config/routes.js";
 import contactRoutes from "../components/contact/routes.js";
+import commentsRoutes from "../components/comments/routes.js";
 
 
 routes.use(express.static("public"));
@@ -19,5 +20,6 @@ routes.use("/admin/properties", propertyRoutesAdmin);
 routes.use("/departaments", departamentsRoutes);
 routes.use("/config", configRoutes);
 routes.use("/contact", contactRoutes);
+routes.use("/comments", commentsRoutes);
 
 export default routes;
