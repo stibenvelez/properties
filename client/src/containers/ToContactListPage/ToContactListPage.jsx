@@ -31,13 +31,13 @@ const ToContactListPage = () => {
                         </h2>
                         <p>Lista de prospectos pendientes por contactar</p>
                     </div>
-                </div>
                 <button
                     onClick={() => history.goBack()}
                     className="bg-gray-600 text-white py-1 px-4 rounded hover:bg-gray-500"
                 >
                     Volver
                 </button>
+                </div>
                 <ToContactList />
             </div>
         </div>

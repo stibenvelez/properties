@@ -67,8 +67,10 @@ const ToContactList = () => {
                                     </div>
                                     <p className="text-sm">{toContact.email}</p>
                                 </td>
-                                <td className="px-6 py-4 whitespace-no-wrap truncate">
-                                    {toContact.message}
+                                <td className="px-6 py-4 whitespace-no-wrap max-w-md">
+                                    <p className="truncate">
+                                        {toContact.message}
+                                    </p>
                                 </td>
 
                                 <td className="px-6 py-4 whitespace-no-wrap">

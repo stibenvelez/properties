@@ -107,13 +107,13 @@ const ContactmeDetail = () => {
                             <Label>
                                 Mensaje <span className="text-red-500"> *</span>
                             </Label>
-                            <Textarea
-                                className="mt-1.5"
-                                defaultValue={toContact.message}
-                                name="message"
-                                readOnly
+                            <p
+                                className="mt-1.5 text-sm"
+
                                 //defaultValue={property.reference}
-                            />
+                            >
+                                {toContact.message}
+                            </p>
                             {/* {errors.reference && (
                   <p className="py-1 text-sm text-red-500">
                       {errors.reference}
