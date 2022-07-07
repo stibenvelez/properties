@@ -3,15 +3,21 @@ import ContactmeDetail from "components/ContactmeDetail/ContactmeDetail";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useParams } from "react-router-dom";
-import { discartContactAction, getToContactAction } from "store/slice/contact/contact.actions";
+import { useHistory, useParams } from "react-router-dom";
+import {
+    discartContactAction,
+    getToContactAction,
+} from "store/slice/contact/contact.actions";
 import ModalCreateManagement from "./ModalCreateManagement";
 
 const ToContactPage = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const params = useParams();
-const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const { toContact } = useSelector(({ contact }) => contact);
+
     useEffect(() => {
         (() => {
             dispatch(getToContactAction(params.id));
@@ -53,15 +59,17 @@ const [modalIsOpen, setModalIsOpen] = useState(false);
                         >
                             Gestionar
                         </button>
-                        <button
-                            type="button"
-                            onClick={() =>
-                                dispatch(discartContactAction(params.id))
-                            }
-                            className=" text-gray-500 py-1 px-1 rounded hover:text-red-500"
-                        >
-                            <TrashIcon className="h-6 w-6" />
-                        </button>
+                        {toContact.stateId !== 4 && (
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    dispatch(discartContactAction(params.id))
+                                }
+                                className=" text-gray-500 py-1 px-1 rounded hover:text-red-500"
+                            >
+                                <TrashIcon className="h-6 w-6" />
+                            </button>
+                        )}
                     </div>
                     <ContactmeDetail />
                 </div>

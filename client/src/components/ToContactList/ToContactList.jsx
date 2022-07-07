@@ -106,7 +106,7 @@ const ToContactList = () => {
                                                 <PencilAltIcon className="w-4 h-4" />
                                             </Link>
                                         </button> */}
-                                        {toContact.id !== 2 && (
+                                        {toContact.stateId !== 4 && (
                                             <button
                                                 onClick={() =>
                                                     handleDeleteProperty(

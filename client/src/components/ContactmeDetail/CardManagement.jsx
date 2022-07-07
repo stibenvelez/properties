@@ -15,13 +15,15 @@ const CardManagement = ({ management }) => {
             <div className="h-6 w-6 dark:text-gray-800">
                 {STATES_CARD[management.state].icon}
             </div>
-            <div>
+            <div className="w-full">
                 <p className="dark:text-gray-800 text-sm font-bold">
                     {management.state}
                 </p>
-                <p className="dark:text-gray-800 text-sm">
-                    {management.observations}
-                </p>
+                <div className="">
+                    <p className="dark:text-gray-800 text-sm">
+                        {management.observations}
+                    </p>
+                </div>
                 <p className="dark:text-gray-800 text-xs">
                     {management.firstName}
                 </p>
