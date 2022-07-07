@@ -29,7 +29,6 @@ export const getToContactByIdServices = async (req, res) => {
     try {
         const [contact] = await ToContactById(id);
         const contactManagement = await allContactManagement(id);
-        console.log(contactManagement);
         contact.management = contactManagement || [];
 
         if (!contact) {

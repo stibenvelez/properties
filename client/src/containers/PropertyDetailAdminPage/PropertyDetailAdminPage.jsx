@@ -1,8 +1,9 @@
-import FormviewProperty from 'components/FormViewProperty/FormViewProperty';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from "react-router-dom";
-import { getPropertyByIdByUserId } from 'store/slice/properties/propertiesActions';
+import { PencilAltIcon } from "@heroicons/react/outline";
+import FormviewProperty from "components/FormViewProperty/FormViewProperty";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { getPropertyByIdByUserId } from "store/slice/properties/propertiesActions";
 
 const PropertyDetailAdminPage = () => {
     const history = useHistory();
@@ -10,12 +11,12 @@ const PropertyDetailAdminPage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         (() => {
-          dispatch(getPropertyByIdByUserId(id));
-      })()
-    }, [])
+            dispatch(getPropertyByIdByUserId(id));
+        })();
+    }, []);
 
-    const {loading} = useSelector(({ properties }) => properties);
-    
+    const { loading } = useSelector(({ properties }) => properties);
+
     const renderSection1 = () => {
         return (
             <div className="space-y-4 sm:space-y-4">
@@ -25,13 +26,19 @@ const PropertyDetailAdminPage = () => {
                     </h2>
                     <p>Este es el detalle del inmueble</p>
                 </div>
-                <div>
+                <div className="flex gap-2">
                     <button
                         onClick={() => history.goBack()}
                         className="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-400"
                     >
                         Volver
                     </button>
+                    <Link
+                        to={`/admin/editar-inmueble/${id}`}
+                        className="text-indigo-400 py-1 px-1 rounded hover:text-indigo-600"
+                    >
+                        <PencilAltIcon className="h-6 w-6" />
+                    </Link>
                 </div>
                 <FormviewProperty />
             </div>
