@@ -5,7 +5,7 @@ const initialState = {
     isContactSent: false,
     toContact: {},
     toContactList: [],
-    msg: "",
+    msg: null,
     error: false,
 };
 
@@ -41,6 +41,7 @@ export const contactSlice = createSlice({
         setGetToContact: (state) => {
             state.loading = true;
             state.error = false;
+            state.msg = null;
         },
         setGetToContactSuccess: (state, action) => {
             state.loading = false;
@@ -60,9 +61,31 @@ export const contactSlice = createSlice({
         },
         setCreateContactManagementError: (state, action) => {
             state.loadingCreateContactManagement = false;
-        }
+        },
+        setDiscardContact: (state) => {
+            state.loading = true;
+            state.msg = null;
+            state.error = false;
+        },
+        setDiscardContactSuccess: (state) => {
+            state.loading = false;
+            state.error = false;
+            state.msg = null;
+        },
+        setDiscardContactError: (state, action) => {
+            state.loading = false;
+            state.msg = action.payload;
+            state.error = true;
 
-
+            setTimeout(() => {
+                state.msg = null;
+                state.error = false;
+            }, 1000);
+        },
+        setResetError: (state) => {
+            state.error = false;
+            state.msg = null;
+        },
     },
 });
 
@@ -80,7 +103,10 @@ export const {
     setCreateContactManagement,
     setCreateContactManagementSuccess,
     setCreateContactManagementError,
-    
+    setDiscardContact,
+    setDiscardContactSuccess,
+    setDiscardContactError,
+    setResetError,
 } = contactSlice.actions;
 
 export default contactSlice.reducer;

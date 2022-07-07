@@ -8,14 +8,20 @@ import {
     setCreateContactManagement,
     setCreateContactManagementError,
     setCreateContactManagementSuccess,
+    setDiscardContact,
+    setDiscardContactError,
+    setDiscardContactSuccess,
     setGetToContact,
     setGetToContactError,
     setGetToContactList,
     setGetToContactListError,
     setGetToContactListSuccess,
     setGetToContactSuccess,
+    setResetError,
 } from ".";
-
+export const resetError = () => (dispatch) => {
+    dispatch(setResetError());
+};
 export const contactMeAction = (contact) => async (dispatch) => {
     dispatch(setContactMe());
     try {
@@ -87,6 +93,7 @@ export const createContactManagementAction = (contact) => async (dispatch) => {
 };
 
 export const discartContactAction = (id) => async (dispatch) => {
+    dispatch(setDiscardContact());
     try {
         const token = localStorage.getItem("token");
         let headers = {
@@ -100,13 +107,18 @@ export const discartContactAction = (id) => async (dispatch) => {
                 headers,
             }
         );
+        dispatch(setGetToContactListSuccess());
         Swal.fire({
             title: "Se descarto el contacto",
             text: "El contacto se ha descartado con exito",
             icon: "success",
         });
-        dispatch(getAllToContactAction());
+        dispatch(setDiscardContactSuccess());
     } catch (error) {
         console.log(error);
+        dispatch(setDiscardContactError(error.response.data.msg));
+        setTimeout(() => {
+            dispatch(setResetError());
+        }, 1000);
     }
-}
+};

@@ -48,13 +48,25 @@ export const createContactManagement = async (req, res) => {
 };
 
 export const discardContact = async (req, res) => {
-    const id = req.params.id;
-    const contact = await ToContactById(id);
-    if (contact.length === 0) {
-        return res.status(404).json({ msg: "No se encontro el contacto" });
-    }
-    
     try {
+        const user = req.user;
+        const id = req.params.id;
+
+        const [contact] = await ToContactById(id);
+        console.log(contact, user.idUser);
+
+        if (Object.keys(contact).length === 0) {
+            return res.json([]);
+        }
+
+        if (contact.stateId === 4) {
+            res.status(403).json({
+                msg: "El contacto ya fue descartado",
+            });
+            return;
+        }
+
+        
         await discardContactServices(req, res);
         res.json({ msg: "Contact me" });
     } catch (error) {

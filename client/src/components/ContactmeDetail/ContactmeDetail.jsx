@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Card from "shared/Card";
 import Input from "shared/Input/Input";
 import Textarea from "shared/Textarea/Textarea";
+import Swal from "sweetalert2";
 import CardManagement from "./CardManagement";
 import STATES_CARD from "./utils/statesCard";
 
@@ -13,7 +14,15 @@ const ContactmeDetail = () => {
         ({ contact }) => contact
     );
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        if (error) {
+            Swal.fire({
+                title: "Error",
+                text: msg,
+                icon: "error"
+            });
+        }
+    }, [error]);
 
     if (loading)
         return (
@@ -21,10 +30,6 @@ const ContactmeDetail = () => {
                 <SpinnerButton />
             </div>
         );
-
-    if (error) {
-        return <p className="text-3xl text-gray-700 text-center">{msg}</p>;
-    }
 
     return (
         <>

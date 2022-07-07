@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
-import { getToContactAction } from "store/slice/contact/contact.actions";
+import { discartContactAction, getToContactAction } from "store/slice/contact/contact.actions";
 import ModalCreateManagement from "./ModalCreateManagement";
 
 const ToContactPage = () => {
@@ -55,7 +55,9 @@ const [modalIsOpen, setModalIsOpen] = useState(false);
                         </button>
                         <button
                             type="button"
-                            onClick={() => {}}
+                            onClick={() =>
+                                dispatch(discartContactAction(params.id))
+                            }
                             className=" text-gray-500 py-1 px-1 rounded hover:text-red-500"
                         >
                             <TrashIcon className="h-6 w-6" />
