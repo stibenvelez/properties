@@ -18,14 +18,18 @@ export const insertComment = async (comment) => {
     } catch (error) {
         throw error;
     }
-}
+};
 
-export const getCommentsById = async (propertyId) => {
+export const getCommentsByProperty = async (propertyId) => {
     try {
-        const sql = `SELECT * FROM CommentsProperties WHERE propertyId = '${propertyId}'`;
+        const sql = `
+        SELECT * 
+        FROM CommentsProperties AS c
+        WHERE c.propertyId = '${propertyId}'
+        `;
         const [comments] = await connection.query(sql);
         return comments;
     } catch (error) {
         throw error;
     }
-}
+};

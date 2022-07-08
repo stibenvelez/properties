@@ -12,7 +12,7 @@ import {
 } from "./properties.DAL.js";
 import csvtojson from "csvtojson";
 import { findUserById } from "../user/user.DAL.js";
-import { getCommentsById } from "../comments/comments.DAL.js";
+import { getCommentsByProperty } from "../comments/comments.DAL.js";
 
 const COLUMNS_REQUIRED = [
     "reference",
@@ -149,7 +149,7 @@ export const getPropertyByIdService = async (req, res) => {
             } || null;
         
         
-        const comments = await getCommentsById(id);
+        const comments = await getCommentsByProperty(id);
         property.comments = comments;
         return property;
     } catch (error) {

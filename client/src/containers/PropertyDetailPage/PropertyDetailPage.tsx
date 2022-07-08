@@ -20,17 +20,23 @@ import ModalContactMe from "./ModalContactMe";
 import Input from "shared/Input/Input";
 import ButtonCircle from "shared/Button/ButtonCircle";
 import FiveStartIconForRate from "./FiveStartIconForRate";
+import { useDispatch, useSelector } from "react-redux";
+
+import SpinnerButton from "components/SpinnerButton/SpinnerButton";
+import { createNewCommentAction, getCommentsByPropertyAction } from "store/slice/comments/comments.actions";
+import CommentsSection from "./CommentsSection";
 
 export interface ListingStayDetailPageProps {
     className?: string;
     isPreviewMode?: boolean;
 }
 
-
 const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
     className = "",
     isPreviewMode,
 }) => {
+    const dispatch: any = useDispatch();
+    const { id }: any = useParams();
     const [property, setProperty] = useState<any>({});
     const [isOpen, setIsOpen] = useState(false);
     const [openFocusIndex, setOpenFocusIndex] = useState(0);
@@ -38,10 +44,16 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
     const [newComment, setNewComment] = useState({
         name: "",
         comment: "",
-        score:5
+        score: 5,
+        propertyId: id,
     });
 
-    const { id }: any = useParams();
+    const { loadingComments } = useSelector(
+        ({ properties }: any) => properties.properties
+    );
+
+    const { comments } = useSelector(({ comments }: any) => comments);
+
     useEffect(() => {
         if (id) {
             (async () => {
@@ -51,15 +63,20 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
         }
     }, []);
 
+    useEffect(() => {
+        (() => dispatch(getCommentsByPropertyAction(id)))();
+    }, []);
+
     const handleOpenModal = (index: number) => {
         setIsOpen(true);
         setOpenFocusIndex(index);
     };
 
     const handleCloseModal = () => setIsOpen(false);
+
     const handleSendComment = () => {
-        console.log("enviando comentario",newComment);
-    }
+        dispatch(createNewCommentAction(newComment));
+    };
 
     const renderSection1 = () => {
         return (
@@ -212,87 +229,7 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
         );
     };
 
-    const renderSection6 = () => {
-        return (
-            <div className="listingSection__wrap">
-                {/* HEADING */}
-                <h2 className="text-2xl font-semibold">
-                    Comentarios{" "}
-                    <span>({property?.comments?.length || 0} comentarios)</span>
-                </h2>
-                <div className="border-b w-20 border-neutral-200 dark:border-neutral-700"></div>
 
-                {/* Content */}
-                <div className="space-y-5">
-                    <FiveStartIconForRate
-                        iconClass="w-6 h-6"
-                        className="space-x-0.5"
-                        newComment={newComment}
-                        setNewComment={setNewComment}
-                    />
-                    <Input
-                        fontClass=""
-                        sizeClass="h-16 px-4 py-3"
-                        rounded="rounded-3xl"
-                        placeholder="Nombre"
-                        value={newComment.name}
-                        name="name"
-                        onChange={(e) =>
-                            setNewComment({
-                                ...newComment,
-                                name: e.target.value,
-                            })
-                        }
-
-                    />
-                    <div className="relative">
-                        <Input
-                            fontClass=""
-                            sizeClass="h-16 px-4 py-3"
-                            rounded="rounded-3xl"
-                            placeholder="Deja un comentario"
-                            value={newComment.comment}
-                            name="comment"
-                            onChange={(e) =>
-                                setNewComment({
-                                    ...newComment,
-                                    comment: e.target.value,
-                                })
-                            }
-
-                        />
-                        <ButtonCircle
-                            className="absolute transform -translate-y-1/2 right-2 top-1/2"
-                            size=" w-12 h-12 "
-                            onClick={handleSendComment}
-                        >
-                            <ArrowRightIcon className="w-5 h-5" />
-                        </ButtonCircle>
-                    </div>
-                </div>
-                <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
-                    {property.comments &&
-                        property.comments.map((data: any, index: number) => (
-                            <CommentListing
-                                key={index}
-                                data={data}
-                                className="py-8"
-                            />
-                        ))}
-                </div>
-                {/* comment */}
-                {/* <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
-                    {COMMENTS.map((data: any, index: number) => (
-                        <CommentListing
-                            key={index}
-                            data={data}
-                            className="py-8"
-                        />
-                    ))}
-                </div> */}
-            </div>
-        );
-    };
 
     const renderSection7 = () => {
         return (
@@ -496,7 +433,11 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                     {renderSection1()}
                     {property.description && renderSection2()}
                     {renderSection5()}
-                    {renderSection6()}
+                    <CommentsSection
+                        newComment={newComment}
+                        setNewComment={setNewComment}
+                    />
+                    
                 </div>
 
                 {/* SIDEBAR */}

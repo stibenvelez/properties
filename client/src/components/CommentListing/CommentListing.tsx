@@ -69,10 +69,10 @@ const CommentListing: FC<CommentListingProps> = ({
                         </span>
                     </div>
                     <div className="flex text-yellow-500">
-                        {scoreState && scoreState.map((item) => (
-                          
-                    <StarIcon className="w-4 h-4" />
-                        ))}
+                        {scoreState &&
+                            scoreState.map((_, index) => (
+                                <StarIcon key={index} className="w-4 h-4" />
+                            ))}
                     </div>
                 </div>
                 <span className="block mt-3 text-neutral-6000 dark:text-neutral-300">

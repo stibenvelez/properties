@@ -1,5 +1,8 @@
 import {
     setclearFilter,
+    setCreateNewComment,
+    setCreateNewCommentError,
+    setCreateNewCommentSuccess,
     setCreateProperty,
     setCreatePropertyError,
     setCreatePropertySuccess,
@@ -311,3 +314,26 @@ export const deletePropertyAction = (idProperty) => async (dispatch) => {
         console.log(error);
     }
 }
+
+export const createNewCommentAction = (comment) => async (dispatch) => { 
+    dispatch(setCreateNewComment());
+    try {
+
+        await clientAxios.post(`/comments`, comment);
+        Swal.fire({
+            icon: "success",
+            title: "Comentario registrado",
+            text: "Se ha registrado el comentario correctamente",
+        });
+        dispatch(setCreateNewCommentSuccess());
+    } catch (error) {
+        Swal.fire({
+            icon: "error",
+            title: "Hubo un error",
+            text: error.response.data.msg,
+        });
+        dispatch(setCreateNewCommentError());
+        console.log(error);
+    }
+}
+

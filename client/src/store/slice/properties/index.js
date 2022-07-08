@@ -15,7 +15,8 @@ const initialState = {
     loadingUploadCsv: false,
     loadingUploadImages: false,
     response: null,
-    property:{}
+    property: {},
+    loadingComments: false,
 };
 
 export const propertiesSlice = createSlice({
@@ -101,6 +102,15 @@ export const propertiesSlice = createSlice({
         },
         setDeletePropertyError: (state, action) => {
             state.loading = false;
+        },
+        setCreateNewComment: (state, action) => {
+            state.loadingComments = true;
+        },
+        setCreateNewCommentSuccess: (state, action) => {
+            state.loadingComments = false;
+        },
+        setCreateNewCommentError: (state, action) => {
+            state.loadingComments = false;
         }
     },
 });
@@ -129,6 +139,9 @@ export const {
     setDeleteProperty,
     setDeletePropertySuccess,
     setDeletePropertyError,
+    setCreateNewComment,
+    setCreateNewCommentSuccess,
+    setCreateNewCommentError
 } = propertiesSlice.actions;
 
 export default propertiesSlice.reducer;

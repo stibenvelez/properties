@@ -5,6 +5,7 @@ import cities from "./slice/cities";
 import auth from "./slice/auth";
 import users from "./slice/user";
 import contact from "./slice/contact";
+import comments from "./slice/comments"
 
 export const store = configureStore({
     reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
         cities,
         auth,
         users,
-        contact
+        contact,
+        comments
     },
 });
 

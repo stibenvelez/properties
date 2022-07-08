@@ -1,4 +1,4 @@
-import { createCommentService } from "./comments.services.js";
+import { createCommentService, getCommentsByPropertyService } from "./comments.services.js";
 
 
 export const createComment = async (req, res) => {
@@ -9,3 +9,12 @@ export const createComment = async (req, res) => {
         throw error;
     }
 }
+
+export const getCommentsByProperty = async (req, res) => {
+    try {
+        const comments = await getCommentsByPropertyService(req, res);
+        res.status(200).json(comments);
+    } catch (error) {
+        res.status(500).json({ msg: "Error al obtener comentarios" });
+    }
+}   
