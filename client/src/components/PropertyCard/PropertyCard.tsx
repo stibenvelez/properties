@@ -30,6 +30,7 @@ const PropertyCard: FC<StayCardProps> = ({
         area,
         bathrooms,
         reference,
+        neighborhood,
     }: any = property;
 
     const renderSliderGallery = () => {
@@ -114,7 +115,9 @@ const PropertyCard: FC<StayCardProps> = ({
                                 />
                             </svg>
                         )}
-                        <span className="">{address}</span>
+                        <span className="">
+                            {address} {neighborhood}
+                        </span>
                     </div>
                 </div>
                 <div className="border-b w-14 border-neutral-100 dark:border-neutral-800"></div>
