@@ -19,32 +19,13 @@ import {
 import ModalContactMe from "./ModalContactMe";
 import Input from "shared/Input/Input";
 import ButtonCircle from "shared/Button/ButtonCircle";
-import FiveStartIconForRate from "components/FiveStartIconForRate/FiveStartIconForRate";
+import FiveStartIconForRate from "./FiveStartIconForRate";
 
 export interface ListingStayDetailPageProps {
     className?: string;
     isPreviewMode?: boolean;
 }
-const COMMENTS = [
-    {
-        name: "Laura",
-        date: "May 20, 2022",
-        comment: "Exelente propiedad, estoy itneresada",
-        starPoint: 5,
-    },
-    {
-        name: "Jorge",
-        date: "May 25, 2022",
-        comment: "Excelente atencion, mil gracias",
-        starPoint: 5,
-    },
-    {
-        name: "Carlos",
-        date: "May 28, 2022",
-        comment: "Me brindaron informacion a tiempo, muy agradable",
-        starPoint: 5,
-    },
-];
+
 
 const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
     className = "",
@@ -54,6 +35,11 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
     const [isOpen, setIsOpen] = useState(false);
     const [openFocusIndex, setOpenFocusIndex] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [newComment, setNewComment] = useState({
+        name: "",
+        comment: "",
+        score:5
+    });
 
     const { id }: any = useParams();
     useEffect(() => {
@@ -71,6 +57,9 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
     };
 
     const handleCloseModal = () => setIsOpen(false);
+    const handleSendComment = () => {
+        console.log("enviando comentario",newComment);
+    }
 
     const renderSection1 = () => {
         return (
@@ -231,25 +220,51 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                     Comentarios{" "}
                     <span>({property?.comments?.length || 0} comentarios)</span>
                 </h2>
-                <div className="border-b w-14 border-neutral-200 dark:border-neutral-700"></div>
+                <div className="border-b w-20 border-neutral-200 dark:border-neutral-700"></div>
 
-                {/* comment */}
                 {/* Content */}
                 <div className="space-y-5">
                     <FiveStartIconForRate
                         iconClass="w-6 h-6"
                         className="space-x-0.5"
+                        newComment={newComment}
+                        setNewComment={setNewComment}
+                    />
+                    <Input
+                        fontClass=""
+                        sizeClass="h-16 px-4 py-3"
+                        rounded="rounded-3xl"
+                        placeholder="Nombre"
+                        value={newComment.name}
+                        name="name"
+                        onChange={(e) =>
+                            setNewComment({
+                                ...newComment,
+                                name: e.target.value,
+                            })
+                        }
+
                     />
                     <div className="relative">
                         <Input
                             fontClass=""
                             sizeClass="h-16 px-4 py-3"
                             rounded="rounded-3xl"
-                            placeholder="Share your thoughts ..."
+                            placeholder="Deja un comentario"
+                            value={newComment.comment}
+                            name="comment"
+                            onChange={(e) =>
+                                setNewComment({
+                                    ...newComment,
+                                    comment: e.target.value,
+                                })
+                            }
+
                         />
                         <ButtonCircle
                             className="absolute transform -translate-y-1/2 right-2 top-1/2"
                             size=" w-12 h-12 "
+                            onClick={handleSendComment}
                         >
                             <ArrowRightIcon className="w-5 h-5" />
                         </ButtonCircle>
