@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import LocationMarker from "components/AnyReactComponent/LocationMarker";
-import CommentListing from "components/CommentListing/CommentListing";
 import GoogleMapReact from "google-map-react";
 import Avatar from "shared/Avatar/Avatar";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
@@ -11,19 +10,15 @@ import { useParams } from "react-router-dom";
 import clientAxios from "config/axios";
 import formatMoney from "utils/formatMoney";
 import {
-    ArrowRightIcon,
     AtSymbolIcon,
     DeviceMobileIcon,
     PhoneIcon,
 } from "@heroicons/react/solid";
 import ModalContactMe from "./ModalContactMe";
-import Input from "shared/Input/Input";
-import ButtonCircle from "shared/Button/ButtonCircle";
-import FiveStartIconForRate from "./FiveStartIconForRate";
-import { useDispatch, useSelector } from "react-redux";
-
-import SpinnerButton from "components/SpinnerButton/SpinnerButton";
-import { createNewCommentAction, getCommentsByPropertyAction } from "store/slice/comments/comments.actions";
+import { useDispatch} from "react-redux";
+import {
+    getCommentsByPropertyAction,
+} from "store/slice/comments/comments.actions";
 import CommentsSection from "./CommentsSection";
 
 export interface ListingStayDetailPageProps {
@@ -48,12 +43,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
         propertyId: id,
     });
 
-    const { loadingComments } = useSelector(
-        ({ properties }: any) => properties.properties
-    );
-
-    const { comments } = useSelector(({ comments }: any) => comments);
-
     useEffect(() => {
         if (id) {
             (async () => {
@@ -73,10 +62,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
     };
 
     const handleCloseModal = () => setIsOpen(false);
-
-    const handleSendComment = () => {
-        dispatch(createNewCommentAction(newComment));
-    };
 
     const renderSection1 = () => {
         return (
@@ -228,8 +213,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
             </div>
         );
     };
-
-
 
     const renderSection7 = () => {
         return (
@@ -437,7 +420,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
                         newComment={newComment}
                         setNewComment={setNewComment}
                     />
-                    
                 </div>
 
                 {/* SIDEBAR */}

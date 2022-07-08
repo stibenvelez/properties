@@ -1,7 +1,6 @@
 import { ArrowRightIcon } from '@heroicons/react/outline';
 import CommentListing from 'components/CommentListing/CommentListing';
 import SpinnerButton from 'components/SpinnerButton/SpinnerButton';
-import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ButtonCircle from 'shared/Button/ButtonCircle';
 import Input from 'shared/Input/Input';
@@ -17,7 +16,7 @@ type Props = {
 
 const CommentsSection:any = ({ newComment, setNewComment }: Props) => {
     const dispatch:any = useDispatch();
-    const { comments, loading, loadingComments } = useSelector(
+    const { comments, loading } = useSelector(
         ({ comments }: any) => comments
     );
     const handleSendComment = () => {
