@@ -10,6 +10,9 @@ import {
     setDeletePropertyError,
     setDeletePropertySuccess,
     setFilters,
+    setGetPorperty,
+    setGetPorpertyError,
+    setGetPorpertySuccess,
     setProperties,
     setPropertiesError,
     setPropertiesSucces,
@@ -52,6 +55,16 @@ export const fetchAllProperties =
             dispatch(setPropertiesError());
         }
     };
+
+export const getPropertyByIdAction = (propertyId) => async (dispatch) => {
+    dispatch(setGetPorperty());
+    try {
+        const response = await clientAxios.get(`/properties/${propertyId}`);
+        dispatch(setGetPorpertySuccess(response.data));
+    } catch (error) {
+        dispatch(setGetPorpertyError(error));
+    }
+}
 
 export const fetchAllPropertiesByUser =
     (filters, categoryProperty) => async (dispatch) => {

@@ -15,11 +15,13 @@ import {
     PhoneIcon,
 } from "@heroicons/react/solid";
 import ModalContactMe from "./ModalContactMe";
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import {
     getCommentsByPropertyAction,
 } from "store/slice/comments/comments.actions";
 import CommentsSection from "./CommentsSection";
+import { getPropertyByIdAction } from "store/slice/properties/propertiesActions";
+import SpinnerButton from "components/SpinnerButton/SpinnerButton";
 
 export interface ListingStayDetailPageProps {
     className?: string;
@@ -32,7 +34,6 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
 }) => {
     const dispatch: any = useDispatch();
     const { id }: any = useParams();
-    const [property, setProperty] = useState<any>({});
     const [isOpen, setIsOpen] = useState(false);
     const [openFocusIndex, setOpenFocusIndex] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -44,24 +45,42 @@ const PropertyDetailPage: FC<ListingStayDetailPageProps> = ({
     });
 
     useEffect(() => {
-        if (id) {
-            (async () => {
-                const { data } = await clientAxios(`/properties/${id}`);
-                setProperty(data);
-            })();
-        }
+        (() => dispatch(getPropertyByIdAction(id)))();
     }, []);
 
     useEffect(() => {
         (() => dispatch(getCommentsByPropertyAction(id)))();
     }, []);
+    
 
     const handleOpenModal = (index: number) => {
         setIsOpen(true);
         setOpenFocusIndex(index);
     };
 
+    const {property, loading} = useSelector(({properties}: any) => properties);
+
     const handleCloseModal = () => setIsOpen(false);
+
+    console.log(property);
+
+
+
+
+    if (loading) {
+        return (
+            <div className="min-h-[300px]  flex flex-col items-center justify-center">
+                <SpinnerButton className={"h-8 w-8"} />
+            </div>
+        );
+    };
+
+    if (Object.keys(property).length == 0) {
+        return <div className="min-h-[300px]  flex flex-col items-center justify-center">
+            <h1 className="text-2xl text-center font-bold">No se encontró este inmueble</h1>
+            <p>Comprueba que este disponible</p>
+        </div>
+    };
 
     const renderSection1 = () => {
         return (

@@ -33,6 +33,16 @@ export const propertiesSlice = createSlice({
         setPropertiesError: (state) => {
             state.loading = false;
         },
+        setGetPorperty: (state) => {
+            state.loading = true;
+        },
+        setGetPorpertySuccess: (state, action) => {
+            state.loading = false;
+            state.property = action.payload;
+        },
+        setGetPorpertyError: (state) => {
+            state.loading = false;
+        },
         setFilters: (state, action) => {
             state.filters = action.payload;
         },
@@ -119,6 +129,9 @@ export const {
     setProperties,
     setPropertiesSucces,
     setPropertiesError,
+    setGetPorperty,
+    setGetPorpertySuccess,
+    setGetPorpertyError,
     setFilters,
     setclearFilter,
     setUploadPropertiescsv,
